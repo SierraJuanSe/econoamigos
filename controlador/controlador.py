@@ -1,6 +1,10 @@
 #!/usr/bin/python3
 import pymysql
 
+'''
+   USUARIO
+'''
+
 def consultarUsuario():
    # Establece la conexion con la base de datos
    db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
@@ -50,8 +54,64 @@ def insertarUsuario(id, nombre, apellido, correo, contra, celular, ocupacion, fe
       db.rollback()
    db.close() #Cierra la conexión
 
-#insertarUsuario('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','Estudiante','2001-01-1',10000)
-consultarUsuario()
+'''
+   OFERTA
+'''
 
+def consultarOferta():
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # ejecuta el query SQL para extraer los usuarios
+   cursor.execute("SELECT * from Oferta")
+   # Recupera los registros de la ejecución
+   resultado = cursor.fetchall()
+   # Ordena el resultado de la ejecucion
+   for fila in resultado:
+      id = fila[0]
+      nombre = fila[1]
+      descripcion = fila[2]
+      precio = fila [3]
+      usuario = fila [4]
+      # Imprime cada fila
+      print (f"ID: {id}, Nombre: {nombre}, Descripcion: {descripcion}\n"
+             f"Precio: {precio}, Usuario: {usuario}")
+   db.close() #Cierra la conexión
+
+def insertarOferta(nombre, descripcion, precio, usuario):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # Define el query de inserción
+   sql = f"insert into Oferta values(null,'{nombre}','{descripcion}',{precio},'{usuario}');"
+
+   # Es necesario por si hay conflictos en la base
+   try:
+      # Ejecuta el query
+      cursor.execute(sql)
+      # Guarda los cambios en la base
+      db.commit()
+   except:
+      # Corrije la inserción en caso de error
+      print("error")
+      db.rollback()
+   db.close() #Cierra la conexión
+
+
+
+'''
+   PRUEBAS
+'''
+# USUARIO
+consultarUsuario()
+#insertarUsuario('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','Estudiante','2001-01-1',10000)
+
+# OFERTA
+#insertarOferta("celular iphone 6","Es un celular bonito",1200000,'1002549404');
+consultarOferta()
 
 
