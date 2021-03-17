@@ -59,3 +59,14 @@ function crearCuenta(nombre, apellido, correo, contrasenia) {
         }
     });
 }
+
+function historial(buscar) {
+    var obj = {
+
+};
+$.ajax({
+    error: function (response) {
+        console.log(JSON.stringify(response))
+    }
+});
+}
