@@ -288,7 +288,83 @@ def insertarCompra(precio, usuario, transaccion, oferta):
       db.rollback()
    db.close() #Cierra la conexión
 
-### PRUEBAS ###
+'''
+   RECARGA
+'''
+
+def consultarRecarga():
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # ejecuta el query SQL para extraer los usuarios
+   cursor.execute("SELECT * from Recarga")
+   # Recupera los registros de la ejecución
+   resultado = cursor.fetchall()
+   # Ordena el resultado de la ejecucion
+   print("\n---- RECARGAS ----")
+   for fila in resultado:
+      transaccion = fila[0]
+      valor = fila[1]
+      # Imprime cada fila
+      print (f"Transaccion: {transaccion}, Valor: {valor}")
+   db.close() #Cierra la conexión
+
+def insertarRecarga(transaccion, valor):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # Define el query de inserción
+   sql = f"insert into Recarga values({transaccion},{valor});"
+
+   # Es necesario por si hay conflictos en la base
+   try:
+      # Ejecuta el query
+      cursor.execute(sql)
+      # Guarda los cambios en la base
+      db.commit()
+   except:
+      # Corrije la inserción en caso de error
+      print("error")
+      db.rollback()
+   db.close() #Cierra la conexión
+
+'''
+   QUERYS ESPECIFICOS
+'''
+def verificarLogin(correo,contra):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # ejecuta el query SQL para extraer los usuarios
+   cursor.execute(f"select * from Usuario as u where u.emailUsuario='{correo}' && u.contraseñaUsuario=sha('{contra}'); ")
+   # Recupera los registros de la ejecución
+   resultado = cursor.fetchall()
+   # Ordena el resultado de la ejecucion
+   print("\n---- VERIFICACION DE LOGIN ----")
+   if len(resultado) != 0: #Si no arroja nada la consulta se envia el error
+      print("BIENVENIDO",resultado[0][1],resultado[0][2])
+   else:
+      print("Error en el login\nVerifique los datos ingresados")
+   db.close()  # Cierra la conexión
+
+
+####################
+## PREUBAS QUERYS ##
+####################
+
+#verificarLogin("felipe@gmail.com",12345)
+
+
+###########################
+## PRUEBAS GENERALES     ##
+## INSERCION / CONSULTAR ##
+###########################
 
 # USUARIO
 #insertarUsuario('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','Estudiante','2001-01-1',10000,'Cll 434,Villa de Leyva')
@@ -315,3 +391,5 @@ def insertarCompra(precio, usuario, transaccion, oferta):
 #consultarCompra()
 
 # Recarga
+#insertarRecarga(1,5000)
+#consultarRecarga()
