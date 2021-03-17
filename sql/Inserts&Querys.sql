@@ -111,3 +111,65 @@ SET cantidadProducto=cantidadProducto-1
 WHERE Oferta_codOferta=1;
 select*from Producto;
 
+insert into Compra values(null,200000,'1002549404',1,2);
+insert into Compra values(null,100000,'23789345',2,3);
+insert into Compra values(null,1200000,'978676',3,1);
+insert into Compra values(null,40000,'1002549404',4,4);
+select*from Compra;
+
+-- -----------------------------------------------------
+-- insertar una Recarga
+-- -----------------------------------------------------
+insert into Recarga values(5,3000);
+insert into Recarga values(6,3000);
+insert into Recarga values(7,3000);
+insert into Recarga values(8,3000);
+select*from Recarga;
+
+-- -----------------------------------------------------
+-- Consultar a usuarios y verificar el login
+-- -----------------------------------------------------
+select*from Usuario as u where u.emailUsuario='felipe@gmail.com' && u.contraseñaUsuario='12345'; 
+-- -----------------------------------------------------
+-- Consultar Todos los producto
+-- -----------------------------------------------------
+select *,'Producto' as tipo from Oferta as o,Producto as p
+where o.codOferta=p.Oferta_codOferta;
+-- -----------------------------------------------------
+-- Consultar Todos los servcios
+-- -----------------------------------------------------
+select *,'Servicio' as tipo from Oferta as o,Servicio as s
+where o.codOferta=s.Oferta_codOferta;
+-- -----------------------------------------------------
+-- Consultar Todas los Productos que un Usuario ha creado
+-- -----------------------------------------------------
+select *,'Producto' as tipo from Oferta as o,Producto as p
+where o.codOferta=p.Oferta_codOferta && o.Usuario_idUsuario='1002549404';
+-- -----------------------------------------------------
+-- Consultar Todas los Servicios que un Usuario ha creado
+-- -----------------------------------------------------
+select *,'Servicio' as tipo from Oferta as o,Servicio as s
+where o.codOferta=s.Oferta_codOferta && o.Usuario_idUsuario='978676';
+-- -----------------------------------------------------
+-- Consultar Todas las Compras de productos que un Usuario ha realizado
+-- -----------------------------------------------------
+Select *from Compra as c where c.Usuario_idUsuario='1002549404';
+-- -----------------------------------------------------
+-- Consultar Quienes realizaron las compras de un servicio
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Actualizar el saldo por una recarga
+-- -----------------------------------------------------
+UPDATE Usuario
+SET totalMonedaUsuario=totalMonedaUsuario+10000
+WHERE idUsuario='1002549404';
+
+-- -----------------------------------------------------
+-- Actualizar la Cantidad de un producto
+-- -----------------------------------------------------
+UPDATE Producto
+SET cantidadProducto=cantidadProducto-1
+WHERE Oferta_codOferta=1;
+select*from Producto;
+
