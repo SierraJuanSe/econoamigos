@@ -381,12 +381,12 @@ def consultarProductoxUsuario(usuario):
       print("Error")
    db.close() #Cierra la conexión
 
-def consultarServicioxUsuario(usuario): #CORREGIR
+def consultarServicioxUsuario(usuario):
    # Establece la conexion con la base de datos
    db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
    # Genera el cursor para ejecutar sentencias
    cursor = db.cursor()
-   sql = f"select * from Oferta as o,Servicio as s" \
+   sql = f"select * from Oferta as o,Servicio as s\n" \
          f"where o.codOferta=s.Oferta_codOferta && o.Usuario_idUsuario='{usuario}';"
    try:
       # ejecuta el query SQL para extraer los usuarios
@@ -433,7 +433,7 @@ def actualizarRecarga(usuario, cantidad):
    cursor = db.cursor()
 
    # Define el query de inserción
-   sql = f"UPDATE Usuario SET totalMonedaUsuario=totalMonedaUsuario+{cantidad} " \
+   sql = f"UPDATE Usuario SET totalMonedaUsuario=totalMonedaUsuario+{cantidad}\n" \
          f"WHERE idUsuario='{usuario}';"
 
    # Es necesario por si hay conflictos en la base
@@ -442,6 +442,30 @@ def actualizarRecarga(usuario, cantidad):
       cursor.execute(sql)
       # Guarda los cambios en la base
       db.commit()
+      print("Recarga actualizada")
+   except:
+      # Corrije la inserción en caso de error
+      print("error")
+      db.rollback()
+   db.close() #Cierra la conexión
+
+def actualizarCantidadProducto(oferta, cantidad):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # Define el query de inserción
+   sql = f"UPDATE Producto SET cantidadProducto=cantidadProducto-{cantidad}\n" \
+         f"WHERE Oferta_codOferta={oferta};" \
+
+   # Es necesario por si hay conflictos en la base
+   try:
+      # Ejecuta el query
+      cursor.execute(sql)
+      # Guarda los cambios en la base
+      db.commit()
+      print("Cantidad actualizada")
    except:
       # Corrije la inserción en caso de error
       print("error")
@@ -457,6 +481,8 @@ def actualizarRecarga(usuario, cantidad):
 #consultarServicioxUsuario("1002549404")
 #consultarCompraxUsuario("1002549404")
 #actualizarRecarga("1002549404", 1000)
+#actualizarCantidadProducto(1, 1)
+
 
 ###########################
 ## PRUEBAS GENERALES     ##
