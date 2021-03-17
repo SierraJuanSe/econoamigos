@@ -2,8 +2,8 @@
 <html>
 
 <head>
-    <title>Econoamigos</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title> Registrate | Econoamigos</title>
+    <link rel="stylesheet" type="text/css" href="css/styleReg.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta http-equiv=”Content-Type” content=”text/html; charset=UTF-8″ />
@@ -16,44 +16,65 @@
 
 <body>
     <img class="fondo" src="img/fondo.png">
+    <img class="fondo2" src="img/fondo.png">
     <div class="container">
 
-        <div class="img">
-            <img src="img/celular.svg">
-        </div>
-        <!-- Formulario de Inicio de Sesión -->
+
+        <!-- Formulario de Registro -->
         <div class="login">
             <form action="index.html">
-                <img src="img/Logo.png">
-                <h2 class="title">Bienvenido</h2>
+                <div class="img2">
+                    <img src="img/icono.png"> </div>
+                <h2 class="title">Sé un Econoamigo</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Nombre</h5>
+                        <input type="text" class="input" id="nombreR">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Apellido</h5>
+                        <input type="text" class="input" id="apellidoR">
+                    </div>
+                </div>
                 <div class="input-div one">
                     <div class="i">
                         <i class="fas fa-envelope"></i>
                     </div>
                     <div class="div">
                         <h5>Correo Electrónico</h5>
-                        <input type="email" class="input" id="correoL">
+                        <input type="email" class="input" id="correoR">
                     </div>
                 </div>
+
                 <div class="input-div pass">
                     <div class="i">
                         <i class="fas fa-lock"></i>
                     </div>
                     <div class="div">
                         <h5>Contraseña</h5>
-                        <input type="password" class="input" id="passL">
+                        <input type="password" class="input" id="passR">
                     </div>
                 </div>
-                <a href="registro.html" id="Entrar">¿No tienes una cuenta? Registrate</a>
-                <button id="Ingresar" type="button" class="btn">Ingresar </button>
+                <a href="index.html" id="Devolver">¿Ya tienes una cuenta? Inicia Sesión</a>
+                <button id="Registrar" type="button" class="btn">Regístrate </button>
             </form>
         </div>
-
-
+        <div class="img">
+            <img src="img/signinfo.svg">
+        </div>
 
     </div>
     <script src="js/animaciones.js" type="text/javascript"></Script>
     <script src="js/funciones.js" type="text/javascript"></Script>
+
 </body>
 
 </html>
