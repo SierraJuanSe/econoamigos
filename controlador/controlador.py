@@ -353,13 +353,110 @@ def verificarLogin(correo,contra):
       print("Error en el login\nVerifique los datos ingresados")
    db.close()  # Cierra la conexión
 
+'''
+   Consultar Todas los Productos que un Usuario ha creado
+'''
+
+def consultarProductoxUsuario(usuario):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+   sql = f"select * from Oferta as o,Producto as p " \
+         f" where o.codOferta=p.Oferta_codOferta && o.Usuario_idUsuario='{usuario}';"
+   try:
+      # ejecuta el query SQL para extraer los usuarios
+      cursor.execute(sql)
+      # Recupera los registros de la ejecución
+      resultado = cursor.fetchall()
+      # Ordena el resultado de la ejecucion
+      print("\n---- PRODUCTOS DEL USUARIO ----")
+      for fila in resultado:
+         imagen = fila[0]
+         cantidad = fila[1]
+         oferta = fila[2]
+         # Imprime cada fila
+         print (f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
+   except:
+      print("Error")
+   db.close() #Cierra la conexión
+
+def consultarServicioxUsuario(usuario): #CORREGIR
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+   sql = f"select * from Oferta as o,Servicio as s" \
+         f"where o.codOferta=s.Oferta_codOferta && o.Usuario_idUsuario='{usuario}';"
+   try:
+      # ejecuta el query SQL para extraer los usuarios
+      cursor.execute(sql)
+      # Recupera los registros de la ejecución
+      resultado = cursor.fetchall()
+      # Ordena el resultado de la ejecucion
+      print("\n---- SERVICIOS DEL USUARIO ----")
+      for fila in resultado:
+         lugar = fila[0]
+         oferta = fila[1]
+         # Imprime cada fila
+         print (f"Lugar: {lugar}, Oferta: {oferta}")
+   except:
+      print("Error")
+   db.close() #Cierra la conexión
+
+def consultarCompraxUsuario(usuario):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+   sql = f"Select * from Compra as c where c.Usuario_idUsuario='{usuario}';"
+   # ejecuta el query SQL para extraer los usuarios
+   cursor.execute(sql)
+   # Recupera los registros de la ejecución
+   resultado = cursor.fetchall()
+   # Ordena el resultado de la ejecucion
+   print("\n---- COMPRAS DEL USUARIO ----")
+   for fila in resultado:
+      id = fila[0]
+      precio = fila[1]
+      usuario = fila[2]
+      transaccion = fila[3]
+      oferta = fila[4]
+      # Imprime cada fila
+      print (f"ID: {id}, Precio: {precio}, Usuario: {usuario}, Transaccion: {transaccion}, Oferta: {oferta}")
+   db.close() #Cierra la conexión
+
+def actualizarRecarga(usuario, cantidad):
+   # Establece la conexion con la base de datos
+   db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+   # Genera el cursor para ejecutar sentencias
+   cursor = db.cursor()
+
+   # Define el query de inserción
+   sql = f"UPDATE Usuario SET totalMonedaUsuario=totalMonedaUsuario+{cantidad} " \
+         f"WHERE idUsuario='{usuario}';"
+
+   # Es necesario por si hay conflictos en la base
+   try:
+      # Ejecuta el query
+      cursor.execute(sql)
+      # Guarda los cambios en la base
+      db.commit()
+   except:
+      # Corrije la inserción en caso de error
+      print("error")
+      db.rollback()
+   db.close() #Cierra la conexión
 
 ####################
 ## PREUBAS QUERYS ##
 ####################
 
 #verificarLogin("felipe@gmail.com",12345)
-
+#consultarProductoxUsuario("1002549404");
+#consultarServicioxUsuario("1002549404")
+#consultarCompraxUsuario("1002549404")
+#actualizarRecarga("1002549404", 1000)
 
 ###########################
 ## PRUEBAS GENERALES     ##
