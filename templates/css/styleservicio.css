@@ -250,18 +250,9 @@ footer {
     margin: auto;
 }
 
-.Servicio,
-.Servicio2 {
+.Servicio {
     width: 50%;
     border-radius: 20px;
-}
-
-.Servicio3 {
-    width: 100%;
-}
-
-.Servicio2 {
-    align-items: right;
 }
 
 .Servicios {
@@ -283,7 +274,7 @@ footer {
 }
 
 .Textos {
-    padding: 10px 5px 20px 5px;
+    padding: 10px 5px 20px 30px;
     font-weight: 300;
     text-align: justify;
 }
