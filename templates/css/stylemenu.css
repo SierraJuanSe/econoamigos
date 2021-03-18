@@ -63,6 +63,12 @@ header .textos h1 {
     font-size: 75px;
 }
 
+.saldo {
+    font-size: 18px;
+    margin: 35px 0;
+    margin-right: -52%;
+}
+
 .enlaces {
     position: absolute;
     height: 100vh;
@@ -232,6 +238,19 @@ footer {
 
 
 /*CONTENIDO*/
+
+.bienvenida {
+    font-size: 30px;
+    box-shadow: 0 5px 5px 1px #ececec;
+    border-radius: 5px;
+    margin: 38px auto;
+    margin-bottom: 4px;
+    background: #fff;
+    height: 140px;
+    width: 490px;
+    padding: 16px;
+    text-align: center;
+}
 
 
 /*Servicios*/
@@ -418,11 +437,7 @@ section {
     }
 }
 
-@media screen and (max-width:700px) {
-    nav .logo h1 {
-        display: none;
-    }
-}
+@media screen and (max-width:700px) {}
 
 @media screen and (max-width:800px) {
     .enlaces {
@@ -468,6 +483,12 @@ section {
     .main-content .box {
         margin: 5px 0;
     }
+    nav .logo h1 {
+        display: none;
+    }
+    .saldo {
+        margin-left: -10%;
+    }
 }
 
 @media screen and (max-width:1500px) {
@@ -485,6 +506,15 @@ section {
         justify-content: center;
         flex-direction: column;
         align-items: center;
+    }
+    .saldo {
+        margin-right: -49%;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .saldo {
+        margin-right: 0%;
     }
 }
 
@@ -509,5 +539,18 @@ section {
     }
     .textotarjeta h5 {
         font-size: 12px;
+    }
+    .bienvenida {
+        font-size: 20px;
+        width: 400px;
+        height: 140px;
+    }
+}
+
+@media screen and (max-width:550px) {
+    .bienvenida {
+        font-size: 25px;
+        width: auto;
+        height: auto;
     }
 }
