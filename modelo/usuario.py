@@ -1,39 +1,59 @@
+from utils.conector import Conector, DBINFO
+
+
 class Usuario:
-    def __init__(self, id=None, nombres=None, apellidos=None, email=None,
-                contrasena=None, celular=None, fechaNacimiento=None, ocupacion=None,
-                totalMoneda=None):
+    def __init__(self, id=None, nombre=None, apellido=None, email=None, password=None):
         self.id = id
-        self.nombres = nombres
-        self.apellidos = apellidos
+        self.nombre = nombre
+        self.apellido = apellido
         self.email = email
-        self.contrasena = contrasena
-        self.celular = celular
-        self.fechaNacimiento = fechaNacimiento
-        self.totalMoneda = self.totalMoneda
-        self.ofertas = []
-        self.compras = []
-        self.transacciones = []
+        self.password = password
+        self.tel = None
+        self.ocupacion = None
+        self.fechaNac = None
+        self.moneda = 0
+        self.direccion = None
 
     def registro(self):
-        pass
+        if not self.existe_email():
+            sql = f"insert into Usuario values('{self.id}','{self.nombre}','{self.apellido}','{self.email}',sha('{self.password}'),'{self.tel}','{self.ocupacion}', '{self.fechaNac}','{self.moneda}','{self.direccion}'); "
+            conn = Conector(DBINFO['host'], DBINFO['user'],
+                            DBINFO['password'], DBINFO['database'])
+            conn.connect()
+            conn.execute_query(sql)
+            conn.commit_change()
+            conn.close()
+            return True
+        return False
 
     def ingreso(self):
-        pass
+        sql = f"select * from Usuario as u where u.emailUsuario='{self.email}' && u.contraseñaUsuario=sha('{self.password}');"
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        result = conn.execute_query(sql)
+        conn.close()
+        if result:
+            self.id = result[0][0]
+            self.nombre = result[0][1]
+            self.apellido = result[0][2]
+            self.tel = result[0][5]
+            self.ocupacion = result[0][6]
+            self.fechaNac = result[0][7]
+            self.moneda = result[0][8]
+            self.direccion = result[0][9]
 
-    def consulta(self):
-        pass
+            return True
 
-    def consulta_ofertas(self):
-        pass
+        return False
 
-    def consulta_compras(self):
-        pass
-
-    def consulta_transacciones(self):
-        pass
-
-    def actualizar(self):
-        pass
-
-    def borrar(self):
-        pass
+    def existe_email(self):
+        sql = 'select * from Usuario where `emailUsuario`=%s'
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        result = conn.execute_query(sql, (self.email, ))
+        conn.close()
+        if result:
+            return True
+        return False
