@@ -434,6 +434,12 @@ table th {
     .main-content .box {
         margin: 5px 0;
     }
+    nav .logo h1 {
+        display: none;
+    }
+    .saldo {
+        margin-left: -10%;
+    }
 }
 
 @media screen and (max-width:1500px) {
@@ -451,6 +457,15 @@ table th {
         justify-content: center;
         flex-direction: column;
         align-items: center;
+    }
+    .saldo {
+        margin-right: -49%;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .saldo {
+        margin-right: 0%;
     }
 }
 

@@ -9,7 +9,6 @@
 body {
     font-family: 'Poppins', sans-serif;
     overflow: auto;
-    ;
 }
 
 
@@ -62,6 +61,12 @@ nav .logo img {
 
 header .textos h1 {
     font-size: 75px;
+}
+
+.saldo {
+    font-size: 18px;
+    margin: 35px 0;
+    margin-right: -52%;
 }
 
 .enlaces {
@@ -408,7 +413,7 @@ section {
 /*Responsive */
 
 @media screen and (max-width:400px) {
-    nav .logo  {
+    nav .logo {
         margin-left: 20px;
     }
     .icono {
@@ -469,6 +474,12 @@ section {
     .main-content .box {
         margin: 5px 0;
     }
+    nav .logo h1 {
+        display: none;
+    }
+    .saldo {
+        margin-left: -10%;
+    }
 }
 
 @media screen and (max-width:1500px) {
@@ -486,6 +497,15 @@ section {
         justify-content: center;
         flex-direction: column;
         align-items: center;
+    }
+    .saldo {
+        margin-right: -49%;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .saldo {
+        margin-right: 0%;
     }
 }
 
@@ -513,15 +533,18 @@ section {
     }
 }
 
+
 /*Barra de Busqueda*/
-#barraBusqueda{
+
+#barraBusqueda {
     position: absolute;
     top: 30px;
     left: 35%;
     width: 26%;
     height: 60px;
 }
-#botonBuscar{
+
+#botonBuscar {
     position: absolute;
     top: 30px;
     right: 32%;
@@ -529,15 +552,15 @@ section {
     height: 60px;
 }
 
-#enlaces{
-    position: absolute; 
+#enlaces {
+    position: absolute;
     z-index: 2;
 }
 
-#tarjetas{    
+#tarjetas {
     margin-top: 8%;
-    
 }
-.card-body{
-    background: #E4DEDD; 
+
+.card-body {
+    background: #E4DEDD;
 }
