@@ -5,6 +5,8 @@ $("#div-file").hide();
 $("#stock").hide();
 $("#TextoProducto").hide();
 $("#TextoServicio").show();
+$( "#ContactarButton" ).empty();
+$( "#ContactarButton" ).append("Seleccione");
 
 boton.addEventListener("click", function() {
     if (contador == 0) {
@@ -55,7 +57,8 @@ $("#Contactar").click(function() {
 });
 
 $("#ButtonServicios").click(function() {
-    alert("entre Servicio");
+    $( "#ContactarButton" ).empty();
+    $( "#ContactarButton" ).append("Servicio");
         $("#div-file").hide();
         $("#stock").hide();
         $("#TextoProducto").hide();
@@ -63,7 +66,8 @@ $("#ButtonServicios").click(function() {
 
 });
 $("#ButtonProductos").click(function() {
-    alert("entre Producto");
+    $( "#ContactarButton" ).empty();
+    $( "#ContactarButton" ).append("Producto");
         $("#div-file").show();
         $("#stock").show();
         $("#TextoProducto").show();
