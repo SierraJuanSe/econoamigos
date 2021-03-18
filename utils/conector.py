@@ -1,6 +1,11 @@
 import pymysql
 
-
+DBINFO = {
+    'host' : "sql10.freemysqlhosting.net",
+    'user' : "sql10399086",
+    'password': "SvQc25Xr7V",
+    'database': "sql10399086"
+}
 class Conector:
 
     def __init__(self, host=None, user=None, password=None, database=None):
