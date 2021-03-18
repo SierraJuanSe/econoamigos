@@ -8,7 +8,7 @@ WHERE Usuario.emailUsuario='jaun@gmail.com') as 'Result';
 
 
 -- -----------------------------------------------------
--- Consultar a usuarios y verificar el login
+-- Consultar a usuario y verificar el login
 -- -----------------------------------------------------
 select*from Usuario as u where u.emailUsuario='felipe@gmail.com' && u.contraseñaUsuario='12345'; 
 
@@ -22,7 +22,7 @@ where u.idUsuario='23789345';
 
 
 -- -----------------------------------------------------
--- Consultar Todos los productos Y todos Los Servicios
+-- Consultar Todos los servicios y los productos con Stock disponible
 -- -----------------------------------------------------
 (select o.codOferta,'Producto' as tipo,o.nombreOferta,o.descripcionOferta,
 o.precioOferta,'-' as Lugar,p.cantidadProducto,p.imagenProducto as imagen from Oferta as o,Producto as p
@@ -33,7 +33,7 @@ where o.codOferta=s.Oferta_codOferta and o.estadoOferta=1);
 
 
 -- -----------------------------------------------------
--- Consultar Todos los productos
+-- Consultar Todos los productos con Stock Disponible
 -- -----------------------------------------------------
 select *,'Producto' as tipo from Oferta as o,Producto as p
 where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1 and p.cantidadProducto>0;
@@ -61,13 +61,20 @@ where o.codOferta=s.Oferta_codOferta && o.Usuario_idUsuario='23789345';
 
 
 -- -----------------------------------------------------
--- Consultar Todas las Compras de productos que un Usuario ha realizado
+-- Consultar Todas las Compras de productos que un Usuario ha realizado!!!!
 -- -----------------------------------------------------
-Select *from Compra as c where c.Usuario_idUsuario='1002549404';
+select *,'Producto' as tipo from Oferta as o,Producto as p,Compra as c
+where o.codOferta=p.Oferta_codOferta and o.codOferta=c.Oferta_codOferta and c.Usuario_idUsuario='1002549404';
 
 
 -- -----------------------------------------------------
--- Consultar Quienes realizaron las compras de los servicios realizados por el usuario 23789345
+-- Consultar Todas las Compras de servicios que un Usuario ha realizado!!!!
+-- -----------------------------------------------------
+select *,'Servicio' as tipo from Oferta as o,Servicio as s,Compra as c
+where o.codOferta=s.Oferta_codOferta and o.codOferta=c.Oferta_codOferta and c.Usuario_idUsuario='23789345';
+
+-- -----------------------------------------------------
+-- Consultar Quienes realizaron las compras de los Productos realizados por el usuario 23789345
 -- -----------------------------------------------------
 SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,
 oferta.codOferta,oferta.nombreOferta,Compra.estadoCompra
@@ -87,28 +94,22 @@ INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);
 
 
 -- -----------------------------------------------------
--- Actualizar el saldo por una compra
--- -----------------------------------------------------
-UPDATE Usuario
-SET totalMonedaUsuario=totalMonedaUsuario-10000
-WHERE idUsuario='1002549404';
-
-
--- -----------------------------------------------------
 -- Actualizar la Cantidad de un producto
 -- -----------------------------------------------------
 UPDATE Producto
-SET cantidadProducto=cantidadProducto-1
+SET cantidadProducto=70
 WHERE Oferta_codOferta=7;
 
-
 -- -----------------------------------------------------
--- Cambiar el estado de la compra 1
+-- Cambiar el estado de la compra 2	(Aca ya se acualiza el saldo)
 -- -----------------------------------------------------
-Update Compra
-SET Compra.estadoCompra=True
-where Compra.codCompra='1';
+Update Compra SET Compra.estadoCompra=True where Compra.codCompra=2;
 
+Update Transaccion as t SET t.estadoTransaccion=True 
+where t.codTransaccion=(select c.Transaccion_codTransaccion from Compra as c where  c.codCompra=2);
+
+Update Transaccion as t SET t.estadoTransaccion=True 
+where t.codTransaccion=(select c.Transaccion_codTransaccion from Compra as c where  c.codCompra=2)+1;
 
 -- -----------------------------------------------------
 -- Inactivar la oferta 1
@@ -128,7 +129,16 @@ where Oferta.codOferta='1';
 -- -----------------------------------------------------
 -- consultar las Transacciones de un usuario
 -- -----------------------------------------------------
-select*from Transaccion where Transaccion.Usuario_idUsuario='1002549404'
+select*from Transaccion where Transaccion.Usuario_idUsuario='1002549404';
+
+
+-- -----------------------------------------------------
+-- consultar Quien es el vendedor y el Comprador de una oferta PENDIENTE
+-- -----------------------------------------------------
+SELECT Distinct c.codCompra,c.Usuario_idUsuario as Comprador,o.Usuario_idUsuario as Vendedor ,o.nombreOferta
+FROM ((Compra as c INNER JOIN Oferta as o ON c.Oferta_codOferta = o.codOferta and c.estadoCompra=0 )
+INNER JOIN Transaccion as t ON c.Usuario_idUsuario = t.Usuario_idUsuario and t.conceptoTransaccion='Compra');
+
 
 
 

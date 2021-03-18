@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS `sql10399086`.`Transaccion` (
   `conceptoTransaccion` VARCHAR(45) NOT NULL,
   `Usuario_idUsuario` VARCHAR(20) NOT NULL,
   `valorTransaccion` BIGINT(40) NOT NULL,
+  `estadoTransaccion` boolean NOT NULL,
   PRIMARY KEY (`codTransaccion`),
   INDEX `fk_Transaccion_Usuario1_idx` (`Usuario_idUsuario` ASC) ,
   CONSTRAINT `fk_Transaccion_Usuario1`
@@ -134,19 +135,6 @@ CREATE TABLE IF NOT EXISTS `sql10399086`.`Servicio` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `sql10399086`.`Recarga`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `sql10399086`.`Recarga` (
-  `Transaccion_codTransaccion` INT NOT NULL,
-  INDEX `fk_Recarga_Transaccion1_idx` (`Transaccion_codTransaccion` ASC) ,
-  CONSTRAINT `fk_Recarga_Transaccion1`
-    FOREIGN KEY (`Transaccion_codTransaccion`)
-    REFERENCES `sql10399086`.`Transaccion` (`codTransaccion`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

@@ -22,9 +22,9 @@ select*from Oferta;
 -- -----------------------------------------------------
 -- insertar un producto
 -- -----------------------------------------------------
-insert into Producto values('https://www.google.es/url?sa=dsds',3,1);
-insert into Producto values('https://www.google.co/url?sa=isdfABAE',2,2);
-insert into Producto values('https://www.google/url?sa=sdfsdfBAE',1,6);
+insert into Producto values('https://www.google.es/url?sa=dsds',15,1);
+insert into Producto values('https://www.google.co/url?sa=isdfABAE',20,2);
+insert into Producto values('https://www.google/url?sa=sdfsdfBAE',10,6);
 insert into Producto values('https://www.goasdasdasd.com',30,7);
 select*from Producto;
 -- -----------------------------------------------------
@@ -39,32 +39,33 @@ select*from Servicio;
 -- -----------------------------------------------------
 -- insertar una Transaccion (cada vez que se haga una transaccion ase actualize la moneda)
 -- -----------------------------------------------------
-insert into Transaccion values(null,'Compra','1002549404',200000);
-insert into Transaccion values(null,'Compra','23789345',100000);
-insert into Transaccion values(null,'Compra','978676',1200000);
-insert into Transaccion values(null,'Compra','333',200000);
-insert into Transaccion values(null,'Compra','1002549404',40000);
-insert into Transaccion values(null,'Recarga','1002549404',200000);
-insert into Transaccion values(null,'Recarga','23789345',100000);
+#Para comprador(Compra) para vendedor (Ingreso)
+insert into Transaccion values(null,'Compra','1002549404',200000,false);
+insert into Transaccion values(null,'Ingreso','23789345',200000,false);
+insert into Transaccion values(null,'Compra','23789345',100000,false);
+insert into Transaccion values(null,'Ingreso','978676',100000,false);
+insert into Transaccion values(null,'Compra','978676',1200000,false);
+insert into Transaccion values(null,'Ingreso','1002549404',1200000,false);
+insert into Transaccion values(null,'Compra','333',200000,false);
+insert into Transaccion values(null,'Ingreso','23789345',200000,false);
+insert into Transaccion values(null,'Compra','1002549404',40000,false);
+insert into Transaccion values(null,'Ingreso','23789345',40000,false);
 
+#Para Recargar
+insert into Transaccion values(null,'Recarga','1002549404',1200000,true);
+insert into Transaccion values(null,'Recarga','23789345',1100000,true);
+insert into Transaccion values(null,'Recarga','978676',1100000,true);
+insert into Transaccion values(null,'Recarga','333',1100000,true);
 select*from Transaccion;
 
 -- -----------------------------------------------------
 -- insertar una compra
 -- -----------------------------------------------------
 insert into Compra values(null,200000,false,'1002549404',1,2);
-insert into Compra values(null,100000,false,'23789345',2,3);
-insert into Compra values(null,1200000,false,'978676',3,1);
-insert into Compra values(null,200000,false,'333',4,2);
-insert into Compra values(null,40000,false,'1002549404',4,6);
+insert into Compra values(null,100000,false,'23789345',3,3);
+insert into Compra values(null,1200000,false,'978676',5,1);
+insert into Compra values(null,200000,false,'333',7,2);
+insert into Compra values(null,40000,false,'1002549404',9,6);
 select*from Compra;
 
--- -----------------------------------------------------
--- insertar una Recarga
--- -----------------------------------------------------
-insert into Recarga values(5);
-insert into Recarga values(6);
-insert into Recarga values(7);
-insert into Recarga values(8);
-select*from Recarga;
 
