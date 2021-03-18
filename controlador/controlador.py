@@ -10,7 +10,7 @@ class controlador:
 
    def conectarBaseDeDatos(self):
       # Establece la conexion con la base de datos
-      self.db = pymysql.connect("sql10.freemysqlhosting.net", "sql10399086", "SvQc25Xr7V", "sql10399086")
+      self.db = pymysql.connect(self.serverDB, self.usuarioDB, self.contraDB, self.base)
       # Genera el cursor para ejecutar sentencias
       self.cursor = self.db.cursor()
 
@@ -330,6 +330,7 @@ class controlador:
 
       self.db.close()  # Cierra la conexión
 
+   ### Actualizar los datos de un usuario ###
    def actualizarUsuario(self, id, nombre, apellido, contra, celular, ocupacion, direccion):
        self.conectarBaseDeDatos()
        # Define el query de inserción
@@ -351,24 +352,49 @@ class controlador:
            self.db.rollback()
        self.db.close()  # Cierra la conexión
 
+   ### Consultar todos los productos y servicios ###
+   def consultarTodo_Producto_Servicio(self):
+       self.conectarBaseDeDatos()
+
+       sql = f"(select o.codOferta,'Producto' as tipo,o.nombreOferta,o.descripcionOferta,\n" \
+             f"o.precioOferta,'-' as Lugar,p.cantidadProducto,p.imagenProducto as imagen from Oferta as o,Producto as p\n" \
+             f"where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1 and p.cantidadProducto>0)union\n" \
+             f"(select o.codOferta,'Servicio' as tipo,o.nombreOferta,o.descripcionOferta,\n" \
+             f"o.precioOferta,s.lugarServicio,'-' as cantidad ,'-' as imagen from Oferta as o,Servicio as s\n" \
+             f"where o.codOferta=s.Oferta_codOferta and o.estadoOferta=1);"
+       # ejecuta el query SQL para extraer los usuarios
+       self.cursor.execute(sql)
+       # Recupera los registros de la ejecución
+       resultado = self.cursor.fetchall()
+       # Ordena el resultado de la ejecucion
+       print("\n---- PRODUCTOS y SERVICIOS ----")
+       for fila in resultado:
+           imagen = fila[0]
+           cantidad = fila[1]
+           oferta = fila[2]
+           # Imprime cada fila
+           print(f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
+       self.db.close()  # Cierra la conexión
+
    ### Consultar todos los productos ###
    def consultarTodo_Producto(self):
       self.conectarBaseDeDatos()
 
-      sql = f"select *,Producto as tipo from Oferta as o,Producto as p\n" \
+      sql = f"select * as tipo from Oferta as o,Producto as p \n " \
             f"where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1 and p.cantidadProducto>0;"
       # ejecuta el query SQL para extraer los usuarios
-      self.cursor.execute("SELECT * from Producto")
+      self.cursor.execute(sql)
       # Recupera los registros de la ejecución
       resultado = self.cursor.fetchall()
       # Ordena el resultado de la ejecucion
       print("\n---- PRODUCTOS ----")
-      for fila in resultado:
-         imagen = fila[0]
-         cantidad = fila[1]
-         oferta = fila[2]
-         # Imprime cada fila
-         print (f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
+      print(resultado)
+     # for fila in resultado:
+     #    imagen = fila[0]
+     #    cantidad = fila[1]
+     #    oferta = fila[2]
+     #    # Imprime cada fila
+     #    print (f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
       self.db.close() #Cierra la conexión
 
    ###   Consultar Todas los Productos que un Usuario ha creado ###
@@ -417,7 +443,8 @@ class controlador:
    ### Todas las compras que el usuario ha realizado ###
    def consultarComprasDeUsuario(self, usuario):
        self.conectarBaseDeDatos()
-       sql = f"Select * from Compra as c where c.Usuario_idUsuario='{usuario}';"
+       sql = f"select *,Producto as tipo from Oferta as o,Producto as p,Compra as c\n" \
+             f"where o.codOferta=p.Oferta_codOferta and o.codOferta=c.Oferta_codOferta and c.Usuario_idUsuario='{usuario}';;"
        # ejecuta el query SQL para extraer los usuarios
        self.cursor.execute(sql)
        # Recupera los registros de la ejecución
@@ -485,6 +512,7 @@ control = controlador(serverDB="",usuarioDB="",contraDB="",base="")
 ####################
 #control.verificarUsuario("felipe@gmail.com")
 #control.verificarLogin("felipe@gmail.com",12345)
+control.consultarTodo_Producto_Servicio()
 #control.consultarTodo_Producto()
 #control.consultarProductosDeUsuario("1002549404");
 #control.consultarServiciosDeUsuario("1002549404")
