@@ -22,10 +22,21 @@
 
         <!-- Formulario de Registro -->
         <div class="login">
-            <form action="index.html">
+            <form>
                 <div class="img2">
                     <img src="img/icono.png"> </div>
                 <h2 class="title">Sé un Econoamigo</h2>
+
+
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Cédula de Ciudadanía</h5>
+                        <input type="text" class="input" id="idR">
+                    </div>
+                </div>
                 <div class="input-div one">
                     <div class="i">
                         <i class="fas fa-user"></i>
@@ -35,15 +46,19 @@
                         <input type="text" class="input" id="nombreR">
                     </div>
                 </div>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Apellido</h5>
-                        <input type="text" class="input" id="apellidoR">
+
+                <div class="col">
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="div">
+                            <h5>Apellido</h5>
+                            <input type="text" class="input" id="apellidoR">
+                        </div>
                     </div>
                 </div>
+
                 <div class="input-div one">
                     <div class="i">
                         <i class="fas fa-envelope"></i>
@@ -53,7 +68,43 @@
                         <input type="email" class="input" id="correoR">
                     </div>
                 </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Teléfono</h5>
+                        <input type="text" class="input" id="telefonoR">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Ocupación</h5>
+                        <input type="text" class="input" id="ocupacionR">
+                    </div>
+                </div>
+                <h5> Fecha de Nacimiento</h5>
+                <div class="input-div one">
 
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <input type="date" class="input" id="fechaR" max="2003-12-31">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Dirección</h5>
+                        <input type="text" class="input" id="direccionR">
+                    </div>
+                </div>
                 <div class="input-div pass">
                     <div class="i">
                         <i class="fas fa-lock"></i>
@@ -63,6 +114,10 @@
                         <input type="password" class="input" id="passR">
                     </div>
                 </div>
+
+
+
+
                 <a href="index.html" id="Devolver">¿Ya tienes una cuenta? Inicia Sesión</a>
                 <button id="Registrar" type="button" class="btn">Regístrate </button>
             </form>

@@ -53,26 +53,31 @@ async function Inicio(correo, contrasenia) {
 $("#Registrar").click(function() {
 
     //Recolectar Datos
+    cedula = $("#idR").val();
     nombre = $("#nombreR").val();
     apellido = $("#apellidoR").val();
     correo = $("#correoR").val();
+    telefono = $("#telefonoR").val();
+    ocupacion = $("#ocupacionR").val();
+    fecha = $("#fechaR").val();
+    direccion = $("#direccionR").val();
     contrasenia = $("#passR").val();
     //Verificar datos
-    if (nombre == "" || apellido == "" || correo == "" || contrasenia == "") {
+    if (cedula == "" || nombre == "" || apellido == "" || telefono == "" || ocupacion == "" || fecha == "" || direccion == "" || contrasenia == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
     } else if (!correo.includes('@')) {
         swal("Error", "Por favor, Ingrese un formato de correo válido", "error");
     } else {
         /*swal("Gracias", "¡Ya eres parte de esta familia!", "success")*/
-        guardar(nombre, apellido, correo, contrasenia); //Llamado a funcion guardar
+        guardar(cedula, nombre, apellido, telefono, ocupacion, fecha, direccion, contrasenia); //Llamado a funcion guardar
     }
 
 });
 
 //Funcion para Registrar Usuario
-async function guardar(nombre, apellido, correo, contrasenia) {
+async function guardar(cedula, nombre, apellido, telefono, ocupacion, fecha, direccion, contrasenia) {
     //Envia los datos a la funcion crearCuenta ubicada en funciones.js
-    var save = await crearCuenta(nombre, apellido, correo, contrasenia)
+    var save = await crearCuenta(cedula, nombre, apellido, telefono, ocupacion, fecha, direccion, contrasenia)
 }
 
 //HISTORIAL
@@ -86,7 +91,7 @@ $("#Solicitar").click(function() {
     if (buscar == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
     } else {
-        busqueda(buscar); 
+        busqueda(buscar);
     }
 
 });

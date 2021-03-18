@@ -29,7 +29,7 @@ function login(correo, contrasenia) {
 }
 
 // Registrar Usuario
-function crearCuenta(nombre, apellido, correo, contrasenia) {
+function crearCuenta(cedula, nombre, apellido, telefono, ocupacion, fecha, direccion, contrasenia) {
     //Almecena los datos en JSON
     var obj = {
         /*"email": correo,
@@ -63,10 +63,10 @@ function crearCuenta(nombre, apellido, correo, contrasenia) {
 function historial(buscar) {
     var obj = {
 
-};
-$.ajax({
-    error: function (response) {
-        console.log(JSON.stringify(response))
-    }
-});
+    };
+    $.ajax({
+        error: function(response) {
+            console.log(JSON.stringify(response))
+        }
+    });
 }
