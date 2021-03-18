@@ -63,6 +63,12 @@ header .textos h1 {
     font-size: 75px;
 }
 
+.saldo {
+    font-size: 18px;
+    margin: 35px 0;
+    margin-right: -52%;
+}
+
 .enlaces {
     position: absolute;
     height: 100vh;
