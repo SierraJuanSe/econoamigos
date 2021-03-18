@@ -59,7 +59,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `sql10399086`.`Oferta` (
   `codOferta` INT NOT NULL AUTO_INCREMENT,
   `nombreOferta` VARCHAR(45) NOT NULL,
-  `descripcionOferta` VARCHAR(45) NOT NULL,
+  `descripcionOferta` VARCHAR(245) NOT NULL,
   `precioOferta` BIGINT(100) NOT NULL,
    `estadoOferta` boolean NOT NULL,
   `Usuario_idUsuario` VARCHAR(20) NOT NULL,

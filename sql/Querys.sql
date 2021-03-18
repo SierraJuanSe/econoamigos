@@ -3,7 +3,7 @@
 -- -----------------------------------------------------
 SELECT EXISTS(
 SELECT Usuario.idUsuario
-FROM usuario 
+FROM Usuario 
 WHERE Usuario.emailUsuario='jaun@gmail.com') as 'Result';
 
 
@@ -11,6 +11,14 @@ WHERE Usuario.emailUsuario='jaun@gmail.com') as 'Result';
 -- Consultar a usuarios y verificar el login
 -- -----------------------------------------------------
 select*from Usuario as u where u.emailUsuario='felipe@gmail.com' && u.contraseñaUsuario='12345'; 
+
+-- -----------------------------------------------------
+-- Actualizar los datos de un usuario
+-- -----------------------------------------------------
+update Usuario as u set u.nombreUsuario='Luis',u.apellidousuario='Velasquez',
+u.contraseñaUsuario='qwerty',u.telefonoUsuario='3249874577',
+u.ocupacionUsuario='Electrico',u.direccion='clle 23 #12-12'
+where u.idUsuario='23789345';
 
 
 -- -----------------------------------------------------
@@ -49,7 +57,7 @@ where o.codOferta=p.Oferta_codOferta && o.Usuario_idUsuario='1002549404';
 -- Consultar Todas los Servicios que un Usuario ha creado
 -- -----------------------------------------------------
 select *,'Servicio' as tipo from Oferta as o,Servicio as s
-where o.codOferta=s.Oferta_codOferta && o.Usuario_idUsuario='978676';
+where o.codOferta=s.Oferta_codOferta && o.Usuario_idUsuario='23789345';
 
 
 -- -----------------------------------------------------
@@ -59,10 +67,10 @@ Select *from Compra as c where c.Usuario_idUsuario='1002549404';
 
 
 -- -----------------------------------------------------
--- Consultar Quienes realizaron las compras los servicios realizados por el usuario 23789345
+-- Consultar Quienes realizaron las compras de los servicios realizados por el usuario 23789345
 -- -----------------------------------------------------
 SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,
-oferta.codOferta,oferta.nombreOferta
+oferta.codOferta,oferta.nombreOferta,Compra.estadoCompra
 FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = oferta.codOferta and Oferta.Usuario_idUsuario='23789345')
 INNER JOIN Producto ON Compra.Oferta_codOferta = Producto.Oferta_codOferta
 INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);
@@ -72,18 +80,10 @@ INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);
 -- Consultar Quienes realizaron las compras los servicios realizados por el usuario 978676
 -- -----------------------------------------------------
 SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,
-oferta.codOferta,oferta.nombreOferta
+oferta.codOferta,oferta.nombreOferta,Compra.estadoCompra
 FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = oferta.codOferta and Oferta.Usuario_idUsuario='978676')
 INNER JOIN Servicio ON Compra.Oferta_codOferta = Servicio.Oferta_codOferta
 INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);
-
-
--- -----------------------------------------------------
--- Actualizar el saldo por una recarga
--- -----------------------------------------------------
-UPDATE Usuario
-SET totalMonedaUsuario=totalMonedaUsuario+10000
-WHERE idUsuario='1002549404';
 
 
 -- -----------------------------------------------------
@@ -99,15 +99,7 @@ WHERE idUsuario='1002549404';
 -- -----------------------------------------------------
 UPDATE Producto
 SET cantidadProducto=cantidadProducto-1
-WHERE Oferta_codOferta=1;
-
-
--- -----------------------------------------------------
--- Actualizar los datos de un usuario
--- -----------------------------------------------------
-update Usuario as u set u.contraseñaUsuario='qwerty',u.telefonoUsuario='3249874577',
- u.ocupacionUsuario='Electrico',u.direccion='clle 23 #12-12'
-where u.idUsuario='23789345';
+WHERE Oferta_codOferta=7;
 
 
 -- -----------------------------------------------------
