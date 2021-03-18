@@ -230,6 +230,7 @@ footer {
     text-decoration: underline;
 }
 
+
 /*CONTENIDO*/
 
 
@@ -250,13 +251,17 @@ footer {
     margin: auto;
 }
 
-.Servicio{
+.Servicio {
     width: 50%;
     border-radius: 20px;
 }
 
 .Servicios {
     display: flex;
+}
+
+.Servicio3 {
+    width: 100%;
 }
 
 .contenedor span {
@@ -347,6 +352,7 @@ footer {
 .textotarjeta h4 {
     font-size: 40px;
 }
+
 .btn {
     display: block;
     width: 100%;
@@ -369,49 +375,53 @@ footer {
     background-position: right;
 }
 
-table{
-    border:2px solid #b3afaf9e;
+table {
+    border: 2px solid #b3afaf9e;
     width: 100%;
     margin: 10;
     padding: 0%;
     border-collapse: collapse;
     border-spacing: 0;
 }
- table tr{
-    border:2px solid #b3afaf9e;
+
+table tr {
+    border: 2px solid #b3afaf9e;
     padding: 5px;
- }
+}
 
- table td, table th{
-padding: 10px;
-text-align: center;
- }
+table td,
+table th {
+    padding: 10px;
+    text-align: center;
+}
 
- table th{
-     text-transform: uppercase;
-     font-family: 18px;
-     letter-spacing: 1px;
-     background:#b3afaf9e ;
- }
-@media screen and (max-widht:480px){
-    table{
-        border:0;
+table th {
+    text-transform: uppercase;
+    font-family: 18px;
+    letter-spacing: 1px;
+    background: #b3afaf9e;
+}
+
+@media screen and (max-widht:480px) {
+    table {
+        border: 0;
     }
-    table tr{
+    table tr {
         margin-bottom: 10px;
         display: block;
-        border-bottom:2px solid #b3afaf9e;
+        border-bottom: 2px solid #b3afaf9e;
     }
-    table td{
+    table td {
         display: block;
         text-align: right;
         font-size: 16px;
-        border-bottom:1px dotted #b3afaf9e;
+        border-bottom: 1px dotted #b3afaf9e;
     }
-    table td:last-child{
-        border-bottom:0;
+    table td:last-child {
+        border-bottom: 0;
     }
 }
+
 @media screen and (max-width:900px) {
     footer {
         position: relative;
@@ -467,6 +477,7 @@ text-align: center;
         font-size: 12px;
     }
 }
+
 @media screen and (max-width:400px) {
     nav .logo {
         margin-left: 20px;
