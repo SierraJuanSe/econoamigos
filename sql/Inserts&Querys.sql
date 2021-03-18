@@ -76,6 +76,17 @@ WHERE Usuario.emailUsuario='jaun@gmail.com') as 'Result';
 -- Consultar a usuarios y verificar el login
 -- -----------------------------------------------------
 select*from Usuario as u where u.emailUsuario='felipe@gmail.com' && u.contraseñaUsuario='12345'; 
+
+-- -----------------------------------------------------
+-- Consultar Todos los productos Y todos Los Servicios
+-- -----------------------------------------------------
+(select o.codOferta,'Producto' as tipo,o.nombreOferta,o.descripcionOferta,
+o.precioOferta,'-' as Lugar,p.cantidadProducto,p.imagenProducto as imagen from Oferta as o,Producto as p
+where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1)union
+(select o.codOferta,'Servicio' as tipo,o.nombreOferta,o.descripcionOferta,
+o.precioOferta,s.lugarServicio,'-' as cantidad ,'-' as imagen from Oferta as o,Servicio as s
+where o.codOferta=s.Oferta_codOferta and o.estadoOferta=1);
+
 -- -----------------------------------------------------
 -- Consultar Todos los productos
 -- -----------------------------------------------------
