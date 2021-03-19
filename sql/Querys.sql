@@ -25,13 +25,18 @@ where u.idUsuario='23789345';
 -- Consultar Todos los servicios y los productos con Stock disponible
 -- -----------------------------------------------------
 (select o.codOferta,'Producto' as tipo,o.nombreOferta,o.descripcionOferta,
-o.precioOferta,'-' as Lugar,p.cantidadProducto,p.imagenProducto as imagen from Oferta as o,Producto as p
+o.precioOferta,o.Usuario_idUsuario,'-' as Lugar,p.cantidadProducto,p.imagenProducto as imagen from Oferta as o,Producto as p
 where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1 and p.cantidadProducto>0)union
 (select o.codOferta,'Servicio' as tipo,o.nombreOferta,o.descripcionOferta,
-o.precioOferta,s.lugarServicio,'-' as cantidad ,'-' as imagen from Oferta as o,Servicio as s
+o.precioOferta,o.Usuario_idUsuario,s.lugarServicio,'-' as cantidad ,'-' as imagen from Oferta as o,Servicio as s
 where o.codOferta=s.Oferta_codOferta and o.estadoOferta=1);
 
-
+(select o.codOferta,'Producto' as tipo,o.nombreOferta,o.descripcionOferta,
+o.precioOferta,o.Usuario_idUsuario,'-' as Lugar,p.cantidadProducto,p.imagenProducto as imagen from Oferta as o,Producto as p
+where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1 and p.cantidadProducto>0 and (o.nombreOferta like '%Mesa%' or and o.descripcionOferta like '%Mesa%'))union
+(select o.codOferta,'Servicio' as tipo,o.nombreOferta,o.descripcionOferta,
+o.precioOferta,o.Usuario_idUsuario,s.lugarServicio,'-' as cantidad ,'-' as imagen from Oferta as o,Servicio as s
+where o.codOferta=s.Oferta_codOferta and o.estadoOferta=1);
 -- -----------------------------------------------------
 -- Consultar Todos los productos con Stock Disponible
 -- -----------------------------------------------------
@@ -138,7 +143,3 @@ select*from Transaccion where Transaccion.Usuario_idUsuario='1002549404';
 SELECT Distinct c.codCompra,c.Usuario_idUsuario as Comprador,o.Usuario_idUsuario as Vendedor ,o.nombreOferta
 FROM ((Compra as c INNER JOIN Oferta as o ON c.Oferta_codOferta = o.codOferta and c.estadoCompra=0 )
 INNER JOIN Transaccion as t ON c.Usuario_idUsuario = t.Usuario_idUsuario and t.conceptoTransaccion='Compra');
-
-
-
-

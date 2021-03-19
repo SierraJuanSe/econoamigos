@@ -25,8 +25,10 @@ select*from Oferta;
 insert into Producto values('https://www.google.es/url?sa=dsds',15,1);
 insert into Producto values('https://www.google.co/url?sa=isdfABAE',20,2);
 insert into Producto values('https://www.google/url?sa=sdfsdfBAE',10,6);
-insert into Producto values('https://www.goasdasdasd.com',30,7);
+insert into Producto values('https://www.goasdasdasd.com',30,LAST_INSERT_ID());
+
 select*from Producto;
+
 -- -----------------------------------------------------
 -- insertar un servicio
 -- -----------------------------------------------------
