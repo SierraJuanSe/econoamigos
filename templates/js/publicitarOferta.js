@@ -1,3 +1,11 @@
+$("#div-file").hide();
+$("#stock").hide();
+$("#TextoProducto").hide();
+$("#TextoServicio").show();
+$( "#ContactarButton" ).empty();
+$( "#ContactarButton" ).append("Seleccione");
+
+
 $("#ButtonServicios").click(function() {
     $("#ContactarButton").empty();
     $("#ContactarButton").append("Servicio");
