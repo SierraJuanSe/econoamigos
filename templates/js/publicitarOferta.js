@@ -1,4 +1,4 @@
-$("#div-file").hide();
+$("#UrlImagen").hide();
 $("#stock").hide();
 $("#TextoProducto").hide();
 $("#TextoServicio").show();
@@ -9,7 +9,7 @@ $( "#ContactarButton" ).append("Seleccione");
 $("#ButtonServicios").click(function() {
     $("#ContactarButton").empty();
     $("#ContactarButton").append("Servicio");
-    $("#div-file").hide();
+    $("#UrlImagen").hide();
     $("#stock").hide();
     $("#TextoProducto").hide();
     $("#TextoServicio").show();
@@ -18,7 +18,7 @@ $("#ButtonServicios").click(function() {
 $("#ButtonProductos").click(function() {
     $("#ContactarButton").empty();
     $("#ContactarButton").append("Producto");
-    $("#div-file").show();
+    $("#UrlImagen").show();
     $("#stock").show();
     $("#TextoProducto").show();
     $("#TextoServicio").hide();
