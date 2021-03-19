@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import pymysql
 
+#BASE PARA LAS SENTENCIAS EN EL MODELO
 class controlador:
    def __init__(self, serverDB, usuarioDB, contraDB, base):
       self.serverDB = serverDB
@@ -78,16 +79,17 @@ class controlador:
          nombre = fila[1]
          descripcion = fila[2]
          precio = fila [3]
-         usuario = fila [4]
+         estado = fila[4]
+         usuario = fila [5]
          # Imprime cada fila
          print (f"ID: {id}, Nombre: {nombre}, Descripcion: {descripcion}\n"
-                f"Precio: {precio}, Usuario: {usuario}")
+                f"Estado: {estado}, Precio: {precio}, Usuario: {usuario}")
       self.db.close() #Cierra la conexión
 
-   def insertarOferta(self, nombre, descripcion, precio, usuario):
+   def insertarOferta(self, nombre, descripcion, precio, estado, usuario):
       self.conectarBaseDeDatos()
       # Define el query de inserción
-      sql = f"insert into Oferta values(null,'{nombre}','{descripcion}',{precio},'{usuario}');"
+      sql = f"insert into Oferta values(null,'{nombre}','{descripcion}',{precio},{estado},'{usuario}');"
 
       # Es necesario en caso de que existan conflictos en la base
       try:
@@ -192,15 +194,17 @@ class controlador:
          concepto = fila[1]
          usuario = fila[2]
          valor = fila[3]
+         estado = fila[4]
          # Imprime cada fila
-         print (f"ID: {id}, Concepto: {concepto}, Usuario: {usuario}, Valor: {valor}")
+         print (f"ID: {id}, Concepto: {concepto}, Usuario: {usuario}, "
+                f"Valor: {valor}, Estado: {estado}")
       self.db.close() #Cierra la conexión
 
-   def insertarTransaccion(self, concepto, usuario, valor):
+   def insertarTransaccion(self, concepto, usuario, valor, estado):
       self.conectarBaseDeDatos()
 
       # Define el query de inserción
-      sql = f"insert into Transaccion values(null,'{concepto}','{usuario}',{valor});"
+      sql = f"insert into Transaccion values(null,'{concepto}','{usuario}',{valor},{estado});"
 
       # Es necesario en caso de que existan conflictos en la base
       try:
@@ -230,18 +234,20 @@ class controlador:
       for fila in resultado:
          id = fila[0]
          precio = fila[1]
-         usuario = fila[2]
-         transaccion = fila[3]
-         oferta = fila[4]
+         estado = fila[2]
+         usuario = fila[3]
+         transaccion = fila[4]
+         oferta = fila[5]
          # Imprime cada fila
-         print (f"ID: {id}, Precio: {precio}, Usuario: {usuario}, Transaccion: {transaccion}, Oferta: {oferta}")
+         print (f"ID: {id}, Precio: {precio}, Estado: {estado}"
+                f" Usuario: {usuario}, Transaccion: {transaccion}, Oferta: {oferta}")
       self.db.close() #Cierra la conexión
 
-   def insertarCompra(self, precio, usuario, transaccion, oferta):
+   def insertarCompra(self, precio, estado, usuario, transaccion, oferta):
       self.conectarBaseDeDatos()
 
       # Define el query de inserción
-      sql = f"insert into Compra values(null,{precio},'{usuario}',{transaccion},{oferta});"
+      sql = f"insert into Compra values(null,{precio},{estado},'{usuario}',{transaccion},{oferta});"
 
       # Es necesario en caso de que existan conflictos en la base
       try:
@@ -252,44 +258,6 @@ class controlador:
       except:
          # Corrije la inserción en caso de error
          print("Error al insertar compra")
-         self.db.rollback()
-      self.db.close() #Cierra la conexión
-
-   '''
-      RECARGA
-   '''
-
-   def consultarRecarga(self):
-      self.conectarBaseDeDatos()
-
-      # ejecuta el query SQL para extraer los usuarios
-      self.cursor.execute("SELECT * from Recarga")
-      # Recupera los registros de la ejecución
-      resultado = self.cursor.fetchall()
-      # Ordena el resultado de la ejecucion
-      print("\n---- RECARGAS ----")
-      for fila in resultado:
-         transaccion = fila[0]
-         valor = fila[1]
-         # Imprime cada fila
-         print (f"Transaccion: {transaccion}, Valor: {valor}")
-      self.db.close() #Cierra la conexión
-
-   def insertarRecarga(self,transaccion, valor):
-      self.conectarBaseDeDatos()
-
-      # Define el query de inserción
-      sql = f"insert into Recarga values({transaccion},{valor});"
-
-      # Es necesario en caso de que existan conflictos en la base
-      try:
-         # Ejecuta el query
-         self.cursor.execute(sql)
-         # Guarda los cambios en la base
-         self.db.commit()
-      except:
-         # Corrije la inserción en caso de error
-         print("error")
          self.db.rollback()
       self.db.close() #Cierra la conexión
 
@@ -369,18 +337,15 @@ class controlador:
        # Ordena el resultado de la ejecucion
        print("\n---- PRODUCTOS y SERVICIOS ----")
        for fila in resultado:
-           imagen = fila[0]
-           cantidad = fila[1]
-           oferta = fila[2]
-           # Imprime cada fila
-           print(f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
+           print(fila)
+
        self.db.close()  # Cierra la conexión
 
    ### Consultar todos los productos ###
    def consultarTodo_Producto(self):
       self.conectarBaseDeDatos()
 
-      sql = f"select * as tipo from Oferta as o,Producto as p \n " \
+      sql = f"select *,'Producto' as tipo from Oferta as o,Producto as p\n " \
             f"where o.codOferta=p.Oferta_codOferta and o.estadoOferta=1 and p.cantidadProducto>0;"
       # ejecuta el query SQL para extraer los usuarios
       self.cursor.execute(sql)
@@ -388,14 +353,25 @@ class controlador:
       resultado = self.cursor.fetchall()
       # Ordena el resultado de la ejecucion
       print("\n---- PRODUCTOS ----")
-      print(resultado)
-     # for fila in resultado:
-     #    imagen = fila[0]
-     #    cantidad = fila[1]
-     #    oferta = fila[2]
-     #    # Imprime cada fila
-     #    print (f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
+      for fila in resultado:
+         print(fila)
       self.db.close() #Cierra la conexión
+
+   ### Consultar todos los servicios ###
+   def consultarTodo_Servicio(self):
+      self.conectarBaseDeDatos()
+
+      sql = f"select *,'Servicio' as tipo from Oferta as o,Servicio as s\n" \
+            f"where o.codOferta=s.Oferta_codOferta and o.estadoOferta=1;"
+      # ejecuta el query SQL para extraer los usuarios
+      self.cursor.execute(sql)
+      # Recupera los registros de la ejecución
+      resultado = self.cursor.fetchall()
+      # Ordena el resultado de la ejecucion
+      print("\n---- SERVICIOS ----")
+      for fila in resultado:
+         print(fila)
+      self.db.close()  # Cierra la conexión
 
    ###   Consultar Todas los Productos que un Usuario ha creado ###
    def consultarProductosDeUsuario(self, usuario):
@@ -410,11 +386,7 @@ class controlador:
          # Ordena el resultado de la ejecucion
          print("\n---- PRODUCTOS CREADOS POR EL USUARIO ----")
          for fila in resultado:
-            imagen = fila[0]
-            cantidad = fila[1]
-            oferta = fila[2]
-            # Imprime cada fila
-            print (f"Imagen: {imagen}, Cantidad: {cantidad}, Oferta: {oferta}")
+            print(fila)
       except:
          print("Error consulta producto por usuario")
       self.db.close() #Cierra la conexión
@@ -432,36 +404,77 @@ class controlador:
          # Ordena el resultado de la ejecucion
          print("\n---- SERVICIOS CREADOS POR EL USUARIO ----")
          for fila in resultado:
-            lugar = fila[0]
-            oferta = fila[1]
-            # Imprime cada fila
-            print (f"Lugar: {lugar}, Oferta: {oferta}")
+            print(fila)
       except:
          print("Error consulta servicio por usuario")
       self.db.close() #Cierra la conexión
 
-   ### Todas las compras que el usuario ha realizado ###
-   def consultarComprasDeUsuario(self, usuario):
+   ### Todas las compras de productos que el usuario ha realizado ###
+   def consultarComprasProductoDeUsuario(self, usuario):
        self.conectarBaseDeDatos()
-       sql = f"select *,Producto as tipo from Oferta as o,Producto as p,Compra as c\n" \
-             f"where o.codOferta=p.Oferta_codOferta and o.codOferta=c.Oferta_codOferta and c.Usuario_idUsuario='{usuario}';;"
+       sql = f"select *,'Producto' as tipo from Oferta as o,Producto as p,Compra as c\n" \
+             f"where o.codOferta=p.Oferta_codOferta and o.codOferta=c.Oferta_codOferta and c.Usuario_idUsuario='{usuario}';"
        # ejecuta el query SQL para extraer los usuarios
        self.cursor.execute(sql)
        # Recupera los registros de la ejecución
        resultado = self.cursor.fetchall()
        # Ordena el resultado de la ejecucion
-       print("\n---- COMPRAS DEL USUARIO ----")
+       print("\n---- COMPRAS DE PRODUCTOS DEL USUARIO ----")
        for fila in resultado:
-           id = fila[0]
-           precio = fila[1]
-           usuario = fila[2]
-           transaccion = fila[3]
-           oferta = fila[4]
-           # Imprime cada fila
-           print(f"ID: {id}, Precio: {precio}, Usuario: {usuario}, Transaccion: {transaccion}, Oferta: {oferta}")
+           print(fila)
        self.db.close()  # Cierra la conexión
 
+   ### Todas las compras de productos que el usuario ha realizado ###
+   def consultarComprasServicioDeUsuario(self, usuario):
+       self.conectarBaseDeDatos()
+       sql = f"select *,'Servicio' as tipo from Oferta as o,Servicio as s,Compra as c\n " \
+             f"where o.codOferta=s.Oferta_codOferta and o.codOferta=c.Oferta_codOferta and c.Usuario_idUsuario='{usuario}';"
+       # ejecuta el query SQL para extraer los usuarios
+       self.cursor.execute(sql)
+       # Recupera los registros de la ejecución
+       resultado = self.cursor.fetchall()
+       # Ordena el resultado de la ejecucion
+       print("\n---- COMPRAS DE SERVICIOS DEL USUARIO ----")
+       for fila in resultado:
+           print(fila)
+       self.db.close()  # Cierra la conexión
 
+   ### Consultar Quienes realizaron las compras de los servicios realizados por el usuario ###
+   def consultarUsuariosDeServicios(self,usuario):
+       self.conectarBaseDeDatos()
+       sql = f"SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion," \
+             f"Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra " \
+             f"FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{usuario}') " \
+             f"INNER JOIN Producto ON Compra.Oferta_codOferta = Producto.Oferta_codOferta " \
+             f"INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
+       # ejecuta el query SQL para extraer los usuarios
+       self.cursor.execute(sql)
+       # Recupera los registros de la ejecución
+       resultado = self.cursor.fetchall()
+       # Ordena el resultado de la ejecucion
+       print("\n---- USUARIOS QUE COMPRARON EL SERVICIO ----")
+       for fila in resultado:
+           print(fila)
+       self.db.close()  # Cierra la conexión
+
+       ### Consultar Quienes realizaron las compras de los servicios realizados por el usuario ###
+
+   def consultarUsuariosDeProductos(self, usuario):
+       self.conectarBaseDeDatos()
+       sql = f"SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario, " \
+             f"Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra " \
+             f"FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{usuario}') " \
+             f"INNER JOIN Servicio ON Compra.Oferta_codOferta = Servicio.Oferta_codOferta " \
+             f"INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
+       # ejecuta el query SQL para extraer los usuarios
+       self.cursor.execute(sql)
+       # Recupera los registros de la ejecución
+       resultado = self.cursor.fetchall()
+       # Ordena el resultado de la ejecucion
+       print("\n---- USUARIOS QUE COMPRARON EL PRODUCTO ----")
+       for fila in resultado:
+           print(fila)
+       self.db.close()  # Cierra la conexión
 
    ### Actualizar el saldo por una compra ##
    def actualizarSaldo(self, usuario, cantidad):
@@ -487,7 +500,7 @@ class controlador:
    def actualizarCantidadProducto(self, oferta, cantidad):
        self.conectarBaseDeDatos()
        # Define el query de inserción
-       sql = f"UPDATE Producto SET cantidadProducto=cantidadProducto-{cantidad}\n" \
+       sql = f"UPDATE Producto SET cantidadProducto={cantidad}\n" \
              f"WHERE Oferta_codOferta={oferta};" \
 
        # Es necesario en caso de que existan conflictos en la base
@@ -503,6 +516,81 @@ class controlador:
           self.db.rollback()
        self.db.close() #Cierra la conexión
 
+   ### Cambiar el estado de la compra 2	(Aca ya se acualiza el saldo) ###
+   def cambiarEstadoCompra(self, compra):
+       self.conectarBaseDeDatos()
+       # Define el query de inserción
+       sql = f"Update Compra SET Compra.estadoCompra=True where Compra.codCompra={compra};\n " \
+             f"Update Transaccion as t SET t.estadoTransaccion=True " \
+             f"where t.codTransaccion=(select Compra.Transaccion_codTransaccion from Compra as c where  c.codCompra={compra});\n" \
+             f"Update Transaccion as t SET t.estadoTransaccion=True \n" \
+             f"where t.codTransaccion=(select Compra.Transaccion_codTransaccion from Compra as c where  c.codCompra={compra})+1;"
+
+       # Es necesario en caso de que existan conflictos en la base
+       try:
+           # Ejecuta el query
+           self.cursor.execute(sql)
+           # Guarda los cambios en la base
+           self.db.commit()
+           print("Estado de Compra actualizado")
+       except Exception as e:
+           # Corrije la inserción en caso de error
+           print(e)
+           print("Error al actualizar estado de compra")
+           self.db.rollback()
+       self.db.close()  # Cierra la conexión
+
+   ### Inactivar la oferta ###
+   def inactivarOferta(self, oferta):
+       self.conectarBaseDeDatos()
+       # Define el query de inserción
+       sql = f"Update Oferta SET Oferta.estadoOferta=false where Oferta.codOferta='{oferta}';"
+
+       # Es necesario en caso de que existan conflictos en la base
+       try:
+          # Ejecuta el query
+          self.cursor.execute(sql)
+          # Guarda los cambios en la base
+          self.db.commit()
+          print("Oferta inactiva")
+       except:
+          # Corrije la inserción en caso de error
+          print("Error al actualizar estado de oferta")
+          self.db.rollback()
+       self.db.close() #Cierra la conexión
+
+   ### Activar la oferta ###
+   def activarOferta(self, oferta):
+       self.conectarBaseDeDatos()
+       # Define el query de inserción
+       sql = f"Update Oferta SET Oferta.estadoOferta=false where Oferta.codOferta='{oferta}';"
+
+       # Es necesario en caso de que existan conflictos en la base
+       try:
+           # Ejecuta el query
+           self.cursor.execute(sql)
+           # Guarda los cambios en la base
+           self.db.commit()
+           print("Oferta activa")
+       except:
+           # Corrije la inserción en caso de error
+           print("Error al actualizar estado de oferta")
+           self.db.rollback()
+       self.db.close()  # Cierra la conexión
+
+   ### Consultar las Transacciones de un usuario ###
+   def consultarTransaccionUsuario(self, usuario):
+       self.conectarBaseDeDatos()
+       sql = f"select*from Transaccion where Transaccion.Usuario_idUsuario='{usuario}'"
+       # ejecuta el query SQL para extraer los usuarios
+       self.cursor.execute(sql)
+       # Recupera los registros de la ejecución
+       resultado = self.cursor.fetchall()
+       # Ordena el resultado de la ejecucion
+       print("\n---- TRANSACCIONES DEL USUARIO----")
+       for fila in resultado:
+           print(fila)
+       self.db.close()  # Cierra la conexión
 
 
 control = controlador(serverDB="",usuarioDB="",contraDB="",base="")
@@ -512,14 +600,22 @@ control = controlador(serverDB="",usuarioDB="",contraDB="",base="")
 ####################
 #control.verificarUsuario("felipe@gmail.com")
 #control.verificarLogin("felipe@gmail.com",12345)
-control.consultarTodo_Producto_Servicio()
+#control.actualizarUsuario("1002549404","Luis","Velasquez","qwerty","3249874577","Eléctrico","Calle 23")
+#control.consultarTodo_Producto_Servicio()
 #control.consultarTodo_Producto()
+#control.consultarTodo_Servicio()
 #control.consultarProductosDeUsuario("1002549404");
 #control.consultarServiciosDeUsuario("1002549404")
-#control.consultarComprasDeUsuario("1002549404")
+#control.consultarComprasProductoDeUsuario("1002549404")
+#control.consultarComprasServicioDeUsuario("1002549404")
+#control.consultarUsuariosDeServicios("1002549404")
+#control.consultarUsuariosDeProductos("1002549404")
 #control.actualizarSaldo("1002549404",2000)
-#control.actualizarCantidadProducto(1, 1)
-#control.actualizarUsuario("1002549404","Luis","Velasquez","qwerty","3249874577","Eléctrico","Calle 23")
+#control.actualizarCantidadProducto(1, 70)
+#control.cambiarEstadoCompra(1)
+#control.inactivarOferta(1)
+#control.activarOferta(1)
+#control.consultarTransaccionUsuario("1002549404")
 
 ###########################
 ## PRUEBAS GENERALES     ##
@@ -531,7 +627,7 @@ control.consultarTodo_Producto_Servicio()
 #control.consultarUsuario()
 
 # OFERTA
-#control.insertarOferta("celular iphone 6","Es un celular bonito",1200000,'1002549404');
+#control.insertarOferta("celular iphone 6","Es un celular bonito",1200000,True,'1002549404');
 #control.consultarOferta()
 
 # PRODUCTO
@@ -543,13 +639,10 @@ control.consultarTodo_Producto_Servicio()
 #control.consultarServicio()
 
 # TRANSACCIÓN
-#control.insertarTransaccion('Compra', '1002549404', 200000)
+#control.insertarTransaccion('Compra', '1002549404', 200000, False)
 #control.consultarTransaccion()
 
 # COMRPA
-#control.insertarCompra(200000,'1002549404',1,1)
+#control.insertarCompra(200000,False,'1002549404',1,1)
 #control.consultarCompra()
 
-# Recarga
-#control.insertarRecarga(1,5000)
-#control.consultarRecarga()
