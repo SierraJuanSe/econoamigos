@@ -593,7 +593,7 @@ class controlador:
        self.db.close()  # Cierra la conexión
 
 
-control = controlador(serverDB="jovenesdcberna.co",usuarioDB="devOcean",contraDB="devOceanEconoamigos",base="econoamigos")
+control = controlador(serverDB="",usuarioDB="",contraDB="",base="")
 ####################
 ## PREUBAS QUERYS ##
 ####################
