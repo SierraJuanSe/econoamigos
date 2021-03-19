@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Econoamigos</title>
+    <link rel="stylesheet" type="text/css" href="css/styleConf.css">
+    <link rel="icon" type="image/png" href="img/icono.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/icono.png" alt="" align="left">
+                <h1> Econoamigos</h1>
+
+            </div>
+            
+            <div class="icono" id="icono">
+                <span> <img src="img/hamburguesa.svg" alt=""></span>
+            </div>
+
+            <div class="enlaces uno" id="enlaces">
+                <a href="menu.html" class="active">Menú Principal</a>
+                <a href="tareas.html">Ofertas Compradas</a>
+                <a href="busqueda.html">Buscador de Ofertas</a>
+                <a href="oferta.html">Publicitar tus Ofertas</a>
+                <a href="solicitudes.html">Solicitudes de mis ofertas</a>
+                <a href="finanzas.html">Historial de Transacciones</a>
+                <a href="Servicios.html">Historial de Ofertas</a>
+                <a href="conf.html">Configuración de la cuenta</a>
+                <a href="index.html">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+
+        <!-- CONTENIDO-->
+        <!-- Formulario de Registro -->
+        <div id="Info">
+            <form>
+                <div class="img2">
+                    <img id="fotoForms" src="img/confi.svg"> </div>
+                    <img id="fotoForms2" src="img/confi2.svg"> 
+                    <img id="fotoForms3" src="img/confi3.svg"> 
+                <h2 class="title">Aquí puedes cambiar tus datos personales y al finalizar guardar los cambios</h2>
+
+
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Cédula de Ciudadanía</h5>
+                        <input type="text" class="input" id="idR">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Nombre</h5>
+                        <input type="text" class="input" id="nombreR">
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="input-div one">
+                        <div class="i">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="div">
+                            <h5>Apellido</h5>
+                            <input type="text" class="input" id="apellidoR">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Correo Electrónico</h5>
+                        <input type="email" class="input" id="correoR">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Teléfono</h5>
+                        <input type="text" class="input" id="telefonoR">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Ocupación</h5>
+                        <input type="text" class="input" id="ocupacionR">
+                    </div>
+                </div>
+                <h5> Fecha de Nacimiento</h5>
+                <div class="input-div one">
+
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <input type="date" class="input" id="fechaR" max="2003-12-31">
+                    </div>
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Dirección</h5>
+                        <input type="text" class="input" id="direccionR">
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Contraseña</h5>
+                        <input type="password" class="input" id="passR">
+                    </div>
+                    
+                </div>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Recarga</h5>
+                        <input type="text" class="input" id="recargaR">
+                    </div>
+                </div>
+
+<br>
+  <br>
+                <button id="GuardarCambios" type="button" class="btn">Guardar Cambios </button>
+</main>
+    <!-- Pie de página-->
+    <footer>
+        <div class="main-content ">
+
+            <div class="left box ">
+                <h2> Sobre nosotros </h2>
+                <div class="content ">
+                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios o productos a cambio de Ecomonedas, nuestra moneda virtual. </p>
+                    <div class="social ">
+                        <a href="https://github.com/SierraJuanSe/econoamigos "><span class="fab fa-github "></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center box ">
+                <h2> Contáctanos</h2>
+                <div class="content ">
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">janis.salazar01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">jessica.parrado01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">lady.salazar01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">valeria.carvajal01@correo.usa.edu.co</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right box ">
+                <h2> Contáctanos</h2>
+                <div class="content ">
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">juan.sierra01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">luis.vejarano01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">luis.velasquez01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">michael.pinilla01@correo.usa.edu.co</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom ">
+            <center>
+                <span class="credit ">
+                    Creado por <a href="# ">Carvajal - Parrado - Pinilla - Salazar B - Salazar S - Sierra - Vejarano - Velasquez |</a>
+                </span>
+                <span class="far fa-copyright "></span><span> 2021 Todos los Derechos Reservados. </span>
+            </center>
+        </div>
+    </footer>
+
+    <script src="js/main.js " type="text/javascript "></Script>
+    <script src="js/funciones.js " type="text/javascript "></Script>
+</body>
+
+</html>
