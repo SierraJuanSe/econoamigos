@@ -12,7 +12,7 @@ END$$transaccion
 DELIMITER ;
 
 
-#Trigger para Actualizar el sueldo por medio de una Compra o una recarga
+#Trigger para Actualizar el sueldo por medio de una Compra
 DELIMITER $$
 CREATE TRIGGER ActualizarMoneda AFTER UPDATE ON Transaccion
 FOR EACH ROW
