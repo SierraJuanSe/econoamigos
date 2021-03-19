@@ -117,11 +117,14 @@ function traerCompras(compras) {
 
 //Consultar solicitudes
 $("#Solicitar").click(function() {
-    solicitudesOfe(solOfertas)
+    consultarSolicitudes()
 });
 
-//Funcion para realizar la busqueda de las ofertas compradas
-async function solicitudesOfe(solOfertas) {
-    //Recibe validacion de la funcion historial ubicada en funciones.js
-    var save = await mostrarsolOfe(solOfertas);
+//Funcion para realizar la busqueda de las solicitudes a ofertas
+function traerSolicitudes(solicitudes) {
+    $("#solicitudes").empty();
+    for (const solicitud of solicitudes) {
+        mostrarSolicitudes(solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
+
+    }
 }

@@ -97,6 +97,43 @@ async function consultarCompras() {
 }
 
 
+//Consultar solicitudes
+async function consultarSolicitudes() {
+    let result = [{
+        "id": "1010456987",
+        "nombre": "Valeria",
+        "apellido": "Carvajal",
+        "telefono": "3123962641",
+        "direccion": "Calle 71 94-33",
+        "oferta": "telefono",
+        "estado": false
+    }, {
+        "id": "1056986987",
+        "nombre": "Andres",
+        "apellido": "Lopez",
+        "telefono": "3123969514",
+        "direccion": "Calle 41 94-35",
+        "oferta": "Paseo perros",
+        "estado": true
+    }, {
+        "id": "1010448787 ",
+        "nombre": "Felipe",
+        "apellido": "Velasquez",
+        "telefono": "3124562641",
+        "direccion": "Calle 58 94-38",
+        "oferta": "Vestido Azul",
+        "estado": false
+    }];
+    $.ajax({
+
+        error: function(response) {
+            console.log(JSON.stringify(response))
+        }
+    });
+
+    traerSolicitudes(result)
+}
+
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }

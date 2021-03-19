@@ -10,17 +10,6 @@ function mostrarSaldo(saldo) {
     $("#saldoUser").append(' ' + saldo)
 }
 
-//Buscar ofertar compradas
-function ofadquiridas(ofertas) {
-    //Almecena los datos en JSON
-    var obj = {}; //Envio de datos por AJAX con metodo POST
-    $.ajax({
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-    });
-}
-
 //Mostrar todas las ofertas compradas 
 function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lugar, imagen) {
     if (tipo == "Producto") {
@@ -46,35 +35,28 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     $("#compras").append(ofertasC);
 }
 
-//Buscar solicitudes 
-function mostrarsolOfe(solOfertas) {
-    //Almecena los datos en JSON
-    var obj = {}; //Envio de datos por AJAX con metodo POST
-    $.ajax({
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-    });
-}
-
 //Mostrar todas las solicitudes a ofertas
-function mostrarSolicitudes(id, nombre, apellido, telefono, direccion, oferta) {
+function mostrarSolicitudes(id, nombre, apellido, telefono, direccion, oferta, estado) {
+    console.log(id, estado)
     solO = "";
-    solO = '<tr><th scope="row" id="idsolicitud">' + id + '</th><td id="nomsolicitud">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
-        '</td><td id="dirsolicitud">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+    solO = '<tr><th scope="row" id="idsolicitud' + id + '">' + id + '</th><td id="nomsolicitud">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
+        '</td><td id="dirsolicitud">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check' + id + '" style="width: 70%;">' +
         '<input type="checkbox" class="custom-control-input" id="customCheck' + id + '"><label class="custom-control-label" for="customCheck' + id + '"></label></td></tr>';
+
     $("#solicitudes").append(solO);
+    $("#customCheck" + id).prop("checked", estado);
+    if (estado) {
+        $("#customCheck" + id).attr("disabled", true);
+    }
+    checkbox(id, estado)
+
 }
 
-
-//Mostrar historial de Servicios
-function historial(buscar) {
-    var obj = {
-
-    };
-    $.ajax({
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
+function checkbox(id, estado) {
+    $("#customCheck" + id).click(function() {
+        accionescheckbox(id, estado)
     });
+}
+async function accionescheckbox(id, estado) {
+    console.log(id)
 }
