@@ -1,0 +1,51 @@
+/*General*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow: auto;
+}
+
+
+/*CONTENIDO*/
+
+.card {
+    height: 250px;
+    width: 300px;
+    margin: 10px;
+    margin-left: -3%;
+}
+
+.card-link {
+    border: none;
+    color: blue;
+    display: block;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.card-link:active,
+.card-link:focus,
+.card-link:hover,
+.btn {
+    border: none;
+    background-position: right;
+    outline: none;
+    text-decoration: none;
+}
+
+
+/*Responsive*/
+
+@media screen and (max-width: 500px) {
+    .card {
+        width: auto;
+    }
+}

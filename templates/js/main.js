@@ -34,6 +34,7 @@ window.addEventListener('click', function(e) {
 
 
 //Enviar datos
+//Menu P
 $("#Contactar").click(function() {
 
     //Recolectar Datos
@@ -49,3 +50,64 @@ $("#Contactar").click(function() {
     }
 
 });
+//Ofertas Compradas
+$("#ContactoO2").click(function() {
+
+    //Recolectar Datos
+    nombre2 = $("#nameC2").val();
+    telefono2 = $("#telC2").val();
+    correo2 = $("#emailC2").val();
+    comentario2 = $("#comentC2").val();
+    //Verificar datos
+    if (nombre2 == "" || telefono2 == "" || correo2 == "" || comentario2 == "") {
+        swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else {
+        swal("Correcto", "Gracias por contactarnos", "success")
+    }
+
+});
+
+//Historial Transacciones
+$("#Contact3").click(function() {
+
+    //Recolectar Datos
+    nombre3 = $("#nameC3").val();
+    telefono3 = $("#telC3").val();
+    correo3 = $("#emailC3").val();
+    comentario3 = $("#comentC3").val();
+    //Verificar datos
+    if (nombre3 == "" || telefono3 == "" || correo3 == "" || comentario3 == "") {
+        swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else {
+        swal("Correcto", "Gracias por contactarnos", "success")
+    }
+
+});
+
+//Historial Servicios
+$("#ContactarC4").click(function() {
+
+    //Recolectar Datos
+    nombre4 = $("#nameC4").val();
+    telefono4 = $("#telC4").val();
+    correo4 = $("#emailC4").val();
+    comentario4 = $("#comentC4").val();
+    //Verificar datos
+    if (nombre4 == "" || telefono4 == "" || correo4 == "" || comentario4 == "") {
+        swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else {
+        swal("Correcto", "Gracias por contactarnos", "success")
+    }
+
+});
+
+//Consultar ofertas
+$("#Compras").click(function() {
+    ofertasCompras(ofertas)
+});
+
+//Funcion para realizar la busqueda de las ofertas compradas
+async function ofertasCompras(ofertas) {
+    //Recibe validacion de la funcion historial ubicada en funciones.js
+    var save = await ofadquiridas(ofertas);
+}

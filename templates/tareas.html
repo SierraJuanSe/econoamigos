@@ -4,19 +4,21 @@
 <head>
     <title>Econoamigos</title>
     <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
+    <link rel="stylesheet" type="text/css" href="css/styleoferta.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
-
     <header>
         <nav>
             <div class="logo">
@@ -49,73 +51,22 @@
         <!-- CONTENIDO-->
 
         <!-- Servicios -->
-        <div class="bienvenida">
-            ¡Hola,<span id="nombreUser"></span>! <br>¿Cómo te encuentras hoy?
-        </div>
         <section class="contenedor">
-            <h2 id="Servicios" class="titulos">¿Qué puedes hacer?</h2>
+
+            <h2 id="Servicios" class="titulos">Productos o Servicios que has adquirido</h2>
+            <p class="lead text-muted">A continuación, podrás ver todas las ofertas que has comprado con su respectivas características. Solo debes presionar el siguiente botón. </p>
+            <button id="Compras" type="button" class="btn">Consultar</button>
             <div class="Servicios">
-                <img src="img/moneda.svg" alt="" class="Servicio">
-                <div class="Textos">
-                    <br><br>
-                    <h3><span>1</span>Búsqueda de Ofertas</h3>
-                    <p class="lead text-muted">Busca los servicios y productos que quieras entre todos los que ofrecen los Econoamigos, para generar ingresos mediante nuestra moneda virtual.</p>
-                    <br>
-                    <h3><span>2</span>Publicitar tus Ofertas</h3>
-                    <p class="lead text-muted"> Crea publicidad de tus productos o servicios que quieras vender para que los demás puedan adquirirlos y ganar Ecomonedas generando así ingresos. <b>Aquí ganamos todos.</b>
-                    </p>
-                    <br>
-                    <h3><span>3</span>Solicitudes a tus ofertas</h3>
-                    <p class="lead text-muted">Podrás ver a las personas que quieren acceder a relizar tu servicio o que desean adquirir tu producto, y tú escogeras tu favorito.
-                    </p>
-                </div>
-            </div>
-            <div class="Servicios">
-                <div class="Textos">
-                    <br><br>
-                    <h3><span>4</span>Ofertas Compradas</h3>
-                    <p class="lead text-muted"> Ver todos los servicios en los que te postulaste para saber como es tu progreso en estos, o ver los productos que adquiriste.</p>
-                    <br>
-                    <h3><span>5</span>Historial de Transacciones</h3>
-                    <p class="lead text-muted"> Revisa los movimientos como ingresos y egresos de la moneda virtual en tu cuenta. Y como ya hemos dicho <b>"Aquí ganamos todos".</b>
-                    </p>
-                    <br>
-                    <h3><span>6</span>Historial de Ofertas</h3>
-                    <p class="lead text-muted">Podrás revisar cuales son los servicios que ya has realizado o los productos que has comprado mediante el uso de Ecomonedas .
-                    </p>
-                </div>
-                <img src="img/chancho.svg" alt="" class="Servicio2">
-            </div>
-        </section>
 
-        <!-- Info de la app -->
-        <section class="form">
-            <h2 id="Informacion" class="titulos">¿Qué es?</h2>
-            <div class="cards">
-                <div class="tarjeta1">
-                    <img src="img/icono.png" class="imgfondo">
-                    <div class="textotarjeta">
-                        <h4>Econoamigos</h4>
+                <div class="compras">
+                    <div class="row" id="compras">
 
-                        <h5>Una solución de Economía solidaria</h5>
-
-                        <p>Mediante la inicitiva de ayudar en la brecha de ingresos y egresos de las personas cabeza de hogar nace Economaigos. Aquí podras ofrecer o aceptar servicios, al igual que comprar productos de otras personas iguales a ti para aumentar
-                            tu economía.
-                        </p>
-                    </div>
-                </div>
-                <div class="tarjeta2">
-                    <img src="img/ecomon.png">
-                    <div class="textotarjeta">
-                        <h4>Ecomoneda</h4>
-
-                        <h5>Moneda virtual de Econoamigos</h5>
-
-                        <p>La obtendrás mediante los servicios que realices como remuneración, o mediante el pago de los productos que vendas. También puedes recargar desde tu cuenta bancaria para tener fondos al momento de ofertar algo que necesites.</p>
                     </div>
                 </div>
             </div>
+            </div>
         </section>
+
 
         <!-- Contacto -->
         <section id="contact">
@@ -131,18 +82,18 @@
                         <p class="lead text-muted "> Estamos trabajando para complacerte. Si tienes algún comentario, duda o sugerencia, solo avísanos.</p>
                         <form class="mt-6 ">
                             <div class="form-group ">
-                                <input type="text " class="form-control " id="nameC " placeholder="Nombre ">
+                                <input type="text " class="form-control " id="nameC2" placeholder="Nombre ">
                             </div>
                             <div class="form-group ">
-                                <input type="email " class="form-control " id="emailC " placeholder="Correo electrónico ">
+                                <input type="email " class="form-control " id="emailC2" placeholder="Correo electrónico ">
                             </div>
                             <div class="form-group ">
-                                <input type="text " class="form-control " id="telC " placeholder="Telefono celular ">
+                                <input type="text " class="form-control " id="telC2" placeholder="Telefono celular ">
                             </div>
                             <div class="form-group ">
-                                <textarea class="form-control " id="comentC " placeholder="Comentario " rows="5 "></textarea>
+                                <textarea class="form-control " id="comentC2" placeholder="Comentario " rows="5 "></textarea>
                             </div>
-                            <button id="Contactar" type="submit" class="btn ">Enviar mensaje</button>
+                            <button id="ContactoO2" type="button" class="btn ">Enviar mensaje</button>
                         </form>
                     </div>
                 </div>
@@ -160,7 +111,7 @@
             <div class="left box ">
                 <h2> Sobre nosotros </h2>
                 <div class="content ">
-                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios o productos a cambio de Ecomonedas, nuestra moneda virtual. </p>
+                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios a cambio de Ecomonedas, nuestra moneda virtual. </p>
                     <div class="social ">
                         <a href="https://github.com/SierraJuanSe/econoamigos "><span class="fab fa-github "></span></a>
                     </div>
