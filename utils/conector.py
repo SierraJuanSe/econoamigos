@@ -1,10 +1,10 @@
 import pymysql
 
 DBINFO = {
-    'host' : "sql10.freemysqlhosting.net",
-    'user' : "sql10399086",
-    'password': "SvQc25Xr7V",
-    'database': "sql10399086"
+    'host' : "jovenesdcberna.co",
+    'user' : "devOcean",
+    'password': "devOceanEconoamigos",
+    'database': "econoamigos"
 }
 class Conector:
 

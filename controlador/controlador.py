@@ -593,8 +593,7 @@ class controlador:
        self.db.close()  # Cierra la conexión
 
 
-control = controlador(serverDB="",usuarioDB="",contraDB="",base="")
-
+control = controlador(serverDB="jovenesdcberna.co",usuarioDB="devOcean",contraDB="devOceanEconoamigos",base="econoamigos")
 ####################
 ## PREUBAS QUERYS ##
 ####################
@@ -639,7 +638,7 @@ control = controlador(serverDB="",usuarioDB="",contraDB="",base="")
 #control.consultarServicio()
 
 # TRANSACCIÓN
-#control.insertarTransaccion('Compra', '1002549404', 200000, False)
+#control.insertarTransaccion('Recarga', '1002549404', 200000, False)
 #control.consultarTransaccion()
 
 # COMRPA
