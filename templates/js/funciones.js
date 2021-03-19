@@ -64,6 +64,27 @@ function mostrarCompras(nombre, descripcion, tipo, precio, estado, lugar, imagen
 }
 
 
+//Buscar solicitudes 
+function mostrarsolOfe(solOfertas) {
+    //Almecena los datos en JSON
+    var obj = {}; //Envio de datos por AJAX con metodo POST
+    $.ajax({
+        error: function(response) {
+            console.log(JSON.stringify(response))
+        }
+    });
+}
+
+//Mostrar todas las solicitudes a ofertas
+function mostrarSolicitudes(id, nombre, apellido, telefono, direccion, oferta) {
+    solO = "";
+    solO = '<tr><th scope="row" id="idsolicitud">' + id + '</th><td id="nomsolicitud">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
+        '</td><td id="dirsolicitud">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+        '<input type="checkbox" class="custom-control-input" id="customCheck' + id + '"><label class="custom-control-label" for="customCheck' + id + '"></label></td></tr>';
+    $("#solicitudes").append(solO);
+}
+
+
 //Mostrar historial de Servicios
 function historial(buscar) {
     var obj = {

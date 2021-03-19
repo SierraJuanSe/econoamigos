@@ -1,0 +1,53 @@
+/*General*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow: auto;
+}
+
+
+/*CONTENIDO*/
+
+.table {
+    height: 250px;
+    margin: 10px;
+    margin-left: 0%;
+}
+
+th {
+    width: 500px;
+}
+
+.estado {
+    width: 100px;
+}
+
+.tel {
+    width: 300px;
+}
+
+.name {
+    width: 700px;
+}
+
+.btn {
+    border: none;
+    background-position: right;
+    outline: none;
+    text-decoration: none;
+}
+
+
+/*Responsive*/
+
+@media screen and (max-width: 500px) {
+    .table {
+        width: auto;
+    }
+}

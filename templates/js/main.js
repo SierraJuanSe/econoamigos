@@ -111,3 +111,14 @@ async function ofertasCompras(ofertas) {
     //Recibe validacion de la funcion historial ubicada en funciones.js
     var save = await ofadquiridas(ofertas);
 }
+
+//Consultar solicitudes
+$("#Solicitar").click(function() {
+    solicitudesOfe(solOfertas)
+});
+
+//Funcion para realizar la busqueda de las ofertas compradas
+async function solicitudesOfe(solOfertas) {
+    //Recibe validacion de la funcion historial ubicada en funciones.js
+    var save = await mostrarsolOfe(solOfertas);
+}
