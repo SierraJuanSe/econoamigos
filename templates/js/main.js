@@ -103,13 +103,16 @@ $("#ContactarC4").click(function() {
 
 //Consultar ofertas
 $("#Compras").click(function() {
-    ofertasCompras(ofertas)
+    consultarCompras()
 });
 
 //Funcion para realizar la busqueda de las ofertas compradas
-async function ofertasCompras(ofertas) {
-    //Recibe validacion de la funcion historial ubicada en funciones.js
-    var save = await ofadquiridas(ofertas);
+function traerCompras(compras) {
+    $("#compras").empty();
+    for (const compra of compras) {
+        mostrarCompras(compra['codcompra'], compra['nombre'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen']);
+
+    }
 }
 
 //Consultar solicitudes
