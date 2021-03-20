@@ -1,31 +1,28 @@
 // Iniciar Sesion
 async function login(correo, contrasenia) {
     //Almacena los datos en JSON
-    let obj = {
+    let data = {
         "emailUsuario": correo,
         "passwordUsuario": contrasenia
     };
-
-    console.log(obj) //Envio de datos por AJAX 
-    $.ajax({
-
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-
-    });
-    let result = {
-        "cedula": "1000257419",
-        "nombre": "Val",
-        "apellido": "Carvajal",
-        "saldo": "15000"
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/ingreso",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result)
+        window.token = JSON.stringify(result);
+        setCookie(token);
+        console.log(readCookie('token'))
+         return true;
+    } catch (error) {
+        console.log(error)
+        
     }
-    window.token = result["cedula"];
-    console.log(window.token);
-    setCookie(token);
-    console.log(token);
-    console.log(readCookie("token"))
-    return result;
+
 
 }
 
@@ -33,7 +30,7 @@ async function login(correo, contrasenia) {
 // Registrar Usuario
 async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia) {
     //Almecena los datos en JSON
-    let obj = {
+    let data = {
         "idUsuario": cedula,
         "nombreUsuario": nombre,
         "apellidoUsuario": apellido,
@@ -43,18 +40,27 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
         "ocupacionUsuario": ocupacion,
         "fechaNacimiento": fecha,
         "direccion": direccion,
-
     };
-    console.log(obj)
-        //Envio de datos por AJAX con metodo POST
-    $.ajax({
 
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-    });
-    return 1;
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/registro",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+          return result.info;
+    } catch (error) {
+        console.log(error)
+        
+    }
 }
+
+
+
+
+
 
 
 //Consultar compras
@@ -100,6 +106,7 @@ async function consultarCompras() {
 //Consultar solicitudes
 async function consultarSolicitudes() {
     let result = [{
+        "codCompra":"1",
         "id": "1010456987",
         "nombre": "Valeria",
         "apellido": "Carvajal",
@@ -108,6 +115,7 @@ async function consultarSolicitudes() {
         "oferta": "telefono",
         "estado": false
     }, {
+        "codCompra":"2",
         "id": "1056986987",
         "nombre": "Andres",
         "apellido": "Lopez",
@@ -116,7 +124,8 @@ async function consultarSolicitudes() {
         "oferta": "Paseo perros",
         "estado": true
     }, {
-        "id": "1010448787 ",
+        "codCompra":"3",
+        "id": "1010448787",
         "nombre": "Felipe",
         "apellido": "Velasquez",
         "telefono": "3124562641",
@@ -124,14 +133,19 @@ async function consultarSolicitudes() {
         "oferta": "Vestido Azul",
         "estado": false
     }];
-    $.ajax({
+    // $.ajax({
 
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-    });
+    //     error: function(response) {
+    //         console.log(JSON.stringify(response))
+    //     }
+    // });
 
     traerSolicitudes(result)
+}
+
+async function actualizarSolicitud(codCompra){
+    console.log(codCompra)
+    return true;
 }
 
 function setCookie(token) {

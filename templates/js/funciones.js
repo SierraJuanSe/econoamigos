@@ -1,13 +1,20 @@
 //Mostrar nombre del usuario
-function mostrarNombre(nombre, apellido) {
-    $("#nombreUser").empty();
-    $("#nombreUser").append(nombre + ' ' + apellido)
+if (window.location.href.includes('menu.html')) {
+    mostrarNombre();
+    mostrarSaldo();
 }
 
+
+function mostrarNombre() {
+    const USUARIO=JSON.parse(readCookie('token'));    
+    $("#nombreUser").empty();
+    $("#nombreUser").append(USUARIO['nombre'] + ' ' + USUARIO['apellido'] );
+}
 //Mostrar saldo del usuario
-function mostrarSaldo(saldo) {
+function mostrarSaldo() {
+    const USUARIO=JSON.parse(readCookie('token'));    
     $("#saldoUser").empty();
-    $("#saldoUser").append(' ' + saldo)
+    $("#saldoUser").append(' ' + USUARIO['moneda'] );
 }
 
 //Mostrar todas las ofertas compradas 
@@ -35,28 +42,54 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     $("#compras").append(ofertasC);
 }
 
-//Mostrar todas las solicitudes a ofertas
-function mostrarSolicitudes(id, nombre, apellido, telefono, direccion, oferta, estado) {
-    console.log(id, estado)
-    solO = "";
-    solO = '<tr><th scope="row" id="idsolicitud' + id + '">' + id + '</th><td id="nomsolicitud">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
-        '</td><td id="dirsolicitud">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check' + id + '" style="width: 70%;">' +
-        '<input type="checkbox" class="custom-control-input" id="customCheck' + id + '"><label class="custom-control-label" for="customCheck' + id + '"></label></td></tr>';
 
+
+//Mostrar todas las solicitudes a ofertas
+function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, estado) {
+    //Codigo HTML
+    solO = "";
+    solO = '<tr><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
+        '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+        '<input type="checkbox" class="custom-control-input" id="customCheck' + id + '"><label class="custom-control-label" for="customCheck' + id + '"></label></td></tr>';
+    //Inserscion al HTML
     $("#solicitudes").append(solO);
+    checkbox(id, estado,codCompra);
+
+}
+
+//Accciones del checkbox
+function checkbox(id, estado, codCompra) {
+    //Cambia el estado del checkbox segun si la compra ya fue realizada
     $("#customCheck" + id).prop("checked", estado);
+    //Si la compra ya fue realizadad, el checbox se deshablita
     if (estado) {
         $("#customCheck" + id).attr("disabled", true);
     }
-    checkbox(id, estado)
-
-}
-
-function checkbox(id, estado) {
-    $("#customCheck" + id).click(function() {
-        accionescheckbox(id, estado)
+    //Accion de boton al checkbox
+    $("#customCheck" + id).click(function () {
+        accionesCheck(id,codCompra);
     });
 }
-async function accionescheckbox(id, estado) {
-    console.log(id)
+
+async function accionesCheck(id,codCompra) {
+    //Acciones de la alerta
+    swal({
+        title: "¿Estas seguro de cambiar el estado de la solicitud?",
+        text: "Una vez hecha la confirmación no podras revertirlo ",
+        icon: "warning", buttons: true, dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("Tu solicitud ha sido realizada, ya podras Verificar tu saldo", {
+                    icon: "success"
+                });
+                var result = actualizarSolicitud(codCompra);
+                if (result) {
+                    $("#customCheck" + id).attr("disabled", true);
+                }
+            } else {
+                $("#customCheck" + id).prop("checked", false);
+            }
+        });
 }
+
