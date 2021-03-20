@@ -23,7 +23,7 @@ window.addEventListener('resize', function() {
 })
 
 window.addEventListener('click', function(e) {
-    console.log(e.target);
+    // console.log(e.target);
     if (contador == false) {
         let span = document.querySelector('.links-header');
         if (e.target == span) {
@@ -124,7 +124,6 @@ $("#Solicitar").click(function() {
 function traerSolicitudes(solicitudes) {
     $("#solicitudes").empty();
     for (const solicitud of solicitudes) {
-        mostrarSolicitudes(solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
-
+        mostrarSolicitudes(solicitud['codCompra'],solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
     }
 }

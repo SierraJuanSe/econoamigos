@@ -100,6 +100,7 @@ async function consultarCompras() {
 //Consultar solicitudes
 async function consultarSolicitudes() {
     let result = [{
+        "codCompra":"1",
         "id": "1010456987",
         "nombre": "Valeria",
         "apellido": "Carvajal",
@@ -108,6 +109,7 @@ async function consultarSolicitudes() {
         "oferta": "telefono",
         "estado": false
     }, {
+        "codCompra":"2",
         "id": "1056986987",
         "nombre": "Andres",
         "apellido": "Lopez",
@@ -116,7 +118,8 @@ async function consultarSolicitudes() {
         "oferta": "Paseo perros",
         "estado": true
     }, {
-        "id": "1010448787 ",
+        "codCompra":"3",
+        "id": "1010448787",
         "nombre": "Felipe",
         "apellido": "Velasquez",
         "telefono": "3124562641",
@@ -124,14 +127,19 @@ async function consultarSolicitudes() {
         "oferta": "Vestido Azul",
         "estado": false
     }];
-    $.ajax({
+    // $.ajax({
 
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-    });
+    //     error: function(response) {
+    //         console.log(JSON.stringify(response))
+    //     }
+    // });
 
     traerSolicitudes(result)
+}
+
+async function actualizarSolicitud(codCompra){
+    console.log(codCompra)
+    return true;
 }
 
 function setCookie(token) {
