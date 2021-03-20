@@ -47,24 +47,20 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
 //Mostrar todas las solicitudes a ofertas
 function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, estado) {
     //Codigo HTML
+    if(!estado){
     solO = "";
-    solO = '<tr><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
+    solO = '<tr id="filasol'+codCompra+'"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
         '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
         '<input type="checkbox" class="custom-control-input" id="customCheck' + id + '"><label class="custom-control-label" for="customCheck' + id + '"></label></td></tr>';
     //Inserscion al HTML
     $("#solicitudes").append(solO);
     checkbox(id, estado,codCompra);
-
+    }
 }
 
 //Accciones del checkbox
 function checkbox(id, estado, codCompra) {
-    //Cambia el estado del checkbox segun si la compra ya fue realizada
-    $("#customCheck" + id).prop("checked", estado);
-    //Si la compra ya fue realizadad, el checbox se deshablita
-    if (estado) {
-        $("#customCheck" + id).attr("disabled", true);
-    }
+
     //Accion de boton al checkbox
     $("#customCheck" + id).click(function () {
         accionesCheck(id,codCompra);
@@ -85,7 +81,7 @@ async function accionesCheck(id,codCompra) {
                 });
                 var result = actualizarSolicitud(codCompra);
                 if (result) {
-                    $("#customCheck" + id).attr("disabled", true);
+                    $("#filasol"+codCompra).remove();
                 }
             } else {
                 $("#customCheck" + id).prop("checked", false);
