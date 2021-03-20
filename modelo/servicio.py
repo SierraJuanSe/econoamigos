@@ -3,12 +3,12 @@ sys.path.append(r"C:\Users\micha\OneDrive\Documentos\7 Semestre\Paralela\C C++\e
 sys.path.append(r"C:\Users\micha\OneDrive\Documentos\7 Semestre\Paralela\C C++\econo-prieteni\modelo")
 
 
-from oferta import Oferta
-from conector import Conector, DBINFO
+from modelo.oferta import Oferta
+from utils.conector import Conector, DBINFO
 
 class Servicio(Oferta):
 
-    def __init__(self,nombre,descripcion,precio,estado,idUsuario,lugar):
+    def __init__(self,nombre=None,descripcion=None,precio=None,estado=None,idUsuario=None,lugar=None):
         super().__init__(nombre,descripcion,precio,estado,idUsuario)
         self.lugar = lugar #Zona de cobertura
 
@@ -39,5 +39,16 @@ class Servicio(Oferta):
         conn.connect()
         result = conn.execute_query(sql)
         result2 = conn.execute_query(sql2)
+        r1 = {}
+        for fila in result:
+            r1['id'] = fila[0]
+            r1['tipo'] = fila[1]
+            r1['nombre'] = fila[2]
+            r1['descripcion'] = fila[3]
+            r1['precio'] = fila[4]
+            r1['idUsuario'] = fila[5]
+
+        for fila in result2:
+            r1['lugar'] = fila[0]
         conn.close()
-        return result, result2
+        return r1

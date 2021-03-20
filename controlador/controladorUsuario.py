@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 from modelo.usuario import Usuario as us
 from flask import Flask, request
-app=Flask(__name__)
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def inicio():
-    return("Inicio")
+    return("Inicio Usuario")
 
 @app.route('/registro', methods=['POST'])
 def registrarUsuario():
@@ -20,9 +23,9 @@ def registrarUsuario():
 
     # Retorna True o False segun el exito del registro
     if nuevo.registro():
-        return "True"
+        return {"status": 200, "info": True}
     else:
-        return "False"
+        return {"status": 400,"info": False}
 
 @app.route('/ingreso', methods = ['POST'])
 def ingresar():
@@ -34,5 +37,5 @@ def ingresar():
                  'fecha_Nacimiento': usuarioReg.fechaNac, 'moneda': usuarioReg.moneda, 'direccion': usuarioReg.direccion}
     return respuesta
 
-if __name__ == 'main_':
-  app.run(host="0.0.0.0")
+if __name__ == '__main__':
+  app.run(host="25.7.209.143")
