@@ -17,6 +17,11 @@ function mostrarSaldo() {
     $("#saldoUser").append(' ' + USUARIO['moneda'] );
 }
 
+function actualizarMonedaVista(newMoneda){
+    $("#saldoUser").empty();
+    $("#saldoUser").append(' ' + newMoneda.toString());
+}
+
 //Mostrar todas las ofertas compradas 
 function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lugar, imagen) {
     if (tipo == "Producto") {

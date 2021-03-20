@@ -130,25 +130,36 @@ async function consultarSolicitudes() {
         "oferta": "Vestido Azul",
         "estado": false
     }];
-    // $.ajax({
-
-    //     error: function(response) {
-    //         console.log(JSON.stringify(response))
-    //     }
-    // });
-
     traerSolicitudes(result)
 }
 
 async function actualizarSolicitud(codCompra){
     console.log(codCompra)
+    actualizarMonedaVista(20000);
     return true;
 }
 
-async function crearServicio(){
+async function crearServicio(nombre,descripcion,precio,lugar){
+    let data = {
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "precio":precio,
+        "idUsuario":"11",// cambiar a cookie
+        "lugar":lugar
+    };
+    console.log(data);
     return true;
 }
-async function crearProducto(){
+async function crearProducto(nombre,descripcion,precio,imagen,cantidad){
+    let data = {
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "precio":precio,
+        "idUsuario":"11",// cambiar a cookie
+        "imagen":imagen,
+        "cantidad":cantidad
+    };
+    console.log(data);
     return true;
 }
 
