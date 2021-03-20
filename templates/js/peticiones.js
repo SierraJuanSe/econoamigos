@@ -60,9 +60,6 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
 
 
 
-
-
-
 //Consultar compras
 async function consultarCompras() {
     let result = [{
@@ -147,6 +144,18 @@ async function actualizarSolicitud(codCompra){
     console.log(codCompra)
     return true;
 }
+
+async function crearServicio(){
+    return true;
+}
+async function crearProducto(){
+    return true;
+}
+
+async function consultarOfertas(){
+    return true;
+}
+
 
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
