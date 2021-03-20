@@ -552,35 +552,22 @@ section {
         height: auto;
     }
 }
-#Info{
-   
-    text-align: center;
-    background: white;
-   
-  
-
-}
-
-#fotoForms{
-    width: 15%;
-    height: 15%;
-}
-
-#fotoForms2{
+#enlaces {
     position: absolute;
-    width: 50%;
-    height: 50%;
-    left: -5%;
-    top: 50%;
+    z-index: 2;
 }
-#fotoForms3{
-    position: absolute;
-    width: 40%;
-    height: 40%;
-    left: 60%;
-    top: 100%;
+#tarjetas{
+    width: 100%;
 }
-#GuardarCambios{
-    width: 20%;
+#tarjetas {
+    margin-top: 5%;
+}
+
+.card-body {
+    background: #E4DEDD;
+}
+#dataPersonal{
+    position: relative;
+    width: 20%
     height: 20%;
 }

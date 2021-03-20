@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -47,116 +47,32 @@
     <main>
 
         <!-- CONTENIDO-->
-        <!-- Formulario de Registro -->
-        <div id="Info">
-            <form>
-                <div class="img2">
-                    <img id="fotoForms" src="img/confi.svg"> </div>
-                    <img id="fotoForms2" src="img/confi2.svg"> 
-                    <img id="fotoForms3" src="img/confi3.svg"> 
-                <h2 class="title">Aquí puedes cambiar tus datos personales y al finalizar guardar los cambios</h2>
-
-
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-id-card"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Cédula de Ciudadanía</h5>
-                        <input type="text" class="input" id="idR">
+        <h2 id="Servicios" class="titulos">Configuración De Cuenta</h2>
+        <h3 align="center">Elige entre las opciones la que deseas modificar y configurar</h3>
+       <div id="tarjetas" class="row">
+            <div class="col-sm-6">
+                <div class="card" align="center" >
+                    <div class="card-body" >
+                        <h2 id="Nombre1" class="card-title" align="center">Datos Personales</h2>
+                        <img id="dataPersonal" src="img/dataPersonal.svg" alt="" align="middle" width="20%" margin-left="-20%">
+                        <p id="descripcion" class="card-text">Ingresa y modifica tus datos. Puedes actualizar tu nombre, apellido, número  de teléfono, correo, ocupación, dirección, entre otros.</p>
+                        <a href="confData.html" id="ActualizarDatos" type="button" class="btn">Actualizar Datos</a>
                     </div>
                 </div>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Nombre</h5>
-                        <input type="text" class="input" id="nombreR">
-                    </div>
-                </div>
-
-                <div class="col">
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="div">
-                            <h5>Apellido</h5>
-                            <input type="text" class="input" id="apellidoR">
-                        </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card" align="center" >
+                    <div class="card-body" >
+                        <h2 id="Nombre2" class="card-title" align="center">Recarga</h2>
+                        <img id="dataPersonal" src="img/ImgRecarga.svg" alt="" align="middle" width="23%" margin-left="-20%">
+                        <p id="Precio" class="card-text">Realiza recargas de cualquier monto y lo verás reflejado en tu saldo como ecomonedas. Este dinero virtual te será útil para cuando quieras adquirir un producto o un servicio en la plataforma.</p>
+                        <p id="LugarDescripcion" class="card-text"></p>
+                        <a href="confRecarga.html" id="ActualizarDatos" type="button" class="btn">Recargar</a>
                     </div>
                 </div>
-
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Correo Electrónico</h5>
-                        <input type="email" class="input" id="correoR">
-                    </div>
-                </div>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Teléfono</h5>
-                        <input type="text" class="input" id="telefonoR">
-                    </div>
-                </div>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Ocupación</h5>
-                        <input type="text" class="input" id="ocupacionR">
-                    </div>
-                </div>
-                <h5> Fecha de Nacimiento</h5>
-                <div class="input-div one">
-
-                    <div class="i">
-                        <i class="fas fa-user"></i>
-                    </div>
-                    <div class="div">
-                        <input type="date" class="input" id="fechaR" max="2003-12-31">
-                    </div>
-                </div>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Dirección</h5>
-                        <input type="text" class="input" id="direccionR">
-                    </div>
-                </div>
-                <div class="input-div pass">
-                    <div class="i">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Contraseña</h5>
-                        <input type="password" class="input" id="passR">
-                    </div>
-                    
-                </div>
-                <div class="input-div one">
-                    <div class="i">
-                        <i class="fas fa-hand-holding-usd"></i>
-                    </div>
-                    <div class="div">
-                        <h5>Recarga</h5>
-                        <input type="text" class="input" id="recargaR">
-                    </div>
-                </div>
-
-<br>
-  <br>
-                <button id="GuardarCambios" type="button" class="btn">Guardar Cambios </button>
+            </div>
+        </div>
+        
 </main>
     <!-- Pie de página-->
     <footer>
