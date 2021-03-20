@@ -127,3 +127,9 @@ function traerSolicitudes(solicitudes) {
         mostrarSolicitudes(solicitud['codCompra'],solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
     }
 }
+
+
+$("#cerrarSesion").click(function() {
+    deleteCookie();
+    location.href = "index.html";
+});

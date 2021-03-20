@@ -1,31 +1,28 @@
 // Iniciar Sesion
 async function login(correo, contrasenia) {
     //Almacena los datos en JSON
-    let obj = {
+    let data = {
         "emailUsuario": correo,
         "passwordUsuario": contrasenia
     };
-
-    console.log(obj) //Envio de datos por AJAX 
-    $.ajax({
-
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-
-    });
-    let result = {
-        "cedula": "1000257419",
-        "nombre": "Val",
-        "apellido": "Carvajal",
-        "saldo": "15000"
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/ingreso",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result)
+        window.token = JSON.stringify(result);
+        setCookie(token);
+        console.log(readCookie('token'))
+         return true;
+    } catch (error) {
+        console.log(error)
+        
     }
-    window.token = result["cedula"];
-    console.log(window.token);
-    setCookie(token);
-    console.log(token);
-    console.log(readCookie("token"))
-    return result;
+
 
 }
 
@@ -33,7 +30,7 @@ async function login(correo, contrasenia) {
 // Registrar Usuario
 async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia) {
     //Almecena los datos en JSON
-    let obj = {
+    let data = {
         "idUsuario": cedula,
         "nombreUsuario": nombre,
         "apellidoUsuario": apellido,
@@ -43,18 +40,27 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
         "ocupacionUsuario": ocupacion,
         "fechaNacimiento": fecha,
         "direccion": direccion,
-
     };
-    console.log(obj)
-        //Envio de datos por AJAX con metodo POST
-    $.ajax({
 
-        error: function(response) {
-            console.log(JSON.stringify(response))
-        }
-    });
-    return 1;
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/registro",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+          return result.info;
+    } catch (error) {
+        console.log(error)
+        
+    }
 }
+
+
+
+
+
 
 
 //Consultar compras

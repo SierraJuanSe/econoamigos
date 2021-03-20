@@ -1,13 +1,20 @@
 //Mostrar nombre del usuario
-function mostrarNombre(nombre, apellido) {
-    $("#nombreUser").empty();
-    $("#nombreUser").append(nombre + ' ' + apellido)
+if (window.location.href.includes('menu.html')) {
+    mostrarNombre();
+    mostrarSaldo();
 }
 
+
+function mostrarNombre() {
+    const USUARIO=JSON.parse(readCookie('token'));    
+    $("#nombreUser").empty();
+    $("#nombreUser").append(USUARIO['nombre'] + ' ' + USUARIO['apellido'] );
+}
 //Mostrar saldo del usuario
-function mostrarSaldo(saldo) {
+function mostrarSaldo() {
+    const USUARIO=JSON.parse(readCookie('token'));    
     $("#saldoUser").empty();
-    $("#saldoUser").append(' ' + saldo)
+    $("#saldoUser").append(' ' + USUARIO['moneda'] );
 }
 
 //Mostrar todas las ofertas compradas 
