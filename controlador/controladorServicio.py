@@ -36,6 +36,7 @@ def consultarServicio():
     msg = request.get_json()
     ofertas = Servicio()
     res = ofertas.consultaIndividual(cod=msg.get('codigo'))
+
     if res != {}:
         return {'status': 200, 'info': res}
     else:
