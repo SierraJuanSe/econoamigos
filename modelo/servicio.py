@@ -40,6 +40,8 @@ class Servicio(Oferta):
         result = conn.execute_query(sql)
         result2 = conn.execute_query(sql2)
         r1 = {}
+        print(result)
+        print(result2)
         for fila in result:
             r1['id'] = fila[0]
             r1['tipo'] = fila[1]
@@ -50,5 +52,7 @@ class Servicio(Oferta):
 
         for fila in result2:
             r1['lugar'] = fila[0]
+        else:
+            r1 = {}
         conn.close()
         return r1

@@ -52,5 +52,7 @@ class Producto(Oferta):
         for fila in result2:
             r1['imagen'] = fila[0]
             r1['cantidad'] = fila[1]
+        else:
+            r1 = {}
         conn.close()
         return r1

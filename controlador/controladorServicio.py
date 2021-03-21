@@ -10,11 +10,21 @@ CORS(app)
 def inicio():
     return("Inicio Servicio")
 
-@app.route('/consultarOferta', methods=['GET'])
+@app.route('/consultarOfertas', methods=['POST'])
+def consultarOfertas():
+    msg = request.get_json()
+    ofertas = Servicio()
+    res = ofertas.consultarTodaOferta(msg.get('id'))
+    if len(res) != 0:
+        return {'status': 200, 'info': res}
+    else:
+        return {'status': 404}
+
+@app.route('/consultarOfertaEspecifica', methods=['POST'])
 def consultarOferta():
     msg = request.get_json()
     ofertas = Servicio()
-    res = ofertas.consultarOfertas(msg.get('busqueda'))
+    res = ofertas.consultarOfertaEspecifica(msg.get('busqueda'))
     if len(res) != 0:
         return {'status': 200, 'info': res}
     else:
