@@ -133,37 +133,125 @@ async function consultarSolicitudes() {
     traerSolicitudes(result)
 }
 
+//Peticion para actualizar la solicitud de una compra
 async function actualizarSolicitud(codCompra){
     console.log(codCompra)
     actualizarMonedaVista(20000);
     return true;
 }
 
+// Peticion para crear un servicio 
 async function crearServicio(nombre,descripcion,precio,lugar){
+    const USUARIO=JSON.parse(readCookie('token'));
     let data = {
         "nombre": nombre,
         "descripcion": descripcion,
         "precio":precio,
-        "idUsuario":"11",// cambiar a cookie
+        "idUsuario":USUARIO['id'],
         "lugar":lugar
     };
-    console.log(data);
-    return true;
-}
-async function crearProducto(nombre,descripcion,precio,imagen,cantidad){
-    let data = {
-        "nombre": nombre,
-        "descripcion": descripcion,
-        "precio":precio,
-        "idUsuario":"11",// cambiar a cookie
-        "imagen":imagen,
-        "cantidad":cantidad
-    };
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/insertarServicio",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+          return result.info;
+    } catch (error) {
+        console.log(error) 
+    }
     console.log(data);
     return true;
 }
 
+//Peticion para crear un producto
+async function crearProducto(nombre,descripcion,precio,imagen,cantidad){
+    const USUARIO=JSON.parse(readCookie('token'));
+    let data = {
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "precio":precio,
+        "idUsuario":USUARIO['id'],
+        "imagen":imagen,
+        "cantidad":cantidad
+    };
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/insertarProducto",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+          return result.info;
+    } catch (error) {
+        console.log(error)
+        
+    }
+    console.log(data);
+    return true;
+}
+
+//Peticion para consultar todas las ofertas(productos o servicios)
 async function consultarOfertas(){
+    const USUARIO=JSON.parse(readCookie('token'));
+    let data={
+        "id":USUARIO['id']
+    }
+ 
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/consultarOfertas",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+        } else {
+            console.log(result.status)
+            return 0;
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+
+    return true;
+}
+
+
+//Peticion para consultar una oferta mediante una busqueda de un input
+//consulta por nombre o descripcion
+async function consultarOfertaEspecifica(busqueda){
+    let data={
+        "busqueda":busqueda
+    }
+ 
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/consultarOfertaEspecifica",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+        } else {
+            console.log(result.status)
+            return 0;
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+
     return true;
 }
 
