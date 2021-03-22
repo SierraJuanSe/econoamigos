@@ -102,7 +102,7 @@ function mostrarTransacciones(concepto, estado, precio) {
         nameEstado="En Proceso"
     }
     fila="";
-    fila='<tr><td data-lable="Concepto">'+concepto+'</td><td data-lable="Estado">'+nameEstado+'</td><td data-lable="Precio"'+precio+'></td></tr>';
+    fila='<tr><td data-lable="Concepto">'+concepto+'</td><td data-lable="Estado">'+nameEstado+'</td><td data-lable="Precio">'+precio+'</td></tr>';
     console.log(fila);
     $("#Transacciones").append(fila);
 
