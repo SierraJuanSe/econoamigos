@@ -120,6 +120,30 @@ $("#Solicitar").click(function() {
     consultarSolicitudes()
 });
 
+
+//Buscar Oferta
+$("#botonBuscar").click(function() {
+    consultarOfertaEspecifica($("#barraBusqueda").val())
+    
+});
+async function traerOfertaEspecifica(ofertas) {
+    $("#ofertas").empty();
+    for (const oferta of ofertas) {
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen']);
+    }
+}
+
+//Traer Ofertas
+$("#BotonOfertas").click(function() {
+    consultarOfertas()
+});
+async function traerOfertas(ofertas) {
+    $("#ofertas").empty();
+    for (const oferta of ofertas) {
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen']);
+    }
+}
+
 //Funcion para realizar la busqueda de las solicitudes a ofertas
 async function traerSolicitudes(solicitudes) {
     $("#solicitudes").empty();
@@ -133,32 +157,3 @@ $("#cerrarSesion").click(function() {
     deleteCookie();
     location.href = "index.html";
 });
-
-$("#consultarTransacciones").click(function() {
-    consultarTrasnsacciones();
-});
-
-async function traerTransacciones(Transacciones) {
-    $("#Transacciones").empty();
-    titulos="";
-    titulos='<tr><th>Concepto </th> <th>Estado</th><th>Precio</th></tr>';
-    $("#Transacciones").append(titulos);
-
-    for (const Transaccion of Transacciones) {
-        mostrarTransacciones(Transaccion['concepto'],Transaccion['estado'],Transaccion['precio'].toString())    
-    }
-}
-
-$("#consultarOfertas").click(function() {
-    consultarOfertas();
-});
-async function traerOfertas(Ofertas) {
-    $("#Ofertas").empty();
-    titulos="";
-    titulos='<tr><th>Nombre </th> <th>Oferta</th><th>Ingreso</th></tr>';
-    $("#Ofertas").append(titulos);
-
-    for (const Ofertones of Ofertas) {
-        mostrarOfertas(Ofertones['nombre'],Ofertones['oferta'],Ofertones['ingreso'].toString())    
-    }
-}

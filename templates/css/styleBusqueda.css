@@ -538,7 +538,7 @@ section {
 
 #barraBusqueda {
     position: absolute;
-    top: 30px;
+    top: 300%;
     left: 35%;
     width: 26%;
     height: 60px;
@@ -546,7 +546,7 @@ section {
 
 #botonBuscar {
     position: absolute;
-    top: 30px;
+    top: 200%;
     right: 32%;
     width: 6%;
     height: 60px;
@@ -557,10 +557,39 @@ section {
     z-index: 2;
 }
 
-#tarjetas {
+#ofertas {
     margin-top: 8%;
 }
 
 .card-body {
     background: #E4DEDD;
+}
+.card{
+    width: max-content;
+}
+.card {
+    height: 250px;
+    width: 300px;
+    margin: 10px;
+    margin-left: -3%;
+}
+
+.card-link {
+    border: none;
+    color: blue;
+    display: block;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.card-link:active,
+.card-link:focus,
+.card-link:hover,
+.btn {
+    border: none;
+    background-position: right;
+    outline: none;
+    text-decoration: none;
 }

@@ -1,8 +1,8 @@
 //Mostrar nombre del usuario
-if (window.location.href.includes('menu.html')) {
+//if (window.location.href.includes('menu.html')) {
     mostrarNombre();
     mostrarSaldo();
-}
+//}
 
 
 function mostrarNombre() {
@@ -63,7 +63,30 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
     checkbox(id, estado,codCompra);
     }
 }
-
+//Mostrar todas las  ofertas
+function mostrarOfertas(id, tipo,nombre, descripcion,precio, lugar, cantidad, imagen) {
+    if (tipo == "Servicio") {
+        lugar = "Lugar: " + lugar;
+        cantidad="";
+        nameimagen = " ";
+        // nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
+    } else {
+        lugar = " " ;
+        cantidad = "Cantidad: " + cantidad;
+        nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
+    }
+    
+    ofertasC = "";
+    ofertasC = '<div class="col-sm-4" id="' + id + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
+        '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="descripcionOferta">' + descripcion + '</h6>' + '<p class="card-text" id="precioOferta">' + precio + '</p>' +
+        '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + id + '">Ver más...</button>' + '<div class="modal" id="myModal' + id + '">' + '<div class="modal-dialog">' +
+        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
+        '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
+        '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<a id="BotonComprar'+ id +'" type="button" class="btn">Comprar</a>'
+        '</div></div></div></div></div></div></div></div>';
+    $("#ofertas").append(ofertasC);
+    botonCrearCompra(id, precio);
+}
 //Accciones del checkbox
 function checkbox(id, estado, codCompra) {
 
@@ -72,6 +95,26 @@ function checkbox(id, estado, codCompra) {
         accionesCheck(id,codCompra);
     });
 }
+
+//Accciones del checkbox para cuando se ralice una compra
+function botonCrearCompra(idOferta, precio) {
+
+    //Accion de boton al checkbox
+    $("#BotonComprar" + idOferta).click(async function () {
+        var save = await crearCompra(idOferta,precio);
+        if (save){
+            $("#myModal" + idOferta).modal("hide");
+            swal("Compra Realizada", {
+                icon: "success"
+            });
+        }else{
+            swal("Error, tu compra no fue realizada", {
+                icon: "error"
+            });
+        }
+    });
+}
+
 
 async function accionesCheck(id,codCompra) {
     //Acciones de la alerta
@@ -93,26 +136,5 @@ async function accionesCheck(id,codCompra) {
                 $("#customCheck" + codCompra).prop("checked", false);
             }
         });
-}
-
-function mostrarTransacciones(concepto, estado, precio) {
-    if(estado){
-        nameEstado="Realizado"
-    }else{
-        nameEstado="En Proceso"
-    }
-    fila="";
-    fila='<tr><td data-lable="Concepto">'+concepto+'</td><td data-lable="Estado">'+nameEstado+'</td><td data-lable="Precio">'+precio+'</td></tr>';
-    console.log(fila);
-    $("#Transacciones").append(fila);
-
-}
-
-function mostrarOfertas(nombre, oferta, ingreso) {
-    fila="";
-    fila='<tr><td data-lable="Nombre">'+nombre+'</td><td data-lable="Oferta">'+oferta+'</td><td data-lable="Ingreso">'+ingreso+'</td></tr>';
-    console.log(fila);
-    $("#Ofertas").append(fila);
-
 }
 

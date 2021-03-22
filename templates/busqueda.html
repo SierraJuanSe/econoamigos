@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/styleBusqueda.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <meta http-equiv=”Content-Type” content="text/html"; charset="UTF-8" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -51,57 +51,28 @@
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
                 <input id="barraBusqueda" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button id="botonBuscar" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <button id="botonBuscar" type="button" class="btn" >Search</button>
             </form>
         </nav>
 
         <!-- TARJETAS DE SERVICIOS-->
 
-        <div id="tarjetas" class="row">
-            <div class="col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 id="Nombre" class="card-title"></h5>
-                        <p id="Precio" class="card-text"></p>
-                        <p id="LugarDescripcion" class="card-text"></p>
-                        <!-- Button to Open the Modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Ver Más
-        </button>
+        <section class="contenedor">
+            <br>
+            <br>
+            <br>
+            <h2 id="Servicios" class="titulos">Productos o Servicios que puedes adquirir</h2>
+            <button id="BotonOfertas" type="button" class="btn">Consultar</button>
+            <div class="Servicios">
 
-                        <!-- The Modal -->
-                        <div class="modal" id="myModal">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
+                <div class="ofertas">
+                    <div class="row" id="ofertas">
 
-                                    <!-- Modal Header -->
-                                    <div class="modal-header">
-                                        <h4 id="NombreInterior" class="modal-title">Nombre</h4>
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    </div>
-
-                                    <!-- Modal body -->
-                                    <div class="modal-body">
-                                        <img id="ImagenInterior" src="img/" align="middle">
-                                        <h6 id="PrecioInterior" class="modal-title">Precio</h6>
-                                        <h6 id="TipoInterior" class="modal-title">Tipo</h6>
-                                        <h6 id="CantidadDescripcionInterior" class="modal-title">Cantidad o Descripcion</h6>
-
-                                    </div>
-
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Comprar</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+        </section>
 
 
 
@@ -179,6 +150,7 @@
     </footer>
 
     <script src="js/main.js " type="text/javascript "></Script>
+    <script src="js/peticiones.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
 </body>
 
