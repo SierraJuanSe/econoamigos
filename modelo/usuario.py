@@ -42,10 +42,45 @@ class Usuario:
             self.fechaNac = result[0][7]
             self.moneda = result[0][8]
             self.direccion = result[0][9]
-
             return True
-
         return False
+
+    def actualizar(self):
+        sql = f"update Usuario as u set u.nombreUsuario='{self.nombre}',u.apellidousuario='{self.apellido}'," \
+              f"u.contraseñaUsuario=sha('{self.password}'),u.telefonoUsuario='{self.tel}'," \
+              f"u.ocupacionUsuario='{self.ocupacion}',u.direccion='{self.direccion}' " \
+              f"where u.idUsuario='{self.id}';"
+        print(sql)
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        try:
+            conn.connect()
+            conn.execute_query(sql)
+            conn.commit_change()
+            conn.close()
+            return True
+        except:
+            return False
+
+
+    def consultar(self):
+        sql = f"select * from Usuario as u where u.idUsuario='{self.id}';"
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        result = conn.execute_query(sql)
+        r = {}
+        try:
+            if result:
+                r['nombre'] = result[0][1]
+                r['apellido'] = result[0][2]
+                r['telefono'] = result[0][5]
+                r['ocupacion'] = result[0][6]
+                r['direccion'] = result[0][9]
+        except:
+            pass
+        conn.close()
+        return r, result[0][8]
 
     def existe_email(self):
         sql = 'select * from Usuario where `emailUsuario`=%s'
