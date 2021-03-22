@@ -23,7 +23,18 @@ def insertarTransaccion():
     else:
         return {'status': 400, 'info':False}
 
-### INSERTAR RECARGAR ####
+### INSERTAR RECARGA ####
+@app.route('/recargar', methods=['POST'])
+def insertarRecarga():
+    msg = request.get_json()
+    user = Usuario(id=msg.get('idUsuario'))
+    tran = Transaccion(concepto="Recarga", usuario=user,
+                           valor=msg.get('valor'), estado=True)
+    if tran.agregar():
+        return {'status': 200, 'info':True}
+    else:
+        return {'status': 400, 'info':False}
+
 
 @app.route('/consultarTransaccion', methods=['POST'])
 def consultarTransaccion():
