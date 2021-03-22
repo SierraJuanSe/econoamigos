@@ -157,3 +157,88 @@ $("#cerrarSesion").click(function() {
     deleteCookie();
     location.href = "index.html";
 });
+
+
+//Traer Datos
+$("#Consultar").click(function() {
+    consultarDatosConfiguracion()
+});
+async function traerDatosUsuario(datos) {
+    /*
+    $("#nombreR").empty();
+    $("#apellidoR").empty();
+    $("#telefonoR").empty();
+    $("#ocupacionR").empty();
+    $("#direccionR").empty();
+    $("#passR").empty();
+    */
+    $("#nombreR").val(datos["nombre"]);
+    $("#apellidoR").val(datos["apellido"]);
+    $("#telefonoR").val(datos["telefono"]);
+    $("#ocupacionR").val(datos["ocupacion"]);
+    $("#direccionR").val(datos["direccion"]);
+    
+  
+}
+
+
+//Modificar Datos
+$("#GuardarCambios").click(async function() {
+    nombre = $("#nombreR").val();
+    apellido = $("#apellidoR").val();
+    telefono = $("#telefonoR").val();
+    ocupacion = $("#ocupacionR").val();
+    direccion = $("#direccionR").val(); 
+    password = $("#passR").val(); 
+    
+    save = await ModificarDatosUsuario(nombre,apellido,telefono,ocupacion,direccion,password);
+    if(save){
+        swal("Se actualizaron los datos con éxito", {
+            icon: "success"
+        });
+    }else{
+        swal("No se pudo actualizar los datos", {
+            icon: "error"
+        });
+    }
+});
+async function ModificarDatosUsuario(datos) {
+    /*
+    $("#nombreR").empty();
+    $("#apellidoR").empty();
+    $("#telefonoR").empty();
+    $("#ocupacionR").empty();
+    $("#direccionR").empty();
+    $("#passR").empty();
+    */
+    $("#nombreR").val(datos["nombre"]);
+    $("#apellidoR").val(datos["apellido"]);
+    $("#telefonoR").val(datos["telefono"]);
+    $("#ocupacionR").val(datos["ocupacion"]);
+    $("#direccionR").val(datos["direccion"]);
+    
+  
+}
+
+
+//Recargar Cuenta
+$("#BotonRecargar").click(async function() {
+    recarga = $("#recargaR").val();
+    
+    save = await Recargar(parseInt(recarga));
+    
+    if(save.info){
+        //const USUARIO=JSON.parse(readCookie('token')); 
+        //USUARIO['moneda'] = USUARIO['moneda'] + parseInt(recarga);
+        console.log(save.moneda);
+        actualizarMonedaVista(save.moneda);
+        
+        swal("Se recargó el saldo con éxito", {
+            icon: "success"
+        });
+    }else{
+        swal("No se pudo recargar", {
+            icon: "error"
+        });
+    }
+});

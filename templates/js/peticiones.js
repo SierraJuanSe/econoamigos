@@ -307,6 +307,96 @@ async function crearCompra(id,precio){
     return true;
 }
 
+//consulta datos para la configuración
+async function consultarDatosConfiguracion(){
+    const USUARIO=JSON.parse(readCookie('token'));
+    let data={
+        "id":USUARIO["id"]
+    }
+ 
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/consultarUsuario",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerDatosUsuario(result.info)
+        } else {
+            swal("Error, Intentalo más tarde", {
+                icon: "error"
+            });
+            console.log(result.status)
+            return 0;
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+
+    return true;
+}
+
+//Modificar datos usuarios
+async function ModificarDatosUsuario(nombre,apellido,telefono,ocupacion,direccion,password){
+    const USUARIO=JSON.parse(readCookie('token'));
+    let data = {
+       "idUsuario":USUARIO['id'],
+        "nombreUsuario": nombre,
+        "apellidoUsuario": apellido,
+        "passwordUsuario": password,
+        "telefonoUsuario": telefono,
+        "ocupacionUsuario": ocupacion,
+        "direccionUsuario": direccion
+        
+    };
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/actualizarUsuario",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result.info);
+          return result.info;
+    } catch (error) {
+        console.log(error) 
+    }
+    console.log(data);
+    
+}
+
+//Recargar cuenta
+async function Recargar(recarga){
+    const USUARIO=JSON.parse(readCookie('token'));
+    let data = {
+       "idUsuario":USUARIO['id'],
+        "valor": recarga
+        
+    };
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/recargar",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result.info);
+          return result;
+    } catch (error) {
+        console.log(error) 
+    }
+    console.log(data);
+    
+}
+
+
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }

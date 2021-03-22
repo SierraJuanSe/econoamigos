@@ -18,6 +18,7 @@ function mostrarSaldo() {
 }
 
 function actualizarMonedaVista(newMoneda){
+    
     $("#saldoUser").empty();
     $("#saldoUser").append(' ' + newMoneda.toString());
 }
