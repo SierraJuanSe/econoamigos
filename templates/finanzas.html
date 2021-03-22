@@ -8,7 +8,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -57,24 +58,15 @@
                         </center>
                     </h2>
                     <br>
-                    <table border="1">
+                    <table id="Transacciones" border="1">
                         <tr>
                             <th>Concepto </th>
                             <th>Estado</th>
                             <th>Precio</th>
                         </tr>
-                        <tr>
-                            <td data-lable="Concepto">a</td>
-                            <td data-lable="Estado"></td>
-                            <td data-lable="Precio"></td>
-                        </tr>
-                        <tr>
-                            <td data-lable="Concepto">a</td>
-                            <td data-lable="Estado"></td>
-                            <td data-lable="Precio"></td>
-                        </tr>
+
                     </table>
-                    <button id="Visualizar" type="button" class="btn">Consultar</button>
+                    <button id="consultarTransacciones" type="button" class="btn">Consultar</button>
                 </div>
             </div>
             </div>
@@ -92,19 +84,22 @@
                     </div>
                     <div class="Textos">
                         <h2>Pregúntanos lo que necesites.</h2>
-                        <p class="lead text-muted "> Estamos trabajando para complacerte. Si tienes algún comentario, duda o sugerencia, solo avísanos.</p>
+                        <p class="lead text-muted "> Estamos trabajando para complacerte. Si tienes algún comentario,
+                            duda o sugerencia, solo avísanos.</p>
                         <form class="mt-6 ">
                             <div class="form-group ">
                                 <input type="text " class="form-control " id="nameC3" placeholder="Nombre ">
                             </div>
                             <div class="form-group ">
-                                <input type="email " class="form-control " id="emailC3" placeholder="Correo electrónico ">
+                                <input type="email " class="form-control " id="emailC3"
+                                    placeholder="Correo electrónico ">
                             </div>
                             <div class="form-group ">
                                 <input type="text " class="form-control " id="telC3" placeholder="Telefono celular ">
                             </div>
                             <div class="form-group ">
-                                <textarea class="form-control " id="comentC3" placeholder="Comentario " rows="5 "></textarea>
+                                <textarea class="form-control " id="comentC3" placeholder="Comentario "
+                                    rows="5 "></textarea>
                             </div>
                             <button id="Contact3" type="button" class="btn">Enviar mensaje</button>
                         </form>
@@ -120,7 +115,9 @@
             <div class="left box">
                 <h2> Sobre nosotros </h2>
                 <div class="content">
-                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios a cambio de Ecomonedas, nuestra moneda virtual. </p>
+                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando
+                        una economía solidaria en la que se puede ofrecer y obtener servicios a cambio de Ecomonedas,
+                        nuestra moneda virtual. </p>
                     <div class="social">
                         <a href="https://github.com/SierraJuanSe/econoamigos"><span class="fab fa-github"></span></a>
                     </div>
@@ -174,14 +171,16 @@
         <div class="bottom">
             <center>
                 <span class="credit">
-          Creado por <a href="#">Carvajal - Parrado - Pinilla - Salazar B - Salazar S - Sierra - Vejarano - Velasquez
-            |</a>
-        </span>
+                    Creado por <a href="#">Carvajal - Parrado - Pinilla - Salazar B - Salazar S - Sierra - Vejarano -
+                        Velasquez
+                        |</a>
+                </span>
                 <span class="far fa-copyright"></span><span> 2021 Todos los Derechos Reservados. </span>
             </center>
         </div>
     </footer>
 
+    <script src="js/peticiones.js" type="text/javascript"></Script>
     <script src="js/main.js" type="text/javascript"></Script>
     <script src="js/funciones.js" type="text/javascript"></Script>
     <script src="js/animaciones.js" type="text/javascript"></Script>

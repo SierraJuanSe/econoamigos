@@ -17,10 +17,10 @@ async function login(correo, contrasenia) {
         window.token = JSON.stringify(result);
         setCookie(token);
         console.log(readCookie('token'))
-         return true;
+        return true;
     } catch (error) {
         console.log(error)
-        
+
     }
 
 
@@ -50,10 +50,10 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-          return result.info;
+        return result.info;
     } catch (error) {
         console.log(error)
-        
+
     }
 }
 
@@ -62,9 +62,9 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
 
 //Consultar compras
 async function consultarCompras() {
-    var USUARIO=JSON.parse(readCookie('token'));
-    let data={
-        "idUsuario":USUARIO['id']
+    var USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idUsuario": USUARIO['id']
     }
     console.log(JSON.stringify(data));
     try {
@@ -96,9 +96,9 @@ async function consultarCompras() {
 
 //Consultar solicitudes
 async function consultarSolicitudes() {
-    var USUARIO=JSON.parse(readCookie('token'));
-    let data={
-        "idUsuario":USUARIO['id']
+    var USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idUsuario": USUARIO['id']
     }
     console.log(JSON.stringify(data));
     try {
@@ -128,9 +128,9 @@ async function consultarSolicitudes() {
 //HACER
 
 //Peticion para actualizar la solicitud de una compra
-async function actualizarSolicitud(codCompra){
-    let data={
-        "idCompra":codCompra
+async function actualizarSolicitud(codCompra) {
+    let data = {
+        "idCompra": codCompra
     }
     try {
         result = await $.ajax({
@@ -156,14 +156,14 @@ async function actualizarSolicitud(codCompra){
 }
 
 // Peticion para crear un servicio 
-async function crearServicio(nombre,descripcion,precio,lugar){
-    const USUARIO=JSON.parse(readCookie('token'));
+async function crearServicio(nombre, descripcion, precio, lugar) {
+    const USUARIO = JSON.parse(readCookie('token'));
     let data = {
         "nombre": nombre,
         "descripcion": descripcion,
-        "precio":precio,
-        "idUsuario":USUARIO['id'],
-        "lugar":lugar
+        "precio": precio,
+        "idUsuario": USUARIO['id'],
+        "lugar": lugar
     };
     try {
         result = await $.ajax({
@@ -173,24 +173,24 @@ async function crearServicio(nombre,descripcion,precio,lugar){
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-          return result.info;
+        return result.info;
     } catch (error) {
-        console.log(error) 
+        console.log(error)
     }
     console.log(data);
     return true;
 }
 
 //Peticion para crear un producto
-async function crearProducto(nombre,descripcion,precio,imagen,cantidad){
-    const USUARIO=JSON.parse(readCookie('token'));
+async function crearProducto(nombre, descripcion, precio, imagen, cantidad) {
+    const USUARIO = JSON.parse(readCookie('token'));
     let data = {
         "nombre": nombre,
         "descripcion": descripcion,
-        "precio":precio,
-        "idUsuario":USUARIO['id'],
-        "imagen":imagen,
-        "cantidad":cantidad
+        "precio": precio,
+        "idUsuario": USUARIO['id'],
+        "imagen": imagen,
+        "cantidad": cantidad
     };
     try {
         result = await $.ajax({
@@ -200,22 +200,22 @@ async function crearProducto(nombre,descripcion,precio,imagen,cantidad){
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-          return result.info;
+        return result.info;
     } catch (error) {
         console.log(error)
-        
+
     }
     console.log(data);
     return true;
 }
 
 //Peticion para consultar todas las ofertas(productos o servicios)
-async function consultarOfertas(){
-    const USUARIO=JSON.parse(readCookie('token'));
-    let data={
-        "id":USUARIO['id']
+async function consultarOfertas() {
+    const USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "id": USUARIO['id']
     }
- 
+
     try {
         result = await $.ajax({
             url: "http://25.7.209.143:5000/consultarOfertas",
@@ -242,11 +242,11 @@ async function consultarOfertas(){
 
 //Peticion para consultar una oferta mediante una busqueda de un input
 //consulta por nombre o descripcion
-async function consultarOfertaEspecifica(busqueda){
-    let data={
-        "busqueda":busqueda
+async function consultarOfertaEspecifica(busqueda) {
+    let data = {
+        "busqueda": busqueda
     }
- 
+
     try {
         result = await $.ajax({
             url: "http://25.7.209.143:5000/consultarOfertaEspecifica",
@@ -270,6 +270,43 @@ async function consultarOfertaEspecifica(busqueda){
     return true;
 }
 
+async function consultarTrasnsacciones() {
+    let result = [{
+        "concepto": "ingreso",
+        "estado": true,
+        "precio": 5000
+    },
+    {
+        "concepto": "compra",
+        "estado": false,
+        "precio": 15000
+    },
+    {
+        "concepto": "recarga",
+        "estado": true,
+        "precio": 2300
+    }]
+    traerTransacciones(result)
+}
+
+async function consultarOfertas() {
+    let result = [{
+        "nombre": "paseo",
+        "oferta": "AA311",
+        "ingreso": 5000
+    },
+    {
+        "nombre": "niñera",
+        "oferta": "ADD01",
+        "ingreso": 20000
+    },
+    {
+        "nombre": "medicamentos",
+        "oferta": "BBU103",
+        "ingreso": 1500
+    }]
+    traerOfertas(result)
+}
 
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
