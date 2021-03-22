@@ -13,8 +13,8 @@ def inicio():
 @app.route('/consultarOfertas', methods=['POST'])
 def consultarOfertas():
     msg = request.get_json()
-    ofertas = Producto()
-    res = ofertas.consultarTodaOferta(msg.get('id'))
+    ofertas = Producto(idUsuario=msg.get('id'))
+    res = ofertas.consultarTodaOferta()
     if len(res) != 0:
         return {'status': 200, 'info': res}
     else:
@@ -23,7 +23,7 @@ def consultarOfertas():
 @app.route('/consultarOfertaEspecifica', methods=['POST'])
 def consultarOferta():
     msg = request.get_json()
-    ofertas = Producto()
+    ofertas = Producto(idUsuario=msg.get('id'))
     res = ofertas.consultarOfertaEspecifica(msg.get('busqueda'))
     if len(res) != 0:
         return {'status': 200, 'info': res}

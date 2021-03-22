@@ -16,15 +16,17 @@ def inicio():
 def insertarCompra():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
+    print("id",user.id)
     tranCompra = Transaccion(concepto="Compra", usuario=user,
-                           valor=msg.get('precio'), estado=False)
+                           valor=int(msg.get('precio')), estado=False)
     user2 = Usuario(id=Transaccion().consultarIdUsuario(msg.get('idOferta')))
-    print(user2.id)
     tranIngreso = Transaccion(concepto="Ingreso", usuario=user2,
-                           valor=msg.get('precio'), estado=False)
+                           valor=int(msg.get('precio')), estado=False)
+    print("precio",tranIngreso.valor)
+    print("oferta",msg.get('idOferta'))
     tranCompra.agregar()
     tranIngreso.agregar()
-    comp = Compra(precio=msg.get('precio'), estado=False, usuario=user,
+    comp = Compra(precio=int(msg.get('precio')), estado=False, usuario=user,
                   cod_oferta=msg.get('idOferta'))
     if comp.agregar():
         return {'status': 200, 'info':True}

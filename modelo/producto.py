@@ -1,20 +1,14 @@
-import sys  
-sys.path.append(r"C:\Users\micha\OneDrive\Documentos\7 Semestre\Paralela\C C++\econo-prieteni\utils")
-sys.path.append(r"C:\Users\micha\OneDrive\Documentos\7 Semestre\Paralela\C C++\econo-prieteni\modelo")
-
 from modelo.oferta import Oferta
 from utils.conector import Conector, DBINFO
 
 class Producto(Oferta):
 
     def __init__(self,nombre=None,descripcion=None,precio=None,estado=None,idUsuario=None,imagen=None,cantidad=None):
-        super().__init__(nombre,descripcion,precio,estado,idUsuario)
+        Oferta.__init__(self,nombre,descripcion,precio,estado,idUsuario)
         self.imagen = imagen
         self.cantidad = cantidad
 
     def agregar(self):
-        self.estado = True
-        self.imagen = 'imagen'
         sql = f"insert into Oferta values('{None}','{self.nombre}','{self.descripcion}','{self.precio}','{self.estado}','{self.idUsuario}');"
         sql2 = f"insert into Producto values('{self.imagen}','{self.cantidad}',LAST_INSERT_ID());"        
         conn = Conector(DBINFO['host'], DBINFO['user'],
