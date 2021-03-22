@@ -17,7 +17,7 @@ async function login(correo, contrasenia) {
         window.token = JSON.stringify(result);
         setCookie(token);
         console.log(readCookie('token'))
-         return true;
+         return result;
     } catch (error) {
         console.log(error)
         
@@ -80,7 +80,10 @@ async function consultarCompras() {
             traerCompras(result.info)
         } else {
             console.log(result.status)
-            return 0;
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+            
         }
     } catch (error) {
         console.log(error)
@@ -114,7 +117,9 @@ async function consultarSolicitudes() {
             traerSolicitudes(result.info);
         } else {
             console.log(result.status)
-            return 0;
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
         }
     } catch (error) {
         console.log(error)
@@ -125,7 +130,6 @@ async function consultarSolicitudes() {
     return true;
 }
 
-//HACER
 
 //Peticion para actualizar la solicitud de una compra
 async function actualizarSolicitud(codCompra){
@@ -229,7 +233,9 @@ async function consultarOfertas(){
             traerOfertas(result.info)
         } else {
             console.log(result.status)
-            return 0;
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
         }
     } catch (error) {
         console.log(error)
