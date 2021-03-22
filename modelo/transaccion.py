@@ -49,3 +49,12 @@ class Transaccion:
         conn.commit_change()
         conn.close()
         return True
+
+    def consultarIdUsuario(self, oferta):
+        sql = f"select Usuario.idUsuario from Oferta, Usuario where Oferta.codOferta={oferta} and Oferta.Usuario_idUsuario= Usuario.idUsuario"
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        result = conn.execute_query(sql)
+        conn.close()
+        return result[0][0]
