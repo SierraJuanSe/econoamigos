@@ -26,7 +26,8 @@ function actualizarMonedaVista(newMoneda){
 function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lugar, imagen) {
     if (tipo == "Producto") {
         namelugar = " ";
-        nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
+        nameimagen="";
+        // nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
     } else {
         namelugar = "Lugar: " + lugar;
         nameimagen = " ";
@@ -56,7 +57,7 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
     solO = "";
     solO = '<tr id="filasol'+codCompra+'"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
         '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
-        '<input type="checkbox" class="custom-control-input" id="customCheck' + id + '"><label class="custom-control-label" for="customCheck' + id + '"></label></td></tr>';
+        '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
     //Inserscion al HTML
     $("#solicitudes").append(solO);
     checkbox(id, estado,codCompra);
@@ -67,7 +68,7 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
 function checkbox(id, estado, codCompra) {
 
     //Accion de boton al checkbox
-    $("#customCheck" + id).click(function () {
+    $("#customCheck" + codCompra).click(function () {
         accionesCheck(id,codCompra);
     });
 }
@@ -89,7 +90,7 @@ async function accionesCheck(id,codCompra) {
                     $("#filasol"+codCompra).remove();
                 }
             } else {
-                $("#customCheck" + id).prop("checked", false);
+                $("#customCheck" + codCompra).prop("checked", false);
             }
         });
 }

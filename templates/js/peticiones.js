@@ -58,84 +58,99 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
 }
 
 
-
+//HACER
 
 //Consultar compras
 async function consultarCompras() {
-    let result = [{
-        "codcompra": "01",
-        "nombre": "Telefono",
-        "descripcion": "Telefono samsung",
-        "tipo": "Producto",
-        "precio": "15000",
-        "estado": true,
-        "lugar": null,
-        "imagen": "https://www.semana.com/resizer/1JZsDLYxDxH5WfbE2YLj5Yc7f0M=/960x540/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/semana/O722PPTFNBH55IPOVUR3VFOSZE.jpg"
-    }, {
-        "codcompra": "02",
-        "nombre": "Pasear Perros",
-        "descripcion": "Pasear perros en el barrio Galpan cada finde semana del mes de mayo",
-        "tipo": "Servicio",
-        "precio": "200.000",
-        "estado": false,
-        "lugar": "Bogotá",
-        "imagen": null
-    }, {
-        "codcompra": "02",
-        "nombre": "Vestido",
-        "descripcion": "Vestido azul con nubes ceñido al cuerpo. Original de shei",
-        "tipo": "Producto",
-        "precio": "20.000",
-        "estado": false,
-        "lugar": null,
-        "imagen": "'https://www.semana.com/resizer/1JZsDLYxDxH5WfbE2YLj5Yc7f0M=/960x540/filters:format(jpg):quality(70)/cloudfront-us-east-1.images.arcpublishing.com/semana/O722PPTFNBH55IPOVUR3VFOSZE.jpg'"
-    }];
-    $.ajax({
-
-        error: function(response) {
-            console.log(JSON.stringify(response))
+    var USUARIO=JSON.parse(readCookie('token'));
+    let data={
+        "idUsuario":USUARIO['id']
+    }
+    console.log(JSON.stringify(data));
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/consultarOfertasCompradas",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerCompras(result.info)
+        } else {
+            console.log(result.status)
+            return 0;
         }
-    });
-    traerCompras(result)
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+
+    return true;
 }
 
+
+//HACER
 
 //Consultar solicitudes
 async function consultarSolicitudes() {
-    let result = [{
-        "codCompra":"1",
-        "id": "1010456987",
-        "nombre": "Valeria",
-        "apellido": "Carvajal",
-        "telefono": "3123962641",
-        "direccion": "Calle 71 94-33",
-        "oferta": "telefono",
-        "estado": false
-    }, {
-        "codCompra":"2",
-        "id": "1056986987",
-        "nombre": "Andres",
-        "apellido": "Lopez",
-        "telefono": "3123969514",
-        "direccion": "Calle 41 94-35",
-        "oferta": "Paseo perros",
-        "estado": true
-    }, {
-        "codCompra":"3",
-        "id": "1010448787",
-        "nombre": "Felipe",
-        "apellido": "Velasquez",
-        "telefono": "3124562641",
-        "direccion": "Calle 58 94-38",
-        "oferta": "Vestido Azul",
-        "estado": false
-    }];
-    traerSolicitudes(result)
+    var USUARIO=JSON.parse(readCookie('token'));
+    let data={
+        "idUsuario":USUARIO['id']
+    }
+    console.log(JSON.stringify(data));
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/consultarOfertasVendidas",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerSolicitudes(result.info);
+        } else {
+            console.log(result.status)
+            return 0;
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+
+    return true;
 }
+
+//HACER
 
 //Peticion para actualizar la solicitud de una compra
 async function actualizarSolicitud(codCompra){
-    console.log(codCompra)
+    let data={
+        "idCompra":codCompra
+    }
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/actualizarEstadoCompra",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+        } else {
+            console.log(result.status)
+            return 0;
+        }
+        return result.info;
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
     actualizarMonedaVista(20000);
     return true;
 }

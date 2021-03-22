@@ -110,7 +110,7 @@ $("#Compras").click(function() {
 function traerCompras(compras) {
     $("#compras").empty();
     for (const compra of compras) {
-        mostrarCompras(compra['codcompra'], compra['nombre'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen']);
+        mostrarCompras(compra['codCompra'], compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen']);
 
     }
 }
@@ -121,7 +121,7 @@ $("#Solicitar").click(function() {
 });
 
 //Funcion para realizar la busqueda de las solicitudes a ofertas
-function traerSolicitudes(solicitudes) {
+async function traerSolicitudes(solicitudes) {
     $("#solicitudes").empty();
     for (const solicitud of solicitudes) {
         mostrarSolicitudes(solicitud['codCompra'],solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
