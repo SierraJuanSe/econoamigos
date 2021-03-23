@@ -242,3 +242,32 @@ $("#BotonRecargar").click(async function() {
         });
     }
 });
+
+$("#consultarTransacciones").click(function() {
+    consultarTrasnsacciones();
+});
+
+async function traerTransacciones(Transacciones) {
+    $("#Transacciones").empty();
+    titulos="";
+    titulos='<tr><th>Concepto </th> <th>Estado</th><th>Precio</th></tr>';
+    $("#Transacciones").append(titulos);
+
+    for (const Transaccion of Transacciones) {
+        mostrarTransacciones(Transaccion['concepto'],Transaccion['estado'],Transaccion['precio'].toString())    
+    }
+}
+
+$("#consultarOfertas").click(function() {
+    consultarOfertas();
+});
+async function traerOfertas(Ofertas) {
+    $("#Ofertas").empty();
+    titulos="";
+    titulos='<tr><th>Nombre </th> <th>Oferta</th><th>Ingreso</th></tr>';
+    $("#Ofertas").append(titulos);
+
+    for (const Ofertones of Ofertas) {
+        mostrarOfertas(Ofertones['nombre'],Ofertones['oferta'],Ofertones['ingreso'].toString())    
+    }
+}

@@ -402,6 +402,44 @@ async function Recargar(recarga){
     
 }
 
+async function consultarTrasnsacciones() {
+    let result = [{
+        "concepto": "ingreso",
+        "estado": true,
+        "precio": 5000
+    },
+    {
+        "concepto": "compra",
+        "estado": false,
+        "precio": 15000
+    },
+    {
+        "concepto": "recarga",
+        "estado": true,
+        "precio": 2300
+    }]
+    traerTransacciones(result)
+}
+
+async function consultarOfertas() {
+    let result = [{
+        "nombre": "paseo",
+        "oferta": "AA311",
+        "ingreso": 5000
+    },
+    {
+        "nombre": "niñera",
+        "oferta": "ADD01",
+        "ingreso": 20000
+    },
+    {
+        "nombre": "medicamentos",
+        "oferta": "BBU103",
+        "ingreso": 1500
+    }]
+    traerOfertas(result)
+}
+
 
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";

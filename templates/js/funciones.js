@@ -139,3 +139,24 @@ async function accionesCheck(id,codCompra) {
         });
 }
 
+function mostrarTransacciones(concepto, estado, precio) {
+    if(estado){
+        nameEstado="Realizado"
+    }else{
+        nameEstado="En Proceso"
+    }
+    fila="";
+    fila='<tr><td data-lable="Concepto">'+concepto+'</td><td data-lable="Estado">'+nameEstado+'</td><td data-lable="Precio">'+precio+'</td></tr>';
+    console.log(fila);
+    $("#Transacciones").append(fila);
+
+}
+
+function mostrarOfertas(nombre, oferta, ingreso) {
+    fila="";
+    fila='<tr><td data-lable="Nombre">'+nombre+'</td><td data-lable="Oferta">'+oferta+'</td><td data-lable="Ingreso">'+ingreso+'</td></tr>';
+    console.log(fila);
+    $("#Ofertas").append(fila);
+
+}
+
