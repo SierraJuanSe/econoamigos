@@ -1,7 +1,7 @@
 from app.controlador import bp
 from app.modelo.usuario import Usuario
 from app.modelo.transaccion import Transaccion
-
+from flask import request
 
 @bp.route('/')
 def inicio():

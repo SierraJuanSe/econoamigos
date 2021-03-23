@@ -2,6 +2,7 @@ from app.controlador import bp
 from app.modelo.usuario import Usuario
 from app.modelo.compra import Compra
 from app.modelo.transaccion import Transaccion
+from flask import request
 
 # @app.route('/')
 # def inicio():

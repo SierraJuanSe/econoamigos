@@ -1,5 +1,6 @@
 from app.controlador import bp
 from app.modelo.producto import Producto
+from flask import request
 
 
 
