@@ -1,5 +1,5 @@
-from modelo.oferta import Oferta
-from utils.conector import Conector, DBINFO
+from app.modelo.oferta import Oferta
+from app.utils.conector import Conector, DBINFO
 
 class Servicio(Oferta):
 

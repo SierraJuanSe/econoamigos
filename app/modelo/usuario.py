@@ -1,4 +1,4 @@
-from utils.conector import Conector, DBINFO
+from app.utils.conector import Conector, DBINFO
 
 
 class Usuario:

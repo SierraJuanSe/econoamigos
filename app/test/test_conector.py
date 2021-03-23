@@ -1,6 +1,6 @@
 import unittest
-from utils.conector import Conector
-from utils.conector import DBINFO
+from app.utils.conector import Conector
+from app.utils.conector import DBINFO
 
 
 class TestConector(unittest.TestCase):

@@ -1,20 +1,15 @@
-#!/usr/bin/python3
-from modelo.usuario import Usuario
-from modelo.compra import Compra
-from modelo.transaccion import Transaccion
-from flask import Flask, request
-from flask_cors import CORS
+from app.controlador import bp
+from app.modelo.usuario import Usuario
+from app.modelo.compra import Compra
+from app.modelo.transaccion import Transaccion
 
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/')
-def inicio():
-    return("Inicio Compra")
+# @app.route('/')
+# def inicio():
+#     return("Inicio Compra")
 
 # Crea una compra de tal forma que se genere un transacción de ingreso y compra
 # Su estado cambiará cuando el que oferta confirme la entrega o la prestación del servicio
-@app.route('/insertarCompra', methods=['POST'])
+@bp.route('/insertarCompra', methods=['POST'])
 def insertarCompra():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
@@ -33,7 +28,7 @@ def insertarCompra():
         return {'status': 400, 'info':False}
 
 # Retorna todas las ofertas que el usuario adquirió
-@app.route('/consultarOfertasCompradas', methods=['POST'])
+@bp.route('/consultarOfertasCompradas', methods=['POST'])
 def consultarOfertasComprados():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
@@ -46,7 +41,7 @@ def consultarOfertasComprados():
         return {'status': 404}
 
 # Retorna todas las ofertas que el usuario haya vendido
-@app.route('/consultarOfertasVendidas', methods=['POST'])
+@bp.route('/consultarOfertasVendidas', methods=['POST'])
 def consultarOfertasVendidos():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
@@ -60,8 +55,8 @@ def consultarOfertasVendidos():
 
 # El usuario que oferta confirma la compra
 # Y automáticamente el trigger actualizará el total de moneda de comprador y vendedor
-@app.route('/actualizarEstadoCompra', methods=['POST'])
-def insertarTransaccion():
+@bp.route('/actualizarEstadoCompra', methods=['POST'])
+def actualizarEstadoCompra():
     msg = request.get_json()
     comp = Compra(id=msg.get('idCompra'))
     if comp.actualizar_estado():

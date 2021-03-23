@@ -1,18 +1,14 @@
-#!/usr/bin/python3
-from modelo.usuario import Usuario
-from modelo.transaccion import Transaccion
-from flask import Flask, request
-from flask_cors import CORS
+from app.controlador import bp
+from app.modelo.usuario import Usuario
+from app.modelo.transaccion import Transaccion
 
-app = Flask(__name__)
-CORS(app)
 
-@app.route('/')
+@bp.route('/')
 def inicio():
     return("Inicio Usuario")
 
 # Creación de un nuevo usuario
-@app.route('/registro', methods=['POST'])
+@bp.route('/registro', methods=['POST'])
 def registrarUsuario():
     msg = request.get_json()
     nuevo = Usuario(id = msg.get('idUsuario'), nombre = msg.get('nombreUsuario'),
@@ -27,7 +23,7 @@ def registrarUsuario():
         return {"status": 400,"info": False}
 
 # Permite o no el ingreso a la plataforma
-@app.route('/ingreso', methods = ['POST'])
+@bp.route('/ingreso', methods = ['POST'])
 def ingresar():
     msg = request.get_json()
     usuarioReg = Usuario(email = msg.get('emailUsuario'), password= msg.get('passwordUsuario'))
@@ -40,7 +36,7 @@ def ingresar():
         return {"status": 400,"info": False, "token":""}
 
 # Actualiza la información del usuario a excepción de su correo y fecha de nacimiento
-@app.route('/actualizarUsuario', methods=['POST'])
+@bp.route('/actualizarUsuario', methods=['POST'])
 def actualizarUsuario():
     msg = request.get_json()
     nuevo = Usuario(id = msg.get('idUsuario'), nombre = msg.get('nombreUsuario'),
@@ -54,7 +50,7 @@ def actualizarUsuario():
         return {"status": 400,"info": False}
 
 # Retorna la información del usuario
-@app.route('/consultarUsuario', methods = ['POST'])
+@bp.route('/consultarUsuario', methods = ['POST'])
 def consultar():
     msg = request.get_json()
     usuarioCon = Usuario(id = msg.get('id'))
@@ -66,7 +62,7 @@ def consultar():
     return respuesta
 
 # Recarga la moneda de un usuario
-@app.route('/recargar', methods=['POST'])
+@bp.route('/recargar', methods=['POST'])
 def insertarRecarga():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))

@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"C:\Users\micha\OneDrive\Documentos\7 Semestre\Paralela\C C++\econo-prieteni\modelo")
 
 import unittest
-from producto import Producto
+from app.modelo.producto import Producto
 
 
 class TestOferta(unittest.TestCase):

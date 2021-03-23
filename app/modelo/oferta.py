@@ -2,7 +2,7 @@ import sys
 sys.path.append(r"C:\Users\micha\OneDrive\Documentos\7 Semestre\Paralela\C C++\econo-prieteni\utils")
 
 from abc import ABCMeta, abstractmethod
-from utils.conector import Conector, DBINFO
+from app.utils.conector import Conector, DBINFO
 
 class Oferta:
 
