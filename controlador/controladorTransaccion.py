@@ -12,6 +12,7 @@ CORS(app)
 def inicio():
     return("Inicio Transaccion")
 
+# Se crea una transacción que por defecto estará en estado pendiente
 @app.route('/insertarTransaccion', methods=['POST'])
 def insertarTransaccion():
     msg = request.get_json()
@@ -23,6 +24,7 @@ def insertarTransaccion():
     else:
         return {'status': 400, 'info':False}
 
+# Retorna todas las transacciones que un usuario haya realizado
 @app.route('/consultarTransaccion', methods=['POST'])
 def consultarTransaccion():
     msg = request.get_json()
@@ -34,6 +36,7 @@ def consultarTransaccion():
     else:
         return {'status': 404}
 
+# Actualiza el estado a completado en la transacción
 @app.route('/actualizarEstadoTransaccion', methods=['POST'])
 def actualizarTransaccion():
     msg = request.get_json()

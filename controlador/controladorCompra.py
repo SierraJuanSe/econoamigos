@@ -12,18 +12,17 @@ CORS(app)
 def inicio():
     return("Inicio Compra")
 
+# Crea una compra de tal forma que se genere un transacción de ingreso y compra
+# Su estado cambiará cuando el que oferta confirme la entrega o la prestación del servicio
 @app.route('/insertarCompra', methods=['POST'])
 def insertarCompra():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
-    print("id",user.id)
     tranCompra = Transaccion(concepto="Compra", usuario=user,
                            valor=int(msg.get('precio')), estado=False)
     user2 = Usuario(id=Transaccion().consultarIdUsuario(msg.get('idOferta')))
     tranIngreso = Transaccion(concepto="Ingreso", usuario=user2,
                            valor=int(msg.get('precio')), estado=False)
-    print("precio",tranIngreso.valor)
-    print("oferta",msg.get('idOferta'))
     tranCompra.agregar()
     tranIngreso.agregar()
     comp = Compra(precio=int(msg.get('precio')), estado=False, usuario=user,
@@ -33,7 +32,7 @@ def insertarCompra():
     else:
         return {'status': 400, 'info':False}
 
-
+# Retorna todas las ofertas que el usuario adquirió
 @app.route('/consultarOfertasCompradas', methods=['POST'])
 def consultarOfertasComprados():
     msg = request.get_json()
@@ -46,7 +45,7 @@ def consultarOfertasComprados():
     else:
         return {'status': 404}
 
-
+# Retorna todas las ofertas que el usuario haya vendido
 @app.route('/consultarOfertasVendidas', methods=['POST'])
 def consultarOfertasVendidos():
     msg = request.get_json()
@@ -59,12 +58,15 @@ def consultarOfertasVendidos():
     else:
         return {'status': 404}
 
+# El usuario que oferta confirma la compra
+# Y automáticamente el trigger actualizará el total de moneda de comprador y vendedor
 @app.route('/actualizarEstadoCompra', methods=['POST'])
 def insertarTransaccion():
     msg = request.get_json()
     comp = Compra(id=msg.get('idCompra'))
     if comp.actualizar_estado():
-        return {'status': 200, 'info':True}
+        aux, moneda = Usuario(id=msg.get('idUsuario')).consultar()
+        return {'status': 200, 'info':True, 'moneda': moneda}
     else:
         return {'status': 400, 'info':False}
 

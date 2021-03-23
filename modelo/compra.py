@@ -64,7 +64,7 @@ class Compra:
 
     def consulta_productos_vendidos(self):
         # Consultar Quienes realizaron las compras de los Productos realizados por el usuario
-        sql = "SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion, Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{}') INNER JOIN Producto ON Compra.Oferta_codOferta = Producto.Oferta_codOferta INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
+        sql = "SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion, Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra, Compra.precioCompra FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{}') INNER JOIN Producto ON Compra.Oferta_codOferta = Producto.Oferta_codOferta INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
         sql = sql.format(self.usuario.id)
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
@@ -82,6 +82,7 @@ class Compra:
                  r['direccion'] = fila[5]
                  r['oferta'] = fila[7]
                  r['estado'] = fila[8]
+                 r['precio'] = fila[9]
                  res.append(r)
         except:
             pass
@@ -90,7 +91,7 @@ class Compra:
 
     def consulta_servicios_vendidos(self):
         # Consultar Quienes realizaron las compras los servicios realizados por el usuario 978676
-        sql = "SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario, Usuario.direccion, Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{}') INNER JOIN Servicio ON Compra.Oferta_codOferta = Servicio.Oferta_codOferta INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
+        sql = "SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario, Usuario.direccion, Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra, Compra.precioCompra FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{}') INNER JOIN Servicio ON Compra.Oferta_codOferta = Servicio.Oferta_codOferta INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
         sql = sql.format(self.usuario.id)
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
@@ -107,6 +108,7 @@ class Compra:
             r['direccion'] = fila[5]
             r['oferta'] = fila[7]
             r['estado'] = fila[8]
+            r['precio'] = fila[9]
             res.append(r)
         conn.close()
         return res

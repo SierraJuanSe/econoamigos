@@ -10,6 +10,7 @@ CORS(app)
 def inicio():
     return("Inicio Producto")
 
+# Trae todas las ofertas excepto las que el usuario ofertó
 @app.route('/consultarOfertas', methods=['POST'])
 def consultarOfertas():
     msg = request.get_json()
@@ -20,6 +21,7 @@ def consultarOfertas():
     else:
         return {'status': 404}
 
+# Crea una oferta para ser publicada al instante
 @app.route('/consultarOfertaEspecifica', methods=['POST'])
 def consultarOferta():
     msg = request.get_json()
@@ -30,6 +32,7 @@ def consultarOferta():
     else:
         return {'status': 404}
 
+# Crea un producto para ser ofertado al instante
 @app.route('/insertarProducto', methods=['POST'])
 def insertarOferta():
     msg = request.get_json()
@@ -41,15 +44,6 @@ def insertarOferta():
     else:
         return {'status': 400, 'info':False}
 
-@app.route('/consultarProducto', methods=['GET'])
-def consultarProducto():
-    msg = request.get_json()
-    ofertas = Producto()
-    res = ofertas.consultaIndividual(cod=msg.get('codigo'))
-    if res != {}:
-        return {'status': 200, 'info': res}
-    else:
-        return {'status': 404}
 
 if __name__ == '__main__':
   app.run(host="25.7.209.143")

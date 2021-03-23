@@ -32,7 +32,7 @@ class Transaccion:
             r['id'] = fila[0]
             r['concepto'] = fila[1]
             r['idUsuario'] = fila[2]
-            r['valor'] = fila[3]
+            r['precio'] = fila[3]
             r['estado'] = fila[4]
             res.append(r)
         conn.close()
