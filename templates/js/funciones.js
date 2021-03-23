@@ -18,7 +18,7 @@ function mostrarSaldo() {
 }
 
 function actualizarMonedaVista(newMoneda){
-    
+
     $("#saldoUser").empty();
     $("#saldoUser").append(' ' + newMoneda.toString());
 }
@@ -26,9 +26,9 @@ function actualizarMonedaVista(newMoneda){
 //Mostrar todas las ofertas compradas 
 function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lugar, imagen) {
     if (tipo == "Producto") {
-        namelugar = " ";
-        nameimagen="";
-        // nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
+        namelugar = "";
+        nameimagen="" ;
+        nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
     } else {
         namelugar = "Lugar: " + lugar;
         nameimagen = " ";
@@ -97,10 +97,8 @@ function checkbox(id, estado, codCompra) {
     });
 }
 
-//Accciones del checkbox para cuando se ralice una compra
 function botonCrearCompra(idOferta, precio) {
 
-    //Accion de boton al checkbox
     $("#BotonComprar" + idOferta).click(async function () {
         var save = await crearCompra(idOferta,precio);
         if (save){
@@ -117,7 +115,7 @@ function botonCrearCompra(idOferta, precio) {
 }
 
 
-async function accionesCheck(id,codCompra) {
+function accionesCheck(id,codCompra) {
     //Acciones de la alerta
     swal({
         title: "¿Estas seguro de cambiar el estado de la solicitud?",
@@ -129,13 +127,35 @@ async function accionesCheck(id,codCompra) {
                 swal("Tu solicitud ha sido realizada, ya podras Verificar tu saldo", {
                     icon: "success"
                 });
-                var result = actualizarSolicitud(codCompra);
-                if (result) {
-                    $("#filasol"+codCompra).remove();
-                }
+                var result =actualizarSolicitud(codCompra);
+                console.log(result.info)
+
             } else {
                 $("#customCheck" + codCompra).prop("checked", false);
             }
         });
 }
 
+function mostrarTransacciones(concepto, estado, precio) {
+    if(estado){
+        nameEstado="Realizado"
+    }else{
+        nameEstado="En Proceso"
+    }
+    if (concepto=='compra' || concepto=='Compra') {
+        precio='-'+precio;
+    }
+    fila="";
+    fila='<tr><td data-lable="Concepto">'+concepto+'</td><td data-lable="Estado">'+nameEstado+'</td><td data-lable="Precio">'+precio+'</td></tr>';
+    console.log(fila);
+    $("#Transacciones").append(fila);
+
+}
+
+function mostrarHistorialOfertas(nombre, comprador, ingreso,estado) {
+    if(estado){
+    fila="";
+    fila='<tr><td data-lable="Nombre">'+nombre+'</td><td data-lable="Oferta">'+comprador+'</td><td data-lable="Ingreso">'+ingreso+'</td></tr>';
+    $("#Ofertas").append(fila);
+    }
+}

@@ -228,8 +228,10 @@ $("#BotonRecargar").click(async function() {
     save = await Recargar(parseInt(recarga));
     
     if(save.info){
-        //const USUARIO=JSON.parse(readCookie('token')); 
-        //USUARIO['moneda'] = USUARIO['moneda'] + parseInt(recarga);
+        const USUARIO=JSON.parse(readCookie('token')); 
+        USUARIO['moneda']=result.moneda;
+        window.token = JSON.stringify(USUARIO);
+        setCookie(token);
         console.log(save.moneda);
         actualizarMonedaVista(save.moneda);
         
@@ -242,3 +244,35 @@ $("#BotonRecargar").click(async function() {
         });
     }
 });
+
+
+//JANIS
+$("#consultarTransacciones").click(function() {
+    consultarTrasnsacciones();
+});
+
+async function traerTransacciones(Transacciones) {
+    $("#Transacciones").empty();
+    titulos="";
+    titulos='<tr><th>Concepto </th> <th>Estado</th><th>Precio</th></tr>';
+    $("#Transacciones").append(titulos);
+
+    for (const Transaccion of Transacciones) {
+        mostrarTransacciones(Transaccion['concepto'],Transaccion['estado'],Transaccion['precio'].toString())    
+    }
+}
+
+$("#consultarHistorialOfertas").click(function() {
+    consultarSolicitudes();
+});
+
+async function traerHistorialOfertas(Ofertas) {
+    $("#Ofertas").empty();
+    titulos="";
+    titulos='<tr><th>Nombre </th> <th>Comprador</th><th>Ingreso</th></tr>';
+    $("#Ofertas").append(titulos);
+
+    for (const Ofertones of Ofertas) {
+        mostrarHistorialOfertas(Ofertones['oferta'],Ofertones['nombre'],Ofertones['precio'].toString(),Ofertones['estado'])    
+    }
+}

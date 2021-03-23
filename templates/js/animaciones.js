@@ -46,7 +46,7 @@ async function envioLogin(correo, contrasenia) {
         location.href = "menu.html";
         console.log(save)
     } else {
-        swal("Error", "El correo que intentas ingresar no esta registrado", "error");
+        swal("Error", "Por favor revisa si ingresaste bien los datos", "error");
     }
 
 }
