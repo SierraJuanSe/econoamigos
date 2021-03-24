@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/styleConf.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <meta http-equiv=”Content-Type” content="text/html" ; charset="UTF-8" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -47,33 +47,38 @@
     <main>
 
         <!-- CONTENIDO-->
-        <h2 id="Servicios" class="titulos">Configuración De Cuenta</h2>
-        <h3 align="center">Elige entre las opciones la que deseas modificar y configurar</h3>
-       <div id="tarjetas" class="row">
-            <div class="col-sm-6">
-                <div class="card" align="center" >
-                    <div class="card-body" >
-                        <h2 id="Nombre1" class="card-title" align="center">Datos Personales</h2>
-                        <img id="dataPersonal" src="img/dataPersonal.svg" alt="" align="middle" width="20%" margin-left="-20%">
-                        <p id="descripcion" class="card-text">Ingresa y modifica tus datos. Puedes actualizar tu nombre, apellido, número  de teléfono, correo, ocupación, dirección, entre otros.</p>
-                        <a href="confData.html" id="ActualizarDatos" type="button" class="btn">Actualizar Datos</a>
+        <div class="contenedor">
+            <h2 id="Servicios" class="titulos">Configuración De Cuenta</h2>
+            <h3 align="center">Elige entre las opciones la que deseas modificar y configurar</h3>
+            <div id="tarjetas" class="row">
+                <div class="col-sm-6">
+                    <div class="card" align="center">
+                        <div class="card-body">
+                            <h2 id="Nombre1" class="card-title" align="center">Datos Personales</h2>
+                            <img id="dataPersonal" src="img/dataPersonal.svg" alt="" align="middle" width="20%" margin-left="-20%">
+                            <br>
+                            <p id="descripcion" class="card-text">Ingresa y modifica tus datos como tu nombre, apellido, número de teléfono, correo, ocupación, dirección, entre otros. Recuerda que para actualizar debes validar tu contraseña.</p>
+                            <a href="confData.html" id="ActualizarDatos" type="button" class="btn">Actualizar Datos</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card" align="center">
+                        <div class="card-body">
+                            <h2 id="Nombre2" class="card-title" align="center">Recarga</h2>
+                            <img id="dataPersonal" src="img/ImgRecarga.svg" alt="" align="middle" width="23%" margin-left="-20%">
+                            <br>
+                            <p id="Precio" class="card-text">Realiza recargas de cualquier monto y lo verás reflejado en tu saldo como Ecomonedas. Este dinero virtual te será útil para cuando quieras adquirir un producto o un servicio en la plataforma.</p>
+                            <p id="LugarDescripcion" class="card-text"></p>
+                            <a href="confRecarga.html" id="ActualizarDatos" type="button" class="btn">Recargar</a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="card" align="center" >
-                    <div class="card-body" >
-                        <h2 id="Nombre2" class="card-title" align="center">Recarga</h2>
-                        <img id="dataPersonal" src="img/ImgRecarga.svg" alt="" align="middle" width="23%" margin-left="-20%">
-                        <p id="Precio" class="card-text">Realiza recargas de cualquier monto y lo verás reflejado en tu saldo como ecomonedas. Este dinero virtual te será útil para cuando quieras adquirir un producto o un servicio en la plataforma.</p>
-                        <p id="LugarDescripcion" class="card-text"></p>
-                        <a href="confRecarga.html" id="ActualizarDatos" type="button" class="btn">Recargar</a>
-                    </div>
-                </div>
-            </div>
+
         </div>
-        
-</main>
+
+    </main>
     <!-- Pie de página-->
     <footer>
         <div class="main-content ">
@@ -143,8 +148,8 @@
     </footer>
 
     <script src="js/main.js " type="text/javascript "></Script>
-        <script src="js/peticiones.js " type="text/javascript "></Script>
-        <script src="js/funciones.js " type="text/javascript "></Script>
+    <script src="js/peticiones.js " type="text/javascript "></Script>
+    <script src="js/funciones.js " type="text/javascript "></Script>
 </body>
 
 </html>

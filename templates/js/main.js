@@ -45,6 +45,10 @@ $("#Contactar").click(function() {
     //Verificar datos
     if (nombre == "" || telefono == "" || correo == "" || comentario == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(telefono)) {
+        swal("Error", "Por favor, Ingrese un número de teléfono válido", "error");
+    } else if (!correo.includes('@')) {
+        swal("Error", "Por favor, Ingrese un formato de correo válido", "error");
     } else {
         swal("Correcto", "Gracias por contactarnos", "success")
     }
@@ -61,6 +65,10 @@ $("#ContactoO2").click(function() {
     //Verificar datos
     if (nombre2 == "" || telefono2 == "" || correo2 == "" || comentario2 == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(telefono2)) {
+        swal("Error", "Por favor, Ingrese un número de teléfono válido", "error");
+    } else if (!correo2.includes('@')) {
+        swal("Error", "Por favor, Ingrese un formato de correo válido", "error");
     } else {
         swal("Correcto", "Gracias por contactarnos", "success")
     }
@@ -78,6 +86,10 @@ $("#Contact3").click(function() {
     //Verificar datos
     if (nombre3 == "" || telefono3 == "" || correo3 == "" || comentario3 == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(telefono3)) {
+        swal("Error", "Por favor, Ingrese un número de teléfono válido", "error");
+    } else if (!correo3.includes('@')) {
+        swal("Error", "Por favor, Ingrese un formato de correo válido", "error");
     } else {
         swal("Correcto", "Gracias por contactarnos", "success")
     }
@@ -95,6 +107,10 @@ $("#ContactarC4").click(function() {
     //Verificar datos
     if (nombre4 == "" || telefono4 == "" || correo4 == "" || comentario4 == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(telefono4)) {
+        swal("Error", "Por favor, Ingrese un número de teléfono válido", "error");
+    } else if (!correo4.includes('@')) {
+        swal("Error", "Por favor, Ingrese un formato de correo válido", "error");
     } else {
         swal("Correcto", "Gracias por contactarnos", "success")
     }
@@ -123,9 +139,13 @@ $("#Solicitar").click(function() {
 
 //Buscar Oferta
 $("#botonBuscar").click(function() {
-    consultarOfertaEspecifica($("#barraBusqueda").val())
-    
+    if ($("#barraBusqueda").val() == "") {
+        swal("Error", "Por favor, Ingrese una palabra para realizar una búsqueda", "error");
+    } else {
+        consultarOfertaEspecifica($("#barraBusqueda").val())
+    }
 });
+
 async function traerOfertaEspecifica(ofertas) {
     $("#ofertas").empty();
     for (const oferta of ofertas) {
@@ -148,7 +168,7 @@ async function traerOfertas(ofertas) {
 async function traerSolicitudes(solicitudes) {
     $("#solicitudes").empty();
     for (const solicitud of solicitudes) {
-        mostrarSolicitudes(solicitud['codCompra'],solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
+        mostrarSolicitudes(solicitud['codCompra'], solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
     }
 }
 
@@ -177,8 +197,8 @@ async function traerDatosUsuario(datos) {
     $("#telefonoR").val(datos["telefono"]);
     $("#ocupacionR").val(datos["ocupacion"]);
     $("#direccionR").val(datos["direccion"]);
-    
-  
+
+
 }
 
 
@@ -188,18 +208,27 @@ $("#GuardarCambios").click(async function() {
     apellido = $("#apellidoR").val();
     telefono = $("#telefonoR").val();
     ocupacion = $("#ocupacionR").val();
-    direccion = $("#direccionR").val(); 
-    password = $("#passR").val(); 
-    
-    save = await ModificarDatosUsuario(nombre,apellido,telefono,ocupacion,direccion,password);
-    if(save){
-        swal("Se actualizaron los datos con éxito", {
-            icon: "success"
-        });
-    }else{
-        swal("No se pudo actualizar los datos", {
-            icon: "error"
-        });
+    direccion = $("#direccionR").val();
+    password = $("#passR").val();
+    password2 = $("#passR2").val();
+    if (nombre == "" || apellido == "" || telefono == "" || ocupacion == "" || direccion == "") {
+        swal("Error", "Selecciona el botón Consultar Datos para traer tu información", "error");
+    } else if (password == "" || password2 == "") {
+        swal("Error", "Por favor, Ingrese la contraseña y su validación", "error");
+    } else if (password != password2) {
+        swal("Error", "Las contraseñas no coinciden", "error");
+    } else {
+
+        save = await ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, direccion, password);
+        if (save) {
+            swal("Se actualizaron los datos con éxito", {
+                icon: "success"
+            });
+        } else {
+            swal("No se pudo actualizar los datos", {
+                icon: "error"
+            });
+        }
     }
 });
 async function ModificarDatosUsuario(datos) {
@@ -216,33 +245,42 @@ async function ModificarDatosUsuario(datos) {
     $("#telefonoR").val(datos["telefono"]);
     $("#ocupacionR").val(datos["ocupacion"]);
     $("#direccionR").val(datos["direccion"]);
-    
-  
+
+
 }
 
 
 //Recargar Cuenta
 $("#BotonRecargar").click(async function() {
     recarga = $("#recargaR").val();
-    
-    save = await Recargar(parseInt(recarga));
-    
-    if(save.info){
-        const USUARIO=JSON.parse(readCookie('token')); 
-        USUARIO['moneda']=result.moneda;
-        window.token = JSON.stringify(USUARIO);
-        setCookie(token);
-        console.log(save.moneda);
-        actualizarMonedaVista(save.moneda);
-        
-        swal("Se recargó el saldo con éxito", {
-            icon: "success"
-        });
-    }else{
-        swal("No se pudo recargar", {
-            icon: "error"
-        });
+    if (recarga == "") {
+        swal("Error", "Por favor, Ingrese un valor para recargar", "error");
+    } else {
+        save = await Recargar(parseInt(recarga));
+        if (save == undefined) {
+            swal("Por favor, Intenta más tarde", {
+                icon: "error"
+            });
+        } else {
+            if (save.info) {
+                const USUARIO = JSON.parse(readCookie('token'));
+                USUARIO['moneda'] = result.moneda;
+                window.token = JSON.stringify(USUARIO);
+                setCookie(token);
+                console.log(save.moneda);
+                actualizarMonedaVista(save.moneda);
+
+                swal("Se recargó el saldo con éxito", {
+                    icon: "success"
+                });
+            } else {
+                swal("Lo sentimos, No se pudo recargar", {
+                    icon: "error"
+                });
+            }
+        }
     }
+
 });
 
 
@@ -253,26 +291,30 @@ $("#consultarTransacciones").click(function() {
 
 async function traerTransacciones(Transacciones) {
     $("#Transacciones").empty();
-    titulos="";
-    titulos='<tr><th>Concepto </th> <th>Estado</th><th>Precio</th></tr>';
+    titulos = "";
+    titulos = '<tr><th>Concepto </th> <th>Estado</th><th>Precio</th></tr>';
     $("#Transacciones").append(titulos);
 
     for (const Transaccion of Transacciones) {
-        mostrarTransacciones(Transaccion['concepto'],Transaccion['estado'],Transaccion['precio'].toString())    
+        mostrarTransacciones(Transaccion['concepto'], Transaccion['estado'], Transaccion['precio'].toString())
     }
 }
 
 $("#consultarHistorialOfertas").click(function() {
+    swal("Recuerda que solo puedes ver en tu historial las ofertas que ya han sido aprobadas. Si tienes alguna en proceso puedes verla desde Solicitudes", {
+        icon: "warning"
+    });
     consultarSolicitudes();
 });
 
 async function traerHistorialOfertas(Ofertas) {
+
     $("#Ofertas").empty();
-    titulos="";
-    titulos='<tr><th>Nombre </th> <th>Comprador</th><th>Ingreso</th></tr>';
+    titulos = "";
+    titulos = '<tr><th>Nombre </th> <th>Comprador</th><th>Ingreso</th></tr>';
     $("#Ofertas").append(titulos);
 
     for (const Ofertones of Ofertas) {
-        mostrarHistorialOfertas(Ofertones['oferta'],Ofertones['nombre'],Ofertones['precio'].toString(),Ofertones['estado'])    
+        mostrarHistorialOfertas(Ofertones['oferta'], Ofertones['nombre'], Ofertones['precio'].toString(), Ofertones['estado'])
     }
 }

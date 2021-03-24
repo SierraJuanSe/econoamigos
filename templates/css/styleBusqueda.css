@@ -308,7 +308,6 @@ footer {
 /*Informacion*/
 
 .form {
-    background-image: linear-gradient(to top, #ececec 0%, #dbdbdb78 100%);
     padding-bottom: 50px;
     padding: 50px;
 }
@@ -317,6 +316,10 @@ footer {
     display: flex;
     padding: 10px 70px 30px;
     justify-content: space-evenly;
+}
+
+.card-body {
+    background-color: #ffffff;
 }
 
 .tarjeta1,
@@ -548,7 +551,7 @@ section {
     position: absolute;
     top: 200%;
     right: 32%;
-    width: 6%;
+    width: auto;
     height: 60px;
 }
 
@@ -558,15 +561,17 @@ section {
 }
 
 #ofertas {
-    margin-top: 8%;
+    margin-top: 1%;
 }
 
 .card-body {
-    background: #E4DEDD;
+    background: #fdfbfb;
 }
-.card{
+
+.card {
     width: max-content;
 }
+
 .card {
     height: 250px;
     width: 300px;

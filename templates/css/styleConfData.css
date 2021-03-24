@@ -552,42 +552,43 @@ section {
         height: auto;
     }
 }
-#Info{
-   
+
+#Info {
     text-align: center;
     background: white;
-   
-  
-
 }
-.enlaces{
+
+.enlaces {
     z-index: 2;
 }
 
-#fotoForms{
+#fotoForms {
     width: 15%;
     height: 15%;
 }
 
-#fotoForms2{
+#fotoForms2 {
     position: absolute;
     width: 45%;
     height: 50%;
     left: -5%;
     top: 48%;
 }
-#fotoForms3{
+
+#fotoForms3 {
     position: absolute;
     width: 35%;
     height: 40%;
     left: 62%;
     top: 53%;
 }
-#GuardarCambios{
+
+#GuardarCambios {
     width: 20%;
     height: 20%;
 }
-#Consultar{
+
+#Consultar {
     width: 20%;
     height: 20%;
 }

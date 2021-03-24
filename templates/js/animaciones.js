@@ -70,8 +70,12 @@ $("#Registrar").click(function() {
     //Verificar datos
     if (cedula == "" || nombre == "" || apellido == "" || correo == "" || telefono == "" || ocupacion == "" || fecha == "" || direccion == "" || contrasenia == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(cedula)) {
+        swal("Error", "Ingrese solo el número de documento, sin puntos o letras", "error");
     } else if (!correo.includes('@')) {
         swal("Error", "Por favor, Ingrese un formato de correo válido", "error");
+    } else if (isNaN(telefono)) {
+        swal("Error", "Por favor, Ingrese un número de teléfono válido", "error");
     } else {
         enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia); //Llamado a funcion guardar
     }
@@ -92,27 +96,4 @@ async function enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, 
     } else {
         swal("Error", "Lo sentimos, el correo que intentas ingresar ya esta registrado", "error");
     }
-}
-
-
-//HISTORIAL
-$("#Solicitar").click(function() {
-
-    //Recolectar Datos
-    buscar = $("#ver").val();
-    //Verificar datos
-
-    //Verificar datos
-    if (buscar == "") {
-        swal("Error", "Por favor, Ingrese todos los datos", "error");
-    } else {
-        busqueda(buscar);
-    }
-
-});
-
-//Funcion para realizar la busqueda de historial
-async function busqueda(buscar) {
-    //Recibe validacion de la funcion historial ubicada en funciones.js
-    var save = await historial(buscar);
 }

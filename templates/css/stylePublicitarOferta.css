@@ -258,8 +258,6 @@ footer {
     margin-top: -20px
 }
 
-
-
 #ContactarButton {
     display: block;
     width: 50%;
@@ -293,7 +291,7 @@ footer {
     background: #24303c;
     padding: 30px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 40px;
     border-radius: 4px;
     font-family: 'calibri';
     color: white;
@@ -310,6 +308,8 @@ footer {
 .Servicio,
 .Servicio2 {
     width: 50%;
+    margin-top: 3%;
+    margin-right: 30px;
     border-radius: 20px;
 }
 

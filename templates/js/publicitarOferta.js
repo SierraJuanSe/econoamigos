@@ -1,5 +1,5 @@
 tipo = "";
-$("#ButtonServicios").click(function () {
+$("#ButtonServicios").click(function() {
     tipo = 'Servicio';
     $("#ContactarButton").empty();
     $("#ContactarButton").append("Servicio");
@@ -9,7 +9,7 @@ $("#ButtonServicios").click(function () {
     $("#crearOferta").show();
 
 });
-$("#ButtonProductos").click(function () {
+$("#ButtonProductos").click(function() {
     tipo = 'Producto';
     $("#ContactarButton").empty();
     $("#ContactarButton").append("Producto");
@@ -19,17 +19,37 @@ $("#ButtonProductos").click(function () {
     $("#crearOferta").show();
 });
 
-$("#crearOferta").click(function () {
+$("#crearOferta").click(function() {
     nombre = $('#nameOferta').val();
     descripcion = $('#descripcionOferta').val();
-    precio = parseInt($('#precioOferta').val());
+    precio = ($('#precioOferta').val());
+
     if (tipo == 'Producto') {
-        cantidad = parseInt($('#stockProducto').val());
+
+        cantidad = ($('#stockProducto').val());
         imagen = $('#UrlImagenProducto').val();
-        enviarProducto(nombre, descripcion, precio, imagen, cantidad)
+
+        if (nombre == "" || descripcion == "" || precio == "" || cantidad == "" || imagen == "") {
+            swal("Error", "Por favor, Ingrese todos los datos", "error");
+        } else if (isNaN(precio)) {
+            swal("Error", "Ingrese solo el precio del producto", "error");
+        } else if (isNaN(cantidad)) {
+            swal("Error", "Ingrese solo el número de la cantidad del producto", "error");
+        } else {
+            enviarProducto(nombre, descripcion, precio, imagen, cantidad)
+        }
+
     } else {
         lugar = $('#direccionOferta').val();
-        enviarServicio(nombre, descripcion, precio, lugar)
+
+        if (nombre == "" || descripcion == "" || precio == "" || lugar == "") {
+            swal("Error", "Por favor, Ingrese todos los datos", "error");
+        } else if (isNaN(precio)) {
+            swal("Error", "Ingrese solo el precio del producto", "error");
+        } else {
+            enviarServicio(nombre, descripcion, precio, lugar)
+        }
+
     }
 
 });

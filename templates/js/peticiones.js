@@ -150,7 +150,7 @@ async function actualizarSolicitud(codCompra) {
         })
         if (result.status == 200) {
             $("#filasol" + codCompra).remove();
-            USUARIO['moneda']=result.moneda;
+            USUARIO['moneda'] = result.moneda;
             window.token = JSON.stringify(USUARIO);
             setCookie(token);
             actualizarMonedaVista(result.moneda);
@@ -315,7 +315,7 @@ async function crearCompra(id, precio) {
         console.log(error)
     }
     console.log(data);
- 
+
 }
 
 //consulta datos para la configuración
@@ -422,8 +422,14 @@ async function consultarTrasnsacciones() {
             contentType: "application/json; charset=utf-8"
         })
         if (result.status == 200) {
-            console.log(result.info)
-            traerTransacciones(result.info)
+            if ((result.info).length == 0) {
+                swal("No se han encontrado coincidencias con tu búsqueda", {
+                    icon: "error"
+                });
+            } else {
+                console.log(result.info)
+                traerTransacciones(result.info)
+            }
         } else {
             console.log(result.status)
             swal("No se han encontrado coincidencias con tu búsqueda", {
@@ -434,25 +440,26 @@ async function consultarTrasnsacciones() {
         console.log(error)
         return 0;
     }
-    
+
 }
 
 async function consultarHistorialOfertas() {
     let result = [{
-        "nombre": "paseo",
-        "oferta": "AA311",
-        "ingreso": 5000
-    },
-    {
-        "nombre": "niñera",
-        "oferta": "ADD01",
-        "ingreso": 20000
-    },
-    {
-        "nombre": "medicamentos",
-        "oferta": "BBU103",
-        "ingreso": 1500
-    }]
+            "nombre": "paseo",
+            "oferta": "AA311",
+            "ingreso": 5000
+        },
+        {
+            "nombre": "niñera",
+            "oferta": "ADD01",
+            "ingreso": 20000
+        },
+        {
+            "nombre": "medicamentos",
+            "oferta": "BBU103",
+            "ingreso": 1500
+        }
+    ]
     traerHistorialOfertas(result)
 }
 

@@ -16,9 +16,10 @@ body {
 
 .card {
     height: 250px;
-    width: 300px;
-    margin: 10px;
-    margin-left: -3%;
+    width: 285px;
+    margin-right: 150px;
+    margin-left: 0%;
+    margin-bottom: 15px;
 }
 
 .card-link {
