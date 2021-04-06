@@ -1,4 +1,4 @@
-#Trigger para Actualizar el sueldo por medio de una recarga
+	#Trigger para Actualizar el sueldo por medio de una recarga
 DELIMITER $$
 CREATE TRIGGER ActualizarMonedaRecarga  AFTER INSERT ON Transaccion
 FOR EACH ROW
@@ -35,7 +35,7 @@ DELIMITER $$
 CREATE TRIGGER ActualizarCantidad AFTER insert ON Compra
 FOR EACH ROW
 BEGIN
-UPDATE Producto as p SET p.cantidadProducto=p.cantidadProducto-1
- where p.Oferta_codOferta=new.Oferta_codOferta;
+UPDATE Oferta as o SET o.cantidadProducto=o.cantidadProducto-1
+ where o.codOferta=new.Oferta_codOferta;
 END$$
 DELIMITER ;
