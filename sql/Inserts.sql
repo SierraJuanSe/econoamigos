@@ -30,6 +30,7 @@ insert into Compra values(null,1200000,false,1,'333');
 insert into Compra values(null,1200000,false,1,'978676');
 insert into Compra values(null,1200000,false,6,'1002549404');
 insert into Compra values(null,1200000,false,2,'978676');
+Select*from Compra;
 
 #Insertar Transacciones a vendedor y comprador
 insert into Transaccion values(null,'Ingreso',1200000,false,'1002549404',1);
@@ -40,4 +41,38 @@ insert into Transaccion values(null,'Ingreso',1200000,false,'23789345',3);
 insert into Transaccion values(null,'Compra',1100000,false,'1002549404',3);
 insert into Transaccion values(null,'Ingreso',1200000,false,'978676',4);
 insert into Transaccion values(null,'Compra',1100000,false,'23789345',4);
+Select*from Transaccion;
+
+#Insertar una Transaccion
+insert into Transaccion values(null,'Transferencia Recibida',200000,false,'1002549404',null);
+insert into Transaccion values(null,'Transferencia Enviada',20000,false,'333',null);
+
+insert into Transaccion values(null,'Transferencia Recibida',50000,false,'23789345',null);
+insert into Transaccion values(null,'Transferencia Enviada',50000,false,'978676',null);
+
+#Insertar un comentario
+insert into comentario values(null,"Es un buen celular aunque es muy delicado",DATE_FORMAT(NOW( ), "%H:%i:%S" ),null,1,'333');
+insert into comentario values(null,"¿Tienes disponibilidad para el dia viernes?",DATE_FORMAT(NOW( ), "%H:%i:%S" ),null,5,'1002549404');
+insert into comentario values(null,"¿Cuantos niños puedes cuidar?",DATE_FORMAT(NOW( ), "%H:%i:%S" ),null,5,'333');
+insert into comentario values(null,"¿Que tipo de herramientas usa para el servicio?",DATE_FORMAT(NOW( ), "%H:%i:%S" ),null,6,'978676');
+select*from Comentario;
+
+#Insertar una respuesta a un comentario
+update Comentario set respuestaComentario="Que bueno que te gusto" where codComentario=1;
+update Comentario set respuestaComentario="Si, para la tarde y noche" where codComentario=2;
+update Comentario set respuestaComentario="llave inglesa,cinta de teflon y pinzas" where codComentario=3;
+select*from Comentario;
+
+#Insertar una valoracion a una oferta
+insert into Valoracion values(null,5,1);
+insert into Valoracion values(null,3,1);
+insert into Valoracion values(null,4.5,2);
+insert into Valoracion values(null,3.5,2);
+insert into Valoracion values(null,5,3);
+insert into Valoracion values(null,2,3);
+select *from Valoracion;
+
+
+
+
 

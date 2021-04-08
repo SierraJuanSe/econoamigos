@@ -1,13 +1,18 @@
-	#Trigger para Actualizar el sueldo por medio de una recarga
+#Trigger para Actualizar el sueldo por medio de una recarga
 DELIMITER $$
 CREATE TRIGGER ActualizarMonedaRecarga  AFTER INSERT ON Transaccion
 FOR EACH ROW
 BEGIN
-    IF new.conceptoTransaccion = 'Recarga'  THEN BEGIN
+    IF new.conceptoTransaccion = 'Recarga' or  new.conceptoTransaccion = 'Transferencia Recibida' THEN BEGIN
 	update Usuario
 	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
 	where Usuario.idUsuario=new.Usuario_idUsuario;
-    END; END IF;
+    END;
+	ELSEIF new.conceptoTransaccion = 'Transferencia Enviada' THEN
+	update Usuario
+	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario-new.valorTransaccion
+	where Usuario.idUsuario=new.Usuario_idUsuario;
+    END IF;
 END$$transaccion
 DELIMITER ;
 

@@ -23,8 +23,8 @@ FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = oferta.codOferta an
 INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);
 
 #Cambiar el estado de la compra (Aca ya se acualiza el saldo) 
-Update Compra SET Compra.estadoCompra=True where Compra.codCompra=2;
-Update Transaccion as t SET t.estadoTransaccion=True where t.Compra_codCompra=2;
+Update Compra SET Compra.estadoCompra=True where Compra.codCompra=3;
+Update Transaccion as t SET t.estadoTransaccion=True where t.Compra_codCompra=3;
 
 #Consultar las transacciones de un Usuario 
 select*from Transaccion where Usuario_idUsuario='1002549404'; 
@@ -35,3 +35,9 @@ update Usuario as u set u.nombreUsuario='Luis',u.apellidousuario='Velasquez',
 u.contraseñaUsuario='qwerty',u.telefonoUsuario='3249874577',
 u.ocupacionUsuario='Electrico',u.direccion='clle 23 #12-12'
 where u.idUsuario='23789345';
+
+#Consultar el promedio de la valoracion de una oferta
+select avg(valor) from Valoracion where Oferta_codOferta=3;
+
+#Cosnultar los comentarios de una oferta
+select*from Comentario where Oferta_codOferta=5;
