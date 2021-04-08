@@ -20,10 +20,7 @@ async function login(correo, contrasenia) {
         return result.info;
     } catch (error) {
         console.log(error)
-
     }
-
-
 }
 
 
@@ -404,8 +401,10 @@ async function Recargar(recarga) {
         console.log(error)
     }
     console.log(data);
-
 }
+
+//Transferir Dinero
+async function Transferir(cedula, monto) {}
 
 //Peicion para conocer el hstorial de transacciones
 async function consultarTrasnsacciones() {

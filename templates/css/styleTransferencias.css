@@ -239,19 +239,6 @@ footer {
 
 /*CONTENIDO*/
 
-.bienvenida {
-    font-size: 30px;
-    box-shadow: 0 5px 5px 1px #ececec;
-    border-radius: 5px;
-    margin: 38px auto;
-    margin-bottom: 4px;
-    background: #fff;
-    height: 140px;
-    width: 490px;
-    padding: 16px;
-    text-align: center;
-}
-
 
 /*Servicios*/
 
@@ -272,34 +259,13 @@ footer {
 
 .Servicio,
 .Servicio2 {
-    width: 50%;
+    width: 55%;
     border-radius: 20px;
-}
-
-.Servicio3 {
-    width: 100%;
-}
-
-.Servicio2 {
-    align-items: right;
+    margin-right: 5%;
 }
 
 .Servicios {
     display: flex;
-}
-
-.contenedor span {
-    background: #1de9b6;
-    color: #000;
-    border-radius: 100%;
-    display: inline-block;
-    font-size: 22px;
-    text-align: center;
-    width: 30px;
-    height: 30px;
-    padding: 2px;
-    box-shadow: 0 0 6px 0 #ececec;
-    margin-right: 5px;
 }
 
 .Textos {
@@ -326,55 +292,143 @@ footer {
     padding: 50px;
 }
 
-.cards {
-    display: flex;
-    padding: 10px 70px 30px;
-    justify-content: space-evenly;
-}
-
-.tarjeta1,
-.tarjeta2 {
-    margin: 20px;
-    background: hsla(165, 72%, 53%, 0.781);
-    display: flex;
-    width: 39%;
-    height: 230px;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 10px;
-    box-shadow: 0 0 6px 0 rgba(28, 184, 150, 0.9);
-    max-width: 1000px;
-}
-
-.tarjeta1 img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border: 3px solid #fff;
-    border-radius: 100%;
-}
-
-.tarjeta2 img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border: 3px solid #000;
-    border-radius: 100%;
-}
-
-.textotarjeta {
-    width: 70%;
+.btn {
+    display: block;
+    width: 100%;
+    height: 50px;
+    border-radius: 25px;
+    outline: none;
+    border: none;
+    background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+    background-size: 200%;
+    font-size: 1.2rem;
     color: #fff;
-    font-weight: 300;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    margin: 1rem 0;
+    cursor: pointer;
+    transition: .5s;
 }
 
-.textotarjeta p {
-    padding-top: 5px;
-    text-align: justify;
+.btn:hover {
+    background-position: right;
 }
 
-.textotarjeta h4 {
-    font-size: 40px;
+.login {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+}
+
+.img img {
+    width: 500px;
+}
+
+form {
+    width: 360px;
+}
+
+.login img {
+    height: 150px;
+}
+
+.login h2 {
+    margin: 15px 0;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 2.9rem;
+}
+
+.login .input-div {
+    position: relative;
+    display: grid;
+    grid-template-columns: 7% 93%;
+    margin: 25px 0;
+    padding: 5px 0;
+    border-bottom: 2px solid #d9d9d9;
+}
+
+.login .input-div.one {
+    margin-top: 0;
+}
+
+.i {
+    color: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.i i {
+    transition: .3s;
+}
+
+.input-div>div {
+    position: relative;
+    height: 45px;
+}
+
+.input-div>div>h5 {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 18px;
+    transition: .3s;
+}
+
+.input-div:before,
+.input-div:after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    width: 0%;
+    height: 2px;
+    background-color: #38d39f;
+    transition: .4s;
+}
+
+.input-div:before {
+    right: 50%;
+}
+
+.input-div:after {
+    left: 50%;
+}
+
+.input-div.focus:before,
+.input-div.focus:after {
+    width: 50%;
+}
+
+.input-div.focus>div>h5 {
+    top: -5px;
+    font-size: 15px;
+}
+
+.input-div.focus>.i>i {
+    color: #38d39f;
+}
+
+.input-div>div>input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: none;
+    padding: 0.5rem 0.7rem;
+    font-size: 1.2rem;
+    color: #555;
+    font-family: 'poppins', sans-serif;
+}
+
+.input-div.pass {
+    margin-bottom: 4px;
 }
 
 
@@ -490,21 +544,6 @@ section {
 }
 
 @media screen and (max-width:1500px) {
-    .cards {
-        flex-direction: column;
-        align-items: center;
-    }
-    .cards .tarjeta1,
-    .cards .tarjeta2 {
-        width: 50%;
-        height: 100%;
-    }
-    .tarjeta1,
-    .tarjeta2 {
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
     .saldo {
         margin-right: -49%;
     }
@@ -516,76 +555,6 @@ section {
     }
 }
 
-@media screen and (max-width:500px) {
-    .cards {
-        flex-direction: column;
-        align-items: center;
-    }
-    .cards .tarjeta1,
-    .cards .tarjeta2 {
-        width: auto;
-        height: auto;
-    }
-    .tarjeta1,
-    .tarjeta2 {
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
-    .textotarjeta h4 {
-        font-size: 14px;
-    }
-    .textotarjeta h5 {
-        font-size: 12px;
-    }
-    .bienvenida {
-        font-size: 20px;
-        width: 400px;
-        height: 140px;
-    }
-}
-
-@media screen and (max-width:550px) {
-    .bienvenida {
-        font-size: 25px;
-        width: auto;
-        height: auto;
-    }
-}
-
-#Info {
-    text-align: center;
-    background: white;
-}
-
-#descripcionServicio {
-    width: 100%;
-}
-
 .enlaces {
     z-index: 2;
-}
-
-#BotonRecargar {
-    margin-top: -8%;
-    width: 40%;
-    height: 40%;
-}
-
-#BotonTransferir {
-    margin-top: 3%;
-    width: 40%;
-    height: 40%;
-}
-
-#cuadroRecarga {
-    background: #E9E8E8;
-    width: 30%;
-    margin-top: -3%;
-    margin-left: 49%;
-    font-size: 30px;
-    box-shadow: 0 5px 5px 1px #ececec;
-    border-radius: 5px;
-    background: #E9E8E8;
-    text-align: center;
 }

@@ -283,6 +283,41 @@ $("#BotonRecargar").click(async function() {
 
 });
 
+//Transferir dinero
+$("#BotonTransferir").click(async function() {
+    cedula = $("#ccTrans").val();
+    monto = $("#montoTrans").val();
+    if (cedula == "" || monto == "") {
+        swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(monto)) {
+        swal("Error", "Por favor, Ingrese una cantidad válida", "error");
+    } else {
+        save = await Transferir(cedula, parseInt(monto));
+        if (save == undefined) {
+            swal("Por favor, Intenta más tarde", {
+                icon: "error"
+            });
+        } else {
+            if (save.info) {
+                const USUARIO = JSON.parse(readCookie('token'));
+                USUARIO['moneda'] = result.moneda;
+                window.token = JSON.stringify(USUARIO);
+                setCookie(token);
+                console.log(save.moneda);
+                actualizarMonedaVista(save.moneda);
+
+                swal("Se realizo la transferecia con éxito, y se ha actualizado tu saldo", {
+                    icon: "success"
+                });
+            } else {
+                swal("Lo sentimos, No se pudo realizar la transferencia", {
+                    icon: "error"
+                });
+            }
+        }
+    }
+
+});
 
 //JANIS
 $("#consultarTransacciones").click(function() {

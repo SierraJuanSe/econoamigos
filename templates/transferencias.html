@@ -3,7 +3,7 @@
 
 <head>
     <title>Econoamigos</title>
-    <link rel="stylesheet" type="text/css" href="css/styleConfRecarga.css">
+    <link rel="stylesheet" type="text/css" href="css/styleTransferencias.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta http-equiv=”Content-Type” content="text/html" ; charset="UTF-8" />
@@ -47,43 +47,46 @@
     <main>
 
         <!-- CONTENIDO-->
-        <div id="Info">
-            <form>
-                <br>
-                <br>
-                <div class="img">
-                    <img id="fotoForms" src="img/moneyConf.svg" width="35%" height="35%" align="left"> </div>
-                <h2 id="descripcionServicio" align="left">Aquí puedes recargar tu cuenta con la cantidad que desees. Recuerda que ese monto hará parte del número de Ecomonedas que tengas en tu cuenta para comprar en la plataforma.</h2>
-                <br>
-                <br>
-                <br>
-                <br>
-                <div id="cuadroRecarga">
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fas fa-hand-holding-usd"></i>
-                        </div>
-                        <div class="div">
-                            <h3>Recarga</h3>
-                            <input type="text" class="input" id="recargaR">
-                            <h6>Ingresa el valor que deseas recargar</h6>
-                        </div>
-                    </div>
+        <section class="contenedor">
+            <br>
+            <h2 id="Servicios" class="titulos">Transfiere a tus Econoamigos</h2>
+            <div class="Servicios">
+                <img src="img/friends.svg" alt="" class="Servicio">
+                <div class="Textos">
                     <br>
-                    <button id="BotonRecargar" type="button" class="btn">Recargar</button>
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fas fa-donate"></i>
-                            <h3>Transferencia</h3>
-                            <h6>Transfiere de tu saldo al Econoamigo que deseas</h6>
+                    <p class="lead text-muted">Aquí puedes enviar la cantidad que desees de tus Ecomonedas a la persona que quieras. Recuerda que no puedes enviar más saldo del que tengas en tu cuenta.Ingresa la cédula de ciudadanía de la persona y el monto transferir.<br>
+                        <div class="login">
+
+                            <form>
+                                <h2 class="title">Datos</h2>
+                                <div class="input-div one">
+                                    <div class="i">
+                                        <i class="fas fa-id-card"></i>
+                                    </div>
+                                    <div class="div">
+                                        <h5>Cédula de ciudadanía</h5>
+                                        <input type="text" class="input" id="ccTrans">
+                                    </div>
+                                </div>
+                                <div class="input-div pass">
+                                    <div class="i">
+                                        <i class="fas fa-piggy-bank"></i>
+                                    </div>
+                                    <div class="div">
+                                        <h5>Cantidad a Transferir</h5>
+                                        <input type="text" class="input" id="montoTrans">
+                                    </div>
+                                </div>
+                                <button id="BotonTransferir" type="button" class="btn">Transferir</button>
+                            </form>
                         </div>
-                    </div>
-                    <a href="transferencias.html" id="BotonTransferir" type="button" class="btn">Transferir</a>
+
                 </div>
-           </div>
+            </div>
+        </section>
+
     </main>
     <!-- Pie de página-->
-    <br>
     <br>
     <br>
     <br>
@@ -155,6 +158,7 @@
     </footer>
 
     <script src="js/main.js " type="text/javascript "></Script>
+    <script src="js/animaciones.js " type="text/javascript "></Script>
     <script src="js/peticiones.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
 </body>
