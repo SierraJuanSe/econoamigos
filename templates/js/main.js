@@ -289,6 +289,8 @@ $("#BotonTransferir").click(async function() {
     monto = $("#montoTrans").val();
     if (cedula == "" || monto == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
+    } else if (isNaN(cedula)) {
+        swal("Error", "Ingrese solo el número de documento, sin puntos o letras", "error");
     } else if (isNaN(monto)) {
         swal("Error", "Por favor, Ingrese una cantidad válida", "error");
     } else {
