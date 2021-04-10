@@ -10,6 +10,8 @@ insert into Oferta values(null,'Producto',"celular iphone 6","Es un celular boni
 insert into Oferta values(null,'Producto',"Mesa de estudio","Es muy comodo",200000,true,null,'https//:www.imagen.jpg',10,'23789345');
 insert into Oferta values(null,'Producto',"Mesa de trabajo","Es muy comodo",100000,true,null,'https//:www.imagen.jpg',10,'23789345');
 insert into Oferta values(null,'Producto',"Posillos de porcelana","Posillos con tematicas varias",10000,true,null,'https//:www.imagen.jpg',10,'978676');
+insert into Oferta values(null,'Producto',"Posillos de porcelana","Posillos con tematicas varias",10000,true,null,'https//:www.imagen.jpg',0,'978676');
+
 Select*from Oferta where tipo='Producto';
 
 #Insertar una Oferta de tipo Servicio
@@ -43,12 +45,12 @@ insert into Transaccion values(null,'Ingreso',1200000,false,'978676',4);
 insert into Transaccion values(null,'Compra',1100000,false,'23789345',4);
 Select*from Transaccion;
 
-#Insertar una Transaccion
-insert into Transaccion values(null,'Transferencia Recibida',200000,false,'1002549404',null);
-insert into Transaccion values(null,'Transferencia Enviada',20000,false,'333',null);
+#Insertar una Transferencia
+insert into Transaccion values(null,'Transferencia Recibida',200000,True,'1002549404',null);
+insert into Transaccion values(null,'Transferencia Enviada',20000,True,'333',null);
 
-insert into Transaccion values(null,'Transferencia Recibida',50000,false,'23789345',null);
-insert into Transaccion values(null,'Transferencia Enviada',50000,false,'978676',null);
+insert into Transaccion values(null,'Transferencia Recibida',50000,True,'23789345',null);
+insert into Transaccion values(null,'Transferencia Enviada',50000,True,'978676',null);
 
 #Insertar un comentario
 insert into comentario values(null,"Es un buen celular aunque es muy delicado",DATE_FORMAT(NOW( ), "%H:%i:%S" ),null,1,'333');
