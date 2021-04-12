@@ -32,7 +32,7 @@ def consultarOferta():
 
 # Crea un oferta para ser publicada al instante
 @bp.route('/insertarOferta', methods=['POST'])
-def insertarProducto():
+def insertarOferta():
     msg = request.get_json()
     oferta = None
     if msg.get('tipo') == "Producto":
