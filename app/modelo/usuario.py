@@ -50,7 +50,6 @@ class Usuario:
               f"u.contraseñaUsuario=sha('{self.password}'),u.telefonoUsuario='{self.tel}'," \
               f"u.ocupacionUsuario='{self.ocupacion}',u.direccion='{self.direccion}' " \
               f"where u.idUsuario='{self.id}';"
-        print(sql)
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         try:

@@ -6,6 +6,8 @@ DBINFO = {
     'password': "devOceanEconoamigos",
     'database': "econoamigos"
 }
+
+
 class Conector:
 
     def __init__(self, host=None, user=None, password=None, database=None):

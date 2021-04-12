@@ -2,13 +2,13 @@ from flask import Blueprint
 
 bp = Blueprint('controlador', __name__)
 
-from app.controlador import controladorCompra, controladorProducto, controladorServicio, controladorTransaccion, controladorUsuario
+from app.controlador import controladorCompra, controladorOferta, controladorComentarios, controladorTransaccion, controladorUsuario
 
 # from modelo.usuario import Usuario
 # from modelo.transaccion import Transaccion
 # from modelo.compra import Compra
-# from modelo.servicio import Servicio
-# from modelo.producto import Producto
+# from modelo.oferta import Oferta
+# from modelo.valoracion import Valoracion
 # from flask import Flask, request
 # from flask_cors import CORS
 
