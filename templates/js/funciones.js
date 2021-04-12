@@ -44,10 +44,12 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
         '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
-        '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' +
-        '</div></div></div></div></div></div></div></div>';
+        '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<form>' +
+        '<br>Puntua la Oferta: <p class="clasificacion"> <input id="radio1" type="radio" name="estrellas" value="5"> <label for="radio1">★</label><input id="radio2" type="radio" name="estrellas" value="4"><label for="radio2">★</label><input id="radio3" type="radio" name="estrellas" value="3"><label for="radio3">★</label><input id="radio4" type="radio" name="estrellas" value="2"><label for="radio4">★</label><input id="radio5" type="radio" name="estrellas" value="1"><label for="radio5">★</label></p></form>'
+    '</div></div></div></div></div></div></div></div>';
     $("#compras").append(ofertasC);
 }
+
 
 
 
