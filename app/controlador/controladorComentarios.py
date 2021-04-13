@@ -2,8 +2,6 @@ from app.controlador import bp
 from app.modelo.comentarios import Comentario
 from flask import request
 
-
-
 # @app.route('/')
 # def inicio():
 #     return("Inicio Comentario")
@@ -26,6 +24,16 @@ def insertarComentario():
     comentario = Comentario(descripcionComentario=msg.get('comentario'),Oferta_codOferta=msg.get('idOferta'),
                             Usuario_idUsuario=msg.get('idUsuario'))
     if comentario.agregarComentario():
+        return {'status': 200, 'info':True}
+    else:
+        return {'status': 400, 'info':False}
+
+# Crea una respuesta a un comentario
+@bp.route('/insertarRespuesta', methods=['POST'])
+def insertarRespuesta():
+    msg = request.get_json()
+    comentario = Comentario(respuestaComentario=msg.get('respuesta'))
+    if comentario.agregarRespuesta(msg.get('idComentario')):
         return {'status': 200, 'info':True}
     else:
         return {'status': 400, 'info':False}

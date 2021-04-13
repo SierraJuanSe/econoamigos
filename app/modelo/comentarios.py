@@ -21,25 +21,27 @@ class Comentario:
         conn.close()
         return True
 
-    def consultarComentarios(self,cod):
-        sql = f"select*from Comentario where Oferta_codOferta='{cod}';"
+    def consultarComentarios(self):
+        sql = f"select*from Comentario where Oferta_codOferta='{self.Oferta_codOferta}';"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
         result = conn.execute_query(sql)
-        r1 = {}
+        r = []
         for fila in result:
+            r1 ={}
             r1['codComentario'] = fila[0]
             r1['descripcion'] = fila[1]
-            r1['hora'] = fila[2]
+            r1['hora'] = str(fila[2])
             r1['respuesta'] = fila[3]
             r1['codOferta'] = fila[4]
             r1['idUsuario'] = fila[5]
+            r.append(r1)
         conn.close()
-        return r1
+        return r
 
-    def agregarRespuesta(self,resp,cod):
-        sql = f"update Comentario set respuestaComentario= '{resp}' where codComentario='{cod}';"
+    def agregarRespuesta(self, comentario):
+        sql = f"update Comentario set respuestaComentario= '{self.respuestaComentario}' where codComentario='{comentario}';"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
