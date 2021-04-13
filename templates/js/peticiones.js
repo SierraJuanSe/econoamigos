@@ -286,7 +286,7 @@ async function consultarOfertaEspecifica(busqueda) {
     return true;
 }
 
-//Crear compra
+//Petición para crear compra
 async function crearCompra(id, precio) {
     const USUARIO = JSON.parse(readCookie('token'));
     console.log(id);
@@ -315,7 +315,7 @@ async function crearCompra(id, precio) {
 
 }
 
-//consulta datos para la configuración
+//Consulta datos para la configuración
 async function consultarDatosConfiguracion() {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
@@ -349,7 +349,7 @@ async function consultarDatosConfiguracion() {
     return true;
 }
 
-//Modificar datos usuarios
+//Peticón para modificar datos usuarios
 async function ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, direccion, password) {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
@@ -379,7 +379,7 @@ async function ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, dire
 
 }
 
-//Recargar cuenta
+//Petición para recargar cuenta
 async function Recargar(recarga) {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
@@ -403,8 +403,29 @@ async function Recargar(recarga) {
     console.log(data);
 }
 
-//Transferir Dinero
-async function Transferir(cedula, monto) {}
+//Petición para transferir Dinero
+async function Transferir(cedula, monto) {
+const USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idUsuario": USUARIO['id'],
+        "valor": monto,
+        "idReceptor": cedula
+    };
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/transferir",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result.info);
+        return result;
+    } catch (error) {
+        console.log(error)
+    }
+    console.log(data);
+}
 
 //Peicion para conocer el hstorial de transacciones
 async function consultarTrasnsacciones() {
