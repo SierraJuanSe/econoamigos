@@ -2,7 +2,7 @@ from flask import Blueprint
 
 bp = Blueprint('controlador', __name__)
 
-from app.controlador import controladorCompra, controladorOferta, controladorComentarios, controladorTransaccion, controladorUsuario
+from app.controlador import controladorCompra, controladorOferta, controladorComentarios, controladorTransaccion, controladorUsuario, controladorValoracion
 
 # from modelo.usuario import Usuario
 # from modelo.transaccion import Transaccion
