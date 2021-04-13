@@ -1,4 +1,5 @@
 from app.utils.conector import Conector, DBINFO
+from datetime import datetime
 
 class Comentario:
 
@@ -9,8 +10,9 @@ class Comentario:
         self.Usuario_idUsuario = Usuario_idUsuario
 
     def agregarComentario(self):
-        sql = f"insert into Comentario values(null,'{self.descripcionComentario}',DATE_FORMAT(NOW( ), '%H:%i:%S')," \
-              f"'{self.respuestaComentario}','{self.Oferta_codOferta}','{self.Usuario_idUsuario}');"
+        aux = datetime.now()
+        horaComentario = str(aux.hour)+":"+str(aux.minute)+":"+str(aux.second)
+        sql = f"insert into Comentario values('{None}','{self.descripcionComentario}','{horaComentario}','{self.respuestaComentario}','{self.Oferta_codOferta}','{self.Usuario_idUsuario}');"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -19,8 +21,8 @@ class Comentario:
         conn.close()
         return True
 
-    def consultarComentarios(self):
-        sql = f"select*from Comentario where Oferta_codOferta='{self.Oferta_codOferta}';"
+    def consultarComentarios(self,cod):
+        sql = f"select*from Comentario where Oferta_codOferta='{cod}';"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -35,3 +37,13 @@ class Comentario:
             r1['idUsuario'] = fila[5]
         conn.close()
         return r1
+
+    def agregarRespuesta(self,resp,cod):
+        sql = f"update Comentario set respuestaComentario= '{resp}' where codComentario='{cod}';"
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        conn.execute_query(sql)
+        conn.commit_change()
+        conn.close()
+        return True
