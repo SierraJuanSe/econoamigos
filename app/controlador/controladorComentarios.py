@@ -6,7 +6,7 @@ from flask import request
 
 # @app.route('/')
 # def inicio():
-#     return("Inicio Producto")
+#     return("Inicio Comentario")
 
 # Consulta los comentarios de una oferta
 @bp.route('/consultarComentarios', methods=['POST'])
