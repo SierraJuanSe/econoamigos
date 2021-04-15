@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"
+    integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU"
+    crossorigin="anonymous"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>Client</title>
+</head>
+
+<body>
+  <h1>Cliente</h1>
+  <main class="main__container container">
+    <form class="connect__form">
+      <button id="connect__btn" class="btn" type="submit">Connect</button>
+      <button id="disconnect__btn" class="btn" type="submit" disabled>Disconnect</button>
+    </form>
+    <form id='userRegistrationForm' class="username__form">
+      <label for="username">Username:</label>
+      <input id='username' type="text" required>
+      <button id='userRegistration' type="submit">Register</button>
+    </form>
+    
+    <div id='chatContainer' lass="chat__container container">
+      <h5 id="chatName">CHAT</h5>
+      <p>Users connected: </p>
+      <p id="listUsers"></p>
+      <ul id="chatList">
+
+      </ul>
+      <form class="chat__form">
+        <input id='chatInput' type="text" placeholder="type here">
+        <button id='chatSubmit' type="submit">Send</button>
+      </form>
+    </div>
+  </main>
+  <script>
+    const socket = io("http://127.0.0.1:5000", {
+      'autoConnect': false
+    });
+    const user = {}
+
+    const setConnected = connected => {
+      $('#connect__btn').prop('disabled', connected)
+      $('#disconnect__btn').prop('disabled', !connected)
+      $('#userRegistrationForm').toggle()
+      $('#listUsers').html('')
+      $('#chatContainer').hide()
+    }
+
+    const connect = () => {
+      socket.connect()
+    }
+
+    const disconnect = () => {
+      socket.emit('userExit', user)
+      socket.disconnect()
+      setConnected(false)
+    }
+
+    const userRegistration = () => {
+      user['username'] = $('#username').val()
+      socket.emit('userRegistration', user)
+    }
+
+    const chatSubmit = () => {
+      const message = {'user': user['username'], 'text': $('#chatInput').val()}
+      drawChat(message)
+      socket.emit('message', message)
+      $('#chatInput').val('')
+    }
+
+    const drawChat = (message) => {
+      $('#chatList').append(`<li>${message.user}: ${message.text}</li>`)
+    }
+
+    /* ESCUCHAS DEL WEB-SOCKET */
+
+    socket.on('connect', data => {
+      console.log(`socket connected`);
+      setConnected(true)
+    })
+
+    socket.on('disconnect', reason => {
+      console.log(`Socket disconnected: ${reason}`);
+    })
+
+    socket.on('userRegistration', data => {
+      if(data.status === 'userRegistred'){
+        $('#chatContainer').show()
+      }
+    })
+
+    socket.on('message', data => {
+      drawChat(data)
+    })
+
+    socket.on('userNew', data => {
+      $('#listUsers').html('')
+      data.forEach(element => {
+        $('#listUsers').append(`${element}, `)
+      });
+    })
+
+    $(() => {
+      $('form').on('submit', e => {
+        e.preventDefault()
+      })
+      $('#chatContainer').hide()
+      $('#userRegistrationForm').hide()
+      $('#connect__btn').click(() => connect())
+      $('#disconnect__btn').click(() => disconnect())
+      $('#userRegistration').click(() => userRegistration())
+      $('#chatSubmit').click(() => chatSubmit())
+
+      socket.disconnect()
+    })
+
+  </script>
+</body>
+
+</html>
