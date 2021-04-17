@@ -160,7 +160,8 @@ $("#BotonOfertas").click(function() {
 async function traerOfertas(ofertas) {
     $("#ofertas").empty();
     for (const oferta of ofertas) {
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen']);
+        var save = await ConsultarComentarios(oferta['id']);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'],save);
     }
 }
 
