@@ -598,3 +598,43 @@ section {
     outline: none;
     text-decoration: none;
 }
+.form-group {
+    margin-bottom: 1rem;
+}
+.control {
+    width: 100%;
+    background: #bdf9eb;
+    padding: 9px;
+    border-radius: 4px;
+    margin-bottom: 0px;
+    border: 1px solid #1de9b6;
+    font-family: 'calibri';
+    font-size: 18px;
+    color: #212529;
+}
+#letter{
+    font-size: 13px;
+}
+.lead_text-muted {
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-width: thin;
+
+}
+
+.lead_text-muted2{
+    border-top-style: solid;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-width: thin;
+    margin-left: 50px;
+
+}
+#BotonEnviarComentario{
+    width: 43%;
+    height: 50px;
+
+}
