@@ -1,3 +1,4 @@
+
 from app.utils.conector import Conector, DBINFO
 
 
@@ -114,18 +115,14 @@ class Compra:
         return res
 
     def actualizar_estado(self):
-        print(self.id)
         sql = f"Update Compra SET Compra.estadoCompra=True where Compra.codCompra={self.id};"
-        sql2 = f"Update Transaccion as t SET t.estadoTransaccion=True where t.codTransaccion=(select c.Transaccion_codTransaccion from Compra as c where  c.codCompra={self.id});"
-        sql3 = f"Update Transaccion as t SET t.estadoTransaccion=True where t.codTransaccion=(select c.Transaccion_codTransaccion from Compra as c where  c.codCompra={self.id})+1;"
+        sql2 = f"Update Transaccion as t SET t.estadoTransaccion=True where t.Compra_codCompra={self.id};"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
         conn.execute_query(sql)
         conn.commit_change()
         conn.execute_query(sql2)
-        conn.commit_change()
-        conn.execute_query(sql3)
         conn.commit_change()
         conn.close()
         return True
