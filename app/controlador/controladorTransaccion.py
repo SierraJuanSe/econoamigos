@@ -26,7 +26,6 @@ def insertarTransferencia():
     msg = request.get_json()
     userFrom = Usuario(id=msg.get('idRemitente'))
     userTo = Usuario(id=msg.get('idReceptor'))
-    print(userFrom.id, userTo.id)
     tranTo = Transaccion(concepto="Transferencia Recibida", usuario=userTo,
                            valor=msg.get('valor'), estado=True)
     tranFrom = Transaccion(concepto="Transferencia Enviada", usuario=userFrom,

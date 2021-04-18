@@ -15,10 +15,10 @@ def insertarCompra():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
     tranCompra = Transaccion(concepto="Compra", usuario=user,
-                           valor=int(msg.get('precio')), estado=False)
+                           valor=int(msg.get('precio')), estado=False, idOferta= msg.get('idOferta'))
     user2 = Usuario(id=Transaccion().consultarIdUsuario(msg.get('idOferta')))
     tranIngreso = Transaccion(concepto="Ingreso", usuario=user2,
-                           valor=int(msg.get('precio')), estado=False)
+                           valor=int(msg.get('precio')), estado=False, idOferta= msg.get('idOferta'))
     tranCompra.agregar()
     tranIngreso.agregar()
     comp = Compra(precio=int(msg.get('precio')), estado=False, usuario=user,
@@ -34,10 +34,9 @@ def consultarOfertasComprados():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
     comp = Compra(usuario=user)
-    res = comp.consultar_productos_comprados()
-    res2 = comp.consultar_servicios_comprados()
-    if res != [] or res2 != []:
-        return {'status': 200, 'info': res+res2}
+    res = comp.consultar_ofertas_compradas()
+    if res != []:
+        return {'status': 200, 'info': res}
     else:
         return {'status': 404}
 
@@ -47,10 +46,9 @@ def consultarOfertasVendidos():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
     comp = Compra(usuario=user)
-    res = comp.consulta_productos_vendidos()
-    res2 = comp.consulta_servicios_vendidos()
-    if res != [] or res2 != []:
-        return {'status': 200, 'info': res+res2}
+    res = comp.consultar_ofertas_vendidas()
+    if res != []:
+        return {'status': 200, 'info': res}
     else:
         return {'status': 404}
 
