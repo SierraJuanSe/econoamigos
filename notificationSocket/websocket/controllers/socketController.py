@@ -1,5 +1,5 @@
-from flask import jsonify
-from flask_socketio import send, emit
+from flask import jsonify, request
+from flask_socketio import send, emit, rooms
 from websocket import socketio
 from websocket.controllers import bp
 
@@ -11,11 +11,15 @@ def socket():
 
 @socketio.on('connect')
 def connect():
-  print(socketio)
+  user = request.sid
+  print(rooms())
+  emit('sid', {'stastus': 'discsid', 'sid': user}, to=user)
 
 @socketio.on('disconnect')
 def test_disconnect():
-  print('Client disconnected')
+  user = request.sid
+  emit('sid', {'stastus': 'discsid', 'sid': user}, to=user)
+  print(f'Client disconnected {user}')
 
 @socketio.on('userRegistration')
 def userRegistration(user):

@@ -100,6 +100,10 @@
       drawChat(data)
     })
 
+    socket.on('sid', data => {
+      console.log('sid', data);
+    })
+
     socket.on('userNew', data => {
       $('#listUsers').html('')
       data.forEach(element => {
