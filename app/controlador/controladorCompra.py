@@ -15,10 +15,10 @@ def insertarCompra():
     msg = request.get_json()
     user = Usuario(id=msg.get('idUsuario'))
     tranCompra = Transaccion(concepto="Compra", usuario=user,
-                           valor=int(msg.get('precio')), estado=False, idOferta= msg.get('idOferta'))
+                           valor=int(msg.get('precio')), estado=False, idCompra= msg.get('idOferta'))
     user2 = Usuario(id=Transaccion().consultarIdUsuario(msg.get('idOferta')))
     tranIngreso = Transaccion(concepto="Ingreso", usuario=user2,
-                           valor=int(msg.get('precio')), estado=False, idOferta= msg.get('idOferta'))
+                           valor=int(msg.get('precio')), estado=False, idCompra= msg.get('idOferta'))
     tranCompra.agregar()
     tranIngreso.agregar()
     comp = Compra(precio=int(msg.get('precio')), estado=False, usuario=user,

@@ -17,4 +17,3 @@ def disconnect():
 def userInfo(data):
   user = request.sid
   onlineUsers[user] = data
-  print(onlineUsers)
