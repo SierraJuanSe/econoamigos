@@ -88,7 +88,7 @@ function mostrarComentarios(codComentario, codOferta, descripcion, hora, idUsuar
             '<h5 class="card-title" id="nombreComentario">' + descripcion + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="horaComentario"> Hora Comentario: ' + hora + '</h6>' +
             '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + codComentario + '">Dar Respuesta</button>' + '<div class="modal" id="myModal' + codComentario + '">' + '<div class="modal-dialog">' +
             '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title"> Dar Respuesta </h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
-            '</div>' + '<div class="modal-body">  <h6> Comentario: </h6> <id="preciomodOfe" class="modal-title">' + descripcion + '<br> <br> <h6> Respuesta: </h6> <textarea class="form-control" id="respuestComentario ' + codComentario + '"></textarea>' +
+            '</div>' + '<div class="modal-body">  <h6> Comentario: </h6> <id="preciomodOfe" class="modal-title">' + descripcion + '<br> <br> <h6> Respuesta: </h6> <textarea class="form-control" id="respuestComentario' + codComentario + '"></textarea>' +
             '<a  id="BotonEnviarRespuesta' + codComentario + '" type="button" class="btn">' + 'Enviar Respuesta' + '</a></div></div></div></div></div></div></div></div></div></div>';
         $("#comentarios").append(comO);
         botonEnviarRespuesta(codComentario);
@@ -98,7 +98,7 @@ function mostrarComentarios(codComentario, codOferta, descripcion, hora, idUsuar
 function botonEnviarRespuesta(codComentario) {
     $("#BotonEnviarRespuesta" + codComentario).click(async function() {
         if ($("#respuestComentario" + codComentario).val() != "") {
-            rta = $("#respuestComentario").val();
+            rta = $("#respuestComentario" + codComentario).val();
             save = await crearRespuesta(codComentario, rta);
             if (!save) {
                 swal("Por favor, Intenta más tarde", {

@@ -168,7 +168,7 @@ async function traerOfertas(ofertas) {
 
 //Consultar comentarios para responder
 $("#VerComentarios").click(function() {
-    consultarComentarios()
+    ConsultarComentarios()
 });
 
 //Funcion para realizar la busqueda de las solicitudes a ofertas
