@@ -356,3 +356,54 @@ async function traerHistorialOfertas(Ofertas) {
         mostrarHistorialOfertas(Ofertones['oferta'], Ofertones['nombre'], Ofertones['precio'].toString(), Ofertones['estado'])
     }
 }
+////////////////////// Notificaciones
+
+
+var box  = document.getElementById('box');
+var down = false;
+
+
+function toggleNotifi(){
+    if (down) {
+        box.style.height  = '0px';
+        box.style.opacity = 0;
+        down = false;
+    }else {
+        box.style.height  = '510px';
+        box.style.opacity = 1;
+        down = true;
+    }
+}
+
+$(document).ready(function(){
+            $(".profile .icon_wrap").click(function(){
+              $(this).parent().toggleClass("active");
+              $(".notifications").removeClass("active");
+            });
+
+            $(".notifications .icon_wrap").click(function(){
+              $(this).parent().toggleClass("active");
+               $(".profile").removeClass("active");
+            });
+
+            $(".show_all .link").click(function(){
+              $(".notifications").removeClass("active");
+              $(".popup").show();
+            });
+
+            $(".close").click(function(){
+              $(".popup").hide();
+            });
+        });
+
+
+//Traer Notificaciones
+$("#BotonCampana").click(function() {
+    consultarNotificaciones();
+});
+async function traerNotificaciones(notificaciones) {
+    $("#BotonCampana").empty();
+    for (const notificacion of notificaciones) {
+        mostrarNotificaciones(notificacion['hora'], notificacion['concepto']);
+    }
+}

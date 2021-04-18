@@ -550,7 +550,29 @@ async function consultarHistorialOfertas() {
     traerHistorialOfertas(result)
 }
 
-
+//Peticion para consultar las notificaciones
+async function consultarNotificaciones() {
+    const USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "id": USUARIO['id']
+    }
+    console.log(data.id)
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/AAAAAAAAAAA",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerNotificaciones(result.info)
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }
