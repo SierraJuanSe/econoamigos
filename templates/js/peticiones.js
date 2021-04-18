@@ -1,3 +1,5 @@
+var url = "http://25.7.209.143:5000"
+
 // Iniciar Sesion
 async function login(correo, contrasenia) {
     //Almacena los datos en JSON
@@ -7,7 +9,7 @@ async function login(correo, contrasenia) {
     };
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/ingreso",
+            url: url + "/ingreso",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -41,7 +43,7 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
 
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/registro",
+            url: url + "/registro",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -83,8 +85,6 @@ async function ConsultarComentarios() {
     }]
     traerComentarios(prueba);
     return prueba;
-
-
 }
 
 //HACER
@@ -99,7 +99,7 @@ async function EnviarComentario(idProducto, comentario) {
     console.log(JSON.stringify(data));
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/insertarComentario",
+            url: url + "/insertarComentario",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -134,7 +134,7 @@ async function consultarCompras() {
     console.log(JSON.stringify(data));
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/consultarOfertasCompradas",
+            url: url + "/consultarOfertasCompradas",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -154,8 +154,6 @@ async function consultarCompras() {
         console.log(error)
         return 0;
     }
-
-
     return true;
 }
 
@@ -168,7 +166,7 @@ async function insertarValoracion(idOferta, radiovalue) {
     console.log(JSON.stringify(data));
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/insertarValoracion",
+            url: url+"/insertarValoracion",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -206,7 +204,7 @@ async function consultarSolicitudes() {
     console.log(JSON.stringify(data));
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/consultarOfertasVendidas",
+            url: url + "/consultarOfertasVendidas",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -242,7 +240,7 @@ async function actualizarSolicitud(codCompra) {
     }
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/actualizarEstadoCompra",
+            url: url + "/actualizarEstadoCompra",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -274,7 +272,7 @@ async function crearRespuesta(idComentario, respuesta) {
     }
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/insertarRespuesta",
+            url: url + "/insertarRespuesta",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -310,7 +308,7 @@ async function crearServicio(nombre, descripcion, precio, lugar) {
     };
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/insertarServicio",
+            url: url + "/insertarServicio",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -337,7 +335,7 @@ async function crearProducto(nombre, descripcion, precio, imagen, cantidad) {
     };
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/insertarProducto",
+            url: url + "/insertarProducto",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -361,7 +359,7 @@ async function consultarOfertas() {
     console.log(data.id)
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/consultarOfertas",
+            url: url + "/consultarOfertas",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -398,7 +396,7 @@ async function consultarOfertaEspecifica(busqueda) {
 
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/consultarOfertaEspecifica",
+            url: url + "/consultarOfertaEspecifica",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -437,7 +435,7 @@ async function crearCompra(id, precio) {
     console.log(data);
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/insertarCompra",
+            url: url + "/insertarCompra",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -461,7 +459,7 @@ async function consultarDatosConfiguracion() {
 
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/consultarUsuario",
+            url: url + "/consultarUsuario",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -501,7 +499,7 @@ async function ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, dire
     };
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/actualizarUsuario",
+            url: url + "/actualizarUsuario",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -526,7 +524,7 @@ async function Recargar(recarga) {
     };
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/recargar",
+            url: url + "/recargar",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -550,7 +548,7 @@ async function Transferir(cedula, monto) {
     };
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/transferir",
+            url: url + "/transferir",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -564,7 +562,7 @@ async function Transferir(cedula, monto) {
     console.log(data);
 }
 
-//Peicion para conocer el hstorial de transacciones
+//Peicion para conocer el historial de transacciones
 async function consultarTrasnsacciones() {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
@@ -572,7 +570,7 @@ async function consultarTrasnsacciones() {
     }
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/consultarTransaccion",
+            url: url + "/consultarTransaccion",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -629,7 +627,7 @@ async function consultarNotificaciones() {
     console.log(data.id)
     try {
         result = await $.ajax({
-            url: "http://25.7.209.143:5000/AAAAAAAAAAA",
+            url: url + "/AAAAAAAAAAA",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
