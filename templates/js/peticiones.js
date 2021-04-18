@@ -158,6 +158,41 @@ async function consultarCompras() {
     return true;
 }
 
+//ofertasInsertar
+async function insertarValoracion(idOferta,radiovalue) {
+    /*let data = {
+        "idOferta": idOferta,
+        "valor":radiovalue
+    }
+    console.log(JSON.stringify(data));
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/insertarValoracion",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerCompras(result.info)
+        } else {
+            console.log(result.status)
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+*/
+    return true;
+}
+async function consultarPromedioValoracion(id){
+    return 4;
+}
 
 //HACER
 

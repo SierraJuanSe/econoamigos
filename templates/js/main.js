@@ -158,10 +158,11 @@ $("#BotonOfertas").click(function() {
     consultarOfertas()
 });
 async function traerOfertas(ofertas) {
+	var puntuacion = await consultarPromedioValoracion();
     $("#ofertas").empty();
     for (const oferta of ofertas) {
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'],save);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'],save,puntuacion);
     }
 }
 
