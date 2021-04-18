@@ -5,8 +5,6 @@ const socketVendor = io('http://127.0.0.1:5000', {
     autoConnect: false,
 })
 
-console.log(socketCustomer);
-
 const customerLogin = {
     emailUsuario: 'comprador@mail.com',
     passwordUsuario: 'compras123',
@@ -123,7 +121,9 @@ const buyProduct = (value) => {
       body: JSON.stringify(data),
   })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log("compra", data)
+      })
   }
 }
 
@@ -133,6 +133,14 @@ socketVendor.on('sid', (data) => {
     window.vendorsid = data.sid
     setCookie('vendorsid', vendorsid)
     socketVendor.emit('userInfo', vendor)
+})
+
+socketVendor.on('buyNotification', (data) => {
+  console.log(data);
+})
+
+socketCustomer.on('buyNotification', (data) => {
+  console.log(data);
 })
 
 /* ESCUCHAS DEL WEB-SOCKET comprador*/

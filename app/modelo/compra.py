@@ -3,16 +3,15 @@ from app.utils.conector import Conector, DBINFO
 
 
 class Compra:
-    def __init__(self, id=None, precio=None, estado=None, usuario=None, cod_transaccion=None, cod_oferta=None):
+    def __init__(self, id=None, precio=None, estado=None, usuario=None, cod_oferta=None):
         self.id = id
         self.precio = precio
         self.estado = estado
         self.usuario = usuario
-        self.cod_transaccion = cod_transaccion
         self.cod_oferta = cod_oferta
 
     def agregar(self):
-        sql = f"insert into Compra values(null,{self.precio},{self.estado},'{self.usuario.id}',{self.cod_oferta});"
+        sql = f"insert into Compra values(null,{self.precio},{self.estado},{self.cod_oferta},'{self.usuario.id}');"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
