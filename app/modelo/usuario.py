@@ -69,6 +69,7 @@ class Usuario:
         conn.connect()
         result = conn.execute_query(sql)
         r = {}
+        print(result)
         try:
             if result:
                 r['nombre'] = result[0][1]

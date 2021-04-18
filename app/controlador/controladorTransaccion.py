@@ -20,6 +20,21 @@ def insertarTransaccion():
     else:
         return {'status': 400, 'info':False}
 
+# Se crea una transacción que por defecto estará en estado pendiente
+@bp.route('/insertarTransferencia', methods=['POST'])
+def insertarTransferencia():
+    msg = request.get_json()
+    userFrom = Usuario(id=msg.get('idRemitente'))
+    userTo = Usuario(id=msg.get('idReceptor'))
+    tranTo = Transaccion(concepto="Transferencia Recibida", usuario=userTo,
+                           valor=msg.get('valor'), estado=True)
+    tranFrom = Transaccion(concepto="Transferencia Enviada", usuario=userFrom,
+                       valor=msg.get('valor'), estado=True)
+    if tranFrom.agregar() and tranTo.agregar():
+        return {'status': 200, 'info':True}
+    else:
+        return {'status': 400, 'info':False}
+
 # Retorna todas las transacciones que un usuario haya realizado
 @bp.route('/consultarTransaccion', methods=['POST'])
 def consultarTransaccion():
