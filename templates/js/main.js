@@ -158,13 +158,27 @@ $("#BotonOfertas").click(function() {
     consultarOfertas()
 });
 async function traerOfertas(ofertas) {
-	var puntuacion = await consultarPromedioValoracion();
+    var puntuacion = await consultarPromedioValoracion();
     $("#ofertas").empty();
     for (const oferta of ofertas) {
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'],save,puntuacion);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
     }
 }
+
+//Consultar comentarios para responder
+$("#VerComentarios").click(function() {
+    consultarComentarios()
+});
+
+//Funcion para realizar la busqueda de las solicitudes a ofertas
+async function traerComentarios(comentarios) {
+    $("#comentarios").empty();
+    for (const comentario of comentarios) {
+        mostrarComentarios(comentario['codComentario'], comentario['codOferta'], comentario['descripcion'], comentario['hora'], comentario['idUsuario'], comentario['respuesta']);
+    }
+}
+
 
 //Funcion para realizar la busqueda de las solicitudes a ofertas
 async function traerSolicitudes(solicitudes) {
@@ -360,42 +374,42 @@ async function traerHistorialOfertas(Ofertas) {
 ////////////////////// Notificaciones
 
 
-var box  = document.getElementById('box');
+var box = document.getElementById('box');
 var down = false;
 
 
-function toggleNotifi(){
+function toggleNotifi() {
     if (down) {
-        box.style.height  = '0px';
+        box.style.height = '0px';
         box.style.opacity = 0;
         down = false;
-    }else {
-        box.style.height  = '510px';
+    } else {
+        box.style.height = '510px';
         box.style.opacity = 1;
         down = true;
     }
 }
 
-$(document).ready(function(){
-            $(".profile .icon_wrap").click(function(){
-              $(this).parent().toggleClass("active");
-              $(".notifications").removeClass("active");
-            });
+$(document).ready(function() {
+    $(".profile .icon_wrap").click(function() {
+        $(this).parent().toggleClass("active");
+        $(".notifications").removeClass("active");
+    });
 
-            $(".notifications .icon_wrap").click(function(){
-              $(this).parent().toggleClass("active");
-               $(".profile").removeClass("active");
-            });
+    $(".notifications .icon_wrap").click(function() {
+        $(this).parent().toggleClass("active");
+        $(".profile").removeClass("active");
+    });
 
-            $(".show_all .link").click(function(){
-              $(".notifications").removeClass("active");
-              $(".popup").show();
-            });
+    $(".show_all .link").click(function() {
+        $(".notifications").removeClass("active");
+        $(".popup").show();
+    });
 
-            $(".close").click(function(){
-              $(".popup").hide();
-            });
-        });
+    $(".close").click(function() {
+        $(".popup").hide();
+    });
+});
 
 
 //Traer Notificaciones

@@ -56,43 +56,44 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
 
 
 //HACER
-async function ConsultarComentarios(idProducto) {
-    var prueba= [{
-            "codComentario": 1,
-            "codOferta": 1,
-            "descripcion": "1111111111111111111111111111",
-            "hora": "19:12:34",
-            "idUsuario": "333",
-            "respuesta": "buenaas1"     
-},{
-            "codComentario": 2,
-            "codOferta": 2,
-            "descripcion": "2222222222222222222222222",
-            "hora": "19:12:34",
-            "idUsuario": "333",
-            "respuesta": "buenaas2"
-        
-},{
-            "codComentario": 3,
-            "codOferta": 3,
-            "descripcion": "3333333333333333333333",
-            "hora": "19:12:34",
-            "idUsuario": "333",
-            "respuesta": "buenaas3"
-        
-}]
+async function ConsultarComentarios() {
+    var prueba = [{
+        "codComentario": 1,
+        "codOferta": 1,
+        "descripcion": "1111111111111111111111111111",
+        "hora": "19:12:34",
+        "idUsuario": "333",
+        "respuesta": "buenaas1"
+    }, {
+        "codComentario": 2,
+        "codOferta": 2,
+        "descripcion": "2222222222222222222222222",
+        "hora": "19:12:34",
+        "idUsuario": "333",
+        "respuesta": "buenaas2"
+
+    }, {
+        "codComentario": 3,
+        "codOferta": 3,
+        "descripcion": "3333333333333333333333",
+        "hora": "19:12:34",
+        "idUsuario": "333",
+        "respuesta": "buenaas3"
+
+    }]
+    traerComentarios(prueba);
     return prueba;
 
 
 }
 
 //HACER
-async function EnviarComentario(idProducto,comentario) {
+async function EnviarComentario(idProducto, comentario) {
     console.log("wiiiiiiiiiiiiiiiiiiiiiii")
     var USUARIO = JSON.parse(readCookie('token'));
     let data = {
         "idOferta": idProducto,
-        "comentario":comentario,
+        "comentario": comentario,
         "idUsuario": USUARIO['id']
     }
     console.log(JSON.stringify(data));
@@ -106,7 +107,7 @@ async function EnviarComentario(idProducto,comentario) {
         })
         if (result.status == true) {
             console.log(result.info)
-           
+
         } else {
             console.log(result.status)
             swal("No se han encontrado coincidencias con tu búsqueda", {
@@ -159,7 +160,7 @@ async function consultarCompras() {
 }
 
 //ofertasInsertar
-async function insertarValoracion(idOferta,radiovalue) {
+async function insertarValoracion(idOferta, radiovalue) {
     /*let data = {
         "idOferta": idOferta,
         "valor":radiovalue
@@ -190,7 +191,7 @@ async function insertarValoracion(idOferta,radiovalue) {
 */
     return true;
 }
-async function consultarPromedioValoracion(id){
+async function consultarPromedioValoracion(id) {
     return 4;
 }
 
@@ -262,6 +263,40 @@ async function actualizarSolicitud(codCompra) {
         return 0;
     }
 }
+
+//Petición para insertar respuesta a comentario
+async function crearRespuesta(idComentario, respuesta) {
+    var USUARIO = JSON.parse(readCookie('token'));
+
+    let data = {
+        "idComentario": idComentario,
+        "respuesta": respuesta
+    }
+    try {
+        result = await $.ajax({
+            url: "http://25.7.209.143:5000/insertarRespuesta",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == true) {
+            console.log(result.info)
+
+        } else {
+            console.log(result.status)
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+}
+
 
 // Peticion para crear un servicio 
 async function crearServicio(nombre, descripcion, precio, lugar) {
@@ -507,7 +542,7 @@ async function Recargar(recarga) {
 
 //Petición para transferir Dinero
 async function Transferir(cedula, monto) {
-const USUARIO = JSON.parse(readCookie('token'));
+    const USUARIO = JSON.parse(readCookie('token'));
     let data = {
         "idUsuario": USUARIO['id'],
         "valor": monto,
@@ -609,6 +644,7 @@ async function consultarNotificaciones() {
         return 0;
     }
 }
+
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }

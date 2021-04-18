@@ -55,7 +55,7 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
         '</div></div></div></div></div></div></div></div>';
 
     $("#compras").append(ofertasC);
-    $(".radioBotones").click(function () {
+    $(".radioBotones").click(function() {
         console.log(codcompra)
         var radiovalue = $(this).val();
         if (radiovalue == 0) radiovalue = "ninguno";
@@ -79,7 +79,46 @@ function obtenerValoracion(idOferta, radiovalue) {
     }
 }
 
+//Mostrar los comentarios a ofertas para responder
+function mostrarComentarios(codComentario, codOferta, descripcion, hora, idUsuario, respuesta) {
+    //Codigo HTML
+    if (respuesta == "" || respuesta == null) {
+        comO = "";
+        comO = '<div class="col-sm-4" id="Card' + codComentario + '">' + '<div class="card">' + '<div class="card-header" id="codOferta' + codComentario + '">Oferta Nº ' + codOferta + '</div>' + '<div class="card-body">' +
+            '<h5 class="card-title" id="nombreComentario">' + descripcion + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="horaComentario"> Hora Comentario: ' + hora + '</h6>' +
+            '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + codComentario + '">Dar Respuesta</button>' + '<div class="modal" id="myModal' + codComentario + '">' + '<div class="modal-dialog">' +
+            '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title"> Dar Respuesta </h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
+            '</div>' + '<div class="modal-body">  <h6> Comentario: </h6> <id="preciomodOfe" class="modal-title">' + descripcion + '<br> <br> <h6> Respuesta: </h6> <textarea class="form-control" id="respuestComentario ' + codComentario + '"></textarea>' +
+            '<a  id="BotonEnviarRespuesta' + codComentario + '" type="button" class="btn">' + 'Enviar Respuesta' + '</a></div></div></div></div></div></div></div></div></div></div>';
+        $("#comentarios").append(comO);
+        botonEnviarRespuesta(codComentario);
+    }
+}
 
+function botonEnviarRespuesta(codComentario) {
+    $("#BotonEnviarRespuesta" + codComentario).click(async function() {
+        if ($("#respuestComentario" + codComentario).val() != "") {
+            rta = $("#respuestComentario").val();
+            save = await crearRespuesta(codComentario, rta);
+            if (!save) {
+                swal("Por favor, Intenta más tarde", {
+                    icon: "error"
+                });
+            } else {
+                swal("Respuesta Almacenada correctamente", {
+                    icon: "success"
+                });
+                $("#myModal" + codComentario).modal('hide');
+                $("#Card" + codComentario).remove();
+            }
+        } else {
+            swal("Error,Ingresa una respuesta", {
+                icon: "error"
+            });
+        }
+
+    });
+}
 
 //Mostrar todas las solicitudes a ofertas
 function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, estado) {
@@ -95,7 +134,7 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
     }
 }
 //Mostrar todas las  ofertas
-function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios,recibir ) {
+function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir) {
     var dibujarComment = "";
 
 
@@ -129,13 +168,13 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
     for (var i = 0; i < recibir; i++) {
 
         ofertasC += '<label >⭐</label>'
-    }
-    +'</div></div></div></div></div></div></div></div>';
+    } +
+    '</div></div></div></div></div></div></div></div>';
     $("#ofertas").append(ofertasC);
     botonCrearCompra(id, precio);
     pedirValoracion(id);
     botonEnviarComentario(id);
-    
+
 }
 
 function pedirValoracion(id) {
@@ -148,14 +187,14 @@ function pedirValoracion(id) {
 function checkbox(id, estado, codCompra) {
 
     //Accion de boton al checkbox
-    $("#customCheck" + codCompra).click(function () {
+    $("#customCheck" + codCompra).click(function() {
         accionesCheck(id, codCompra);
     });
 }
 
 
 function botonEnviarComentario(id) {
-    $("#BotonEnviarComentario" + id).click(async function () {
+    $("#BotonEnviarComentario" + id).click(async function() {
         if ($("#descripcionComent").val() != "") {
             comment = $("#descripcionComent").val();
 
@@ -169,8 +208,7 @@ function botonEnviarComentario(id) {
                     icon: "success"
                 });
             }
-        }
-        else {
+        } else {
             swal("Error,Ingresa un Comentario", {
                 icon: "error"
             });
@@ -183,7 +221,7 @@ function botonEnviarComentario(id) {
 function botonCrearCompra(idOferta, precio) {
 
 
-    $("#BotonComprar" + idOferta).click(async function () {
+    $("#BotonComprar" + idOferta).click(async function() {
         const USUARIO = JSON.parse(readCookie('token'));
         if (USUARIO['moneda'] > precio) {
             var save = await crearCompra(idOferta, precio);
@@ -209,12 +247,12 @@ function botonCrearCompra(idOferta, precio) {
 function accionesCheck(id, codCompra) {
     //Acciones de la alerta
     swal({
-        title: "¿Estas seguro de cambiar el estado de la solicitud?",
-        text: "Una vez hecha la confirmación no podras revertirlo ",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
+            title: "¿Estas seguro de cambiar el estado de la solicitud?",
+            text: "Una vez hecha la confirmación no podras revertirlo ",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
         .then((willDelete) => {
             if (willDelete) {
                 swal("Tu solicitud ha sido realizada, ya podras Verificar tu saldo", {
