@@ -573,6 +573,7 @@ async function consultarNotificaciones() {
         console.log(error)
         return 0;
     }
+}
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }
