@@ -15,7 +15,6 @@ from app import socketio, onlineUsers
 @bp.route('/insertarCompra', methods=['POST'])
 def insertarCompra():
     msg = request.get_json()
-    
     oferta = Oferta()
     ofert = oferta.consultarOfertaEspecificaUsuario(msg.get('idOferta'))[0]
     idVendedor = ofert['idUsuario']
@@ -35,7 +34,7 @@ def insertarCompra():
         notificateCompra(vendedor, ofert)
         return {'status': 200, 'info':True}
     else:
-        return {'status': 400, 'info':False}
+        return {'status': 400, 'info': False}
 
 # Retorna todas las ofertas que el usuario adquirió
 @bp.route('/consultarOfertasCompradas', methods=['POST'])

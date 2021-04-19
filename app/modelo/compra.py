@@ -24,7 +24,8 @@ class Compra:
         conn.close()
 
     def consultar_ofertas_compradas(self):
-        sql = f"select * from Oferta where codOferta=(select Oferta_codOferta from Compra where Usuario_idUsuario='{self.usuario.id}');"
+        sql = f"select *, Compra.codCompra from Oferta,Compra where codOferta=(select Oferta_codOferta from Compra where Usuario_idUsuario='{self.usuario.id}') " \
+              f"and Compra.Oferta_codOferta=Oferta.codOferta;"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -40,6 +41,7 @@ class Compra:
             r['estado'] = fila[5]
             r['lugar'] =  fila[6]
             r['imagen'] = fila[7]
+            r['codCompra'] = fila[-1]
             res.append(r)
         conn.close()
         return res
