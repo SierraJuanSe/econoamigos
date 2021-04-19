@@ -1,3 +1,6 @@
+const URL = 'http://127.0.0.1:5000'
+let numNotifications = 0
+
 const socketCustomer = io('http://127.0.0.1:5000', {
     autoConnect: false,
 })
@@ -23,7 +26,7 @@ let vendor = {
 }
 
 let products = []
-const URL = 'http://127.0.0.1:5000'
+
 
 /* acciones */
 
@@ -135,12 +138,15 @@ socketVendor.on('sid', (data) => {
     socketVendor.emit('userInfo', vendor)
 })
 
-socketVendor.on('buyNotification', (data) => {
-  console.log(data);
+socketCustomer.on('buyNotification', (data) => {
+  console.log("costumer", data);
 })
 
-socketCustomer.on('buyNotification', (data) => {
-  console.log(data);
+socketVendor.on('buyNotification', (data) => {
+  numNotifications += 1;
+  info = `<p>Te hicieron una compra de: ${data.info.nombre} por $${data.info.precio}</p>`
+  $('#notification_list').append(info)
+  console.log("vendor:", data);
 })
 
 /* ESCUCHAS DEL WEB-SOCKET comprador*/

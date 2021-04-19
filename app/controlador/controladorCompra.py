@@ -15,22 +15,24 @@ from app import socketio, onlineUsers
 @bp.route('/insertarCompra', methods=['POST'])
 def insertarCompra():
     msg = request.get_json()
-    comprador = Usuario(id=msg.get('idUsuario'))
-    oferta = Oferta()
-    print(oferta.consultarOfertaEspecificaUsuario(msg.get('idOferta')))
-    comp = Compra(precio=int(msg.get('precio')), estado=False, usuario=comprador,
-                  cod_oferta=msg.get('idOferta'))
-    compra = comp.agregar()
-    tranCompra = Transaccion(concepto="Compra", usuario=comprador,
-                           valor=int(msg.get('precio')), estado=False, idCompra= msg.get('idOferta'))
-    # user2 = Usuario(id=Transaccion().consultarIdUsuario(msg.get('idOferta')))
-    # tranIngreso = Transaccion(concepto="Ingreso", usuario=user2,
-    #                        valor=int(msg.get('precio')), estado=False, idCompra= msg.get('idOferta'))
-    # tranCompra.agregar()
-    # tranIngreso.agregar()
     
-    if True:
-        notificateCompra(msg, None, None)
+    oferta = Oferta()
+    ofert = oferta.consultarOfertaEspecificaUsuario(msg.get('idOferta'))[0]
+    idVendedor = ofert['idUsuario']
+    comprador = Usuario(id=msg.get('idUsuario'))
+    vendedor = Usuario(id=idVendedor)
+    compra = Compra(precio=int(msg.get('precio')), estado=False, usuario=comprador,
+                  cod_oferta=msg.get('idOferta'))
+    isCompra = compra.agregar()
+
+    if isCompra:
+        tranCompra = Transaccion(concepto="Compra", usuario=comprador,
+                           valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
+        tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor,
+                           valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
+        tranCompra.agregar()
+        tranIngreso.agregar()
+        notificateCompra(vendedor, ofert)
         return {'status': 200, 'info':True}
     else:
         return {'status': 400, 'info':False}
@@ -71,9 +73,9 @@ def actualizarEstadoCompra():
     else:
         return {'status': 400, 'info':False}
 
-def notificateCompra(data, vendor, producto):
-    onlineUser = list(filter(lambda i: onlineUsers[i]['id'] == data['idUsuario'], onlineUsers.keys()))
-    socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotofication', 'info': {}}, to=onlineUser[0])
+def notificateCompra(vendor, producto):
+    onlineUser = list(filter(lambda i: onlineUsers[i]['id'] == vendor.id, onlineUsers.keys()))
+    socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotofication', 'info': producto}, to=onlineUser[0])
 
 if __name__ == '__main__':
     app.run(host="25.7.209.143")

@@ -15,10 +15,13 @@ class Compra:
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
-        conn.execute_query(sql)
-        conn.commit_change()
+        cursor = conn.get_cursor()
+        y = cursor.execute(sql)
+        if y:
+            self.id = cursor.lastrowid
+            conn.commit_change()
+            return True
         conn.close()
-        return True
 
     def consultar_ofertas_compradas(self):
         sql = f"select * from Oferta where codOferta=(select Oferta_codOferta from Compra where Usuario_idUsuario='{self.usuario.id}');"
