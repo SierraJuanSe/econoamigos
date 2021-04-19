@@ -3,26 +3,29 @@ from app.utils.conector import Conector, DBINFO
 
 
 class Compra:
-    def __init__(self, id=None, precio=None, estado=None, usuario=None, cod_transaccion=None, cod_oferta=None):
+    def __init__(self, id=None, precio=None, estado=None, usuario=None, cod_oferta=None):
         self.id = id
         self.precio = precio
         self.estado = estado
         self.usuario = usuario
-        self.cod_transaccion = cod_transaccion
         self.cod_oferta = cod_oferta
 
     def agregar(self):
-        sql = f"insert into Compra values(null,{self.precio},{self.estado},'{self.usuario.id}',{self.cod_oferta});"
+        sql = f"insert into Compra values(null,{self.precio},{self.estado},{self.cod_oferta},'{self.usuario.id}');"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
-        conn.execute_query(sql)
-        conn.commit_change()
+        cursor = conn.get_cursor()
+        y = cursor.execute(sql)
+        if y:
+            self.id = cursor.lastrowid
+            conn.commit_change()
+            return True
         conn.close()
-        return True
 
     def consultar_ofertas_compradas(self):
-        sql = f"select * from Oferta where codOferta=(select Oferta_codOferta from Compra where Usuario_idUsuario='{self.usuario.id}');"
+        sql = f"select *, Compra.codCompra from Oferta,Compra where codOferta=(select Oferta_codOferta from Compra where Usuario_idUsuario='{self.usuario.id}') " \
+              f"and Compra.Oferta_codOferta=Oferta.codOferta;"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -38,6 +41,7 @@ class Compra:
             r['estado'] = fila[5]
             r['lugar'] =  fila[6]
             r['imagen'] = fila[7]
+            r['codCompra'] = fila[-1]
             res.append(r)
         conn.close()
         return res

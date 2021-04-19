@@ -23,4 +23,8 @@ class Valoracion:
         conn.connect()
         result = conn.execute_query(sql)
         conn.close()
+        try:
+            result = int(result[0][0])
+        except:
+            result = 0
         return result

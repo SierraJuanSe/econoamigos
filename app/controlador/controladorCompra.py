@@ -2,6 +2,7 @@ from app.controlador import bp
 from app.modelo.usuario import Usuario
 from app.modelo.compra import Compra
 from app.modelo.transaccion import Transaccion
+from app.modelo.oferta import Oferta
 from flask import request
 
 # @app.route('/')
@@ -13,20 +14,26 @@ from flask import request
 @bp.route('/insertarCompra', methods=['POST'])
 def insertarCompra():
     msg = request.get_json()
-    user = Usuario(id=msg.get('idUsuario'))
-    tranCompra = Transaccion(concepto="Compra", usuario=user,
-                           valor=int(msg.get('precio')), estado=False, idOferta= msg.get('idOferta'))
-    user2 = Usuario(id=Transaccion().consultarIdUsuario(msg.get('idOferta')))
-    tranIngreso = Transaccion(concepto="Ingreso", usuario=user2,
-                           valor=int(msg.get('precio')), estado=False, idOferta= msg.get('idOferta'))
-    tranCompra.agregar()
-    tranIngreso.agregar()
-    comp = Compra(precio=int(msg.get('precio')), estado=False, usuario=user,
-                  cod_oferta=msg.get('idOferta'))
-    if comp.agregar():
-        return {'status': 200, 'info':True}
+    oferta = Oferta()
+    ofert = oferta.consultarOfertaEspecificaUsuario(msg.get('idOferta'))[0]
+    idVendedor = ofert['idUsuario']
+    comprador = Usuario(id=msg.get('idUsuario'))
+    vendedor = Usuario(id=idVendedor)
+    compra = Compra(precio=int(msg.get('precio')), estado=False, usuario=comprador,
+                    cod_oferta=msg.get('idOferta'))
+    isCompra = compra.agregar()
+
+    if isCompra:
+        tranCompra = Transaccion(concepto="Compra", usuario=comprador,
+                                 valor=int(msg.get('precio')), estado=False, idCompra=compra.id)
+        tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor,
+                                  valor=int(msg.get('precio')), estado=False, idCompra=compra.id)
+        tranCompra.agregar()
+        tranIngreso.agregar()
+        #notificateCompra(vendedor, ofert)
+        return {'status': 200, 'info': True}
     else:
-        return {'status': 400, 'info':False}
+        return {'status': 400, 'info': False}
 
 # Retorna todas las ofertas que el usuario adquirió
 @bp.route('/consultarOfertasCompradas', methods=['POST'])

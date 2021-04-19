@@ -14,8 +14,8 @@ def consultarPromedioValoracion():
     msg = request.get_json()
     valoracion = Valoracion(Oferta_codOferta=msg.get('idOferta'))
     res = valoracion.consultarPromedio()
-    if len(res) != 0:
-        return {'status': 200, 'info': res[0][0]}
+    if res != "":
+        return {'status': 200, 'info': res}
     else:
         return {'status': 404}
 
