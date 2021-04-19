@@ -4,6 +4,7 @@ from app.modelo.compra import Compra
 from app.modelo.transaccion import Transaccion
 from app.modelo.oferta import Oferta
 from flask import request
+from app import socketio, onlineUsers
 
 # @app.route('/')
 # def inicio():
@@ -20,18 +21,18 @@ def insertarCompra():
     comprador = Usuario(id=msg.get('idUsuario'))
     vendedor = Usuario(id=idVendedor)
     compra = Compra(precio=int(msg.get('precio')), estado=False, usuario=comprador,
-                    cod_oferta=msg.get('idOferta'))
+                  cod_oferta=msg.get('idOferta'))
     isCompra = compra.agregar()
 
     if isCompra:
         tranCompra = Transaccion(concepto="Compra", usuario=comprador,
-                                 valor=int(msg.get('precio')), estado=False, idCompra=compra.id)
+                           valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
         tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor,
-                                  valor=int(msg.get('precio')), estado=False, idCompra=compra.id)
+                           valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
         tranCompra.agregar()
         tranIngreso.agregar()
-        #notificateCompra(vendedor, ofert)
-        return {'status': 200, 'info': True}
+        notificateCompra(vendedor, ofert)
+        return {'status': 200, 'info':True}
     else:
         return {'status': 400, 'info': False}
 
@@ -71,6 +72,9 @@ def actualizarEstadoCompra():
     else:
         return {'status': 400, 'info':False}
 
+def notificateCompra(vendor, producto):
+    onlineUser = list(filter(lambda i: onlineUsers[i]['id'] == vendor.id, onlineUsers.keys()))
+    socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotofication', 'info': producto}, to=onlineUser[0])
 
 if __name__ == '__main__':
     app.run(host="25.7.209.143")

@@ -1,11 +1,27 @@
 from flask import Flask
+from flask_socketio import SocketIO
 from flask_cors import CORS
+from config import Config
 
-app = Flask(__name__)
-CORS(app)
+socketio = SocketIO(cors_allowed_origins='*')
+cors = CORS()
+onlineUsers = {}
 
-from app.controlador import bp as controlador_bp
-app.register_blueprint(controlador_bp)
+def create_app(config_class=Config):
+  app = Flask(__name__)
+  app.config.from_object(config_class)
+
+
+  cors.init_app(app)
+  socketio.init_app(app)
+
+  from app.controlador import bp as controlador_bp
+  app.register_blueprint(controlador_bp)
+  
+  from app.notifications import bp as notifications_bp
+  app.register_blueprint(notifications_bp)
+
+  return app
 
 
 from app.modelo.usuario import Usuario
