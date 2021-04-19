@@ -54,7 +54,7 @@ const connectVendor = () => {
             window.token = JSON.stringify(data.token);
             setCookie(token);
             console.log(JSON.parse(readCookie('token')))
-            // vendor = data.token
+            vendor = data.token
             socketVendor.connect()
             setConnectedVendor(true)
         })
@@ -119,7 +119,7 @@ const buyProduct = (value) => {
       "precio": p.precio,
       "idOferta": p.id
     }
-    fetch(URL + '/insertarCompra', {
+    fetch(URLSocket + '/insertarCompra', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
