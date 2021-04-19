@@ -125,8 +125,9 @@ $("#Compras").click(function() {
 //Funcion para realizar la busqueda de las ofertas compradas
 function traerCompras(compras) {
     $("#compras").empty();
+    console.log(compras)
     for (const compra of compras) {
-        mostrarCompras(compra['codCompra'], compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen']);
+        mostrarCompras(compra['codCompra'], compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen'],compra['codOferta']);
 
     }
 }
@@ -158,17 +159,17 @@ $("#BotonOfertas").click(function() {
     consultarOfertas()
 });
 async function traerOfertas(ofertas) {
-    var puntuacion = await consultarPromedioValoracion();
     $("#ofertas").empty();
     for (const oferta of ofertas) {
+        var puntuacion = await consultarPromedioValoracion(oferta['id']);
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'],save, puntuacion);
     }
 }
 
 //Consultar comentarios para responder
 $("#VerComentarios").click(function() {
-    ConsultarComentarios()
+    ConsultarMisComentarios()
 });
 
 //Funcion para realizar la busqueda de las solicitudes a ofertas
@@ -310,7 +311,7 @@ $("#BotonTransferir").click(async function() {
     } else if (isNaN(monto)) {
         swal("Error", "Por favor, Ingrese una cantidad válida", "error");
     } else {
-        save = await Transferir(cedula, parseInt(monto));
+        save = await insertarTransferencia(cedula, parseInt(monto));
         if (save == undefined) {
             swal("Por favor, Intenta más tarde", {
                 icon: "error"

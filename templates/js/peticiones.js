@@ -58,41 +58,13 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
 
 
 //HACER
-async function ConsultarComentarios() {
-    var prueba = [{
-        "codComentario": 1,
-        "codOferta": 1,
-        "descripcion": "1111111111111111111111111111",
-        "hora": "19:12:34",
-        "idUsuario": "333",
-        "respuesta": "buenaas1"
-    }, {
-        "codComentario": 2,
-        "codOferta": 2,
-        "descripcion": "2222222222222222222222222",
-        "hora": "19:12:34",
-        "idUsuario": "333",
-        "respuesta": "buenaas2"
 
-    }, {
-        "codComentario": 3,
-        "codOferta": 3,
-        "descripcion": "3333333333333333333333",
-        "hora": "19:12:34",
-        "idUsuario": "333",
-        "respuesta": "buenaas3"
-
-    }]
-    traerComentarios(prueba);
-    return prueba;
-}
 
 //HACER
-async function EnviarComentario(idProducto, comentario) {
-    console.log("wiiiiiiiiiiiiiiiiiiiiiii")
+async function insertarComentario(id, comentario) {
     var USUARIO = JSON.parse(readCookie('token'));
     let data = {
-        "idOferta": idProducto,
+        "idOferta": id,
         "comentario": comentario,
         "idUsuario": USUARIO['id']
     }
@@ -105,9 +77,9 @@ async function EnviarComentario(idProducto, comentario) {
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-        if (result.status == true) {
+        if (result.status == 200) {
             console.log(result.info)
-
+            return result.info
         } else {
             console.log(result.status)
             swal("No se han encontrado coincidencias con tu búsqueda", {
@@ -119,9 +91,6 @@ async function EnviarComentario(idProducto, comentario) {
         console.log(error)
         return 0;
     }
-
-
-    return true;
 }
 
 
@@ -159,7 +128,8 @@ async function consultarCompras() {
 
 //ofertasInsertar
 async function insertarValoracion(idOferta, radiovalue) {
-    /*let data = {
+    console.log(idOferta+radiovalue)
+    let data = {
         "idOferta": idOferta,
         "valor":radiovalue
     }
@@ -174,10 +144,10 @@ async function insertarValoracion(idOferta, radiovalue) {
         })
         if (result.status == 200) {
             console.log(result.info)
-            traerCompras(result.info)
+            return true;
         } else {
             console.log(result.status)
-            swal("No se han encontrado coincidencias con tu búsqueda", {
+            swal("Error", {
                 icon: "error"
             });
 
@@ -186,11 +156,32 @@ async function insertarValoracion(idOferta, radiovalue) {
         console.log(error)
         return 0;
     }
-*/
-    return true;
 }
 async function consultarPromedioValoracion(id) {
-    return 4;
+    let data = {
+        "idOferta": id
+    }
+    try {
+        result = await $.ajax({
+            url: url+"/consultarPromedioValoracion",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            return result.info;
+        } else {
+            console.log(result.status)
+            swal("Error", {
+                icon: "error"
+            });
+
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
 }
 
 //HACER
@@ -278,15 +269,13 @@ async function crearRespuesta(idComentario, respuesta) {
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-        if (result.status == true) {
+        if (result.info) {
             console.log(result.info)
-
+            return true
         } else {
-            console.log(result.status)
             swal("No se han encontrado coincidencias con tu búsqueda", {
                 icon: "error"
             });
-
         }
     } catch (error) {
         console.log(error)
@@ -539,16 +528,16 @@ async function Recargar(recarga) {
 }
 
 //Petición para transferir Dinero
-async function Transferir(cedula, monto) {
+async function insertarTransferencia(cedula, monto) {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
-        "idUsuario": USUARIO['id'],
+        "idRemitente": USUARIO['id'],
         "valor": monto,
         "idReceptor": cedula
     };
     try {
         result = await $.ajax({
-            url: url + "/transferir",
+            url: url + "/insertarTransferencia",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -596,6 +585,57 @@ async function consultarTrasnsacciones() {
         return 0;
     }
 
+}
+
+async function ConsultarComentarios(id) {
+    let data = {
+        "idOferta": id
+    }
+    try {
+        result = await $.ajax({
+            url: url+"/consultarComentarios",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            return result.info;
+        } else {
+            console.log(result.status)
+            swal("Error", {
+                icon: "error"
+            });
+
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+}
+
+
+async function ConsultarMisComentarios() {
+    const USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idUsuario": USUARIO['id']
+    }
+    try {
+        result = await $.ajax({
+            url: url + "/consultarMisComentarios",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerComentarios(result.info)
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
 }
 
 async function consultarHistorialOfertas() {
