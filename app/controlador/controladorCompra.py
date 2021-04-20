@@ -5,6 +5,7 @@ from app.modelo.transaccion import Transaccion
 from app.modelo.oferta import Oferta
 from flask import request
 from app import socketio, onlineUsers
+from datetime import datetime
 
 # @app.route('/')
 # def inicio():
@@ -73,8 +74,12 @@ def actualizarEstadoCompra():
         return {'status': 400, 'info':False}
 
 def notificateCompra(vendor, producto):
-    onlineUser = list(filter(lambda i: onlineUsers[i]['id'] == vendor.id, onlineUsers.keys()))
-    socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotofication', 'info': producto}, to=onlineUser[0])
+    onlineUser = list(filter(lambda i: int(onlineUsers[i]['id']) == int(vendor.id), onlineUsers.keys()))
+    if onlineUser:
+        aux = datetime.now()
+        horaComentario = str(aux.hour) + ":" + str(aux.minute) + ":" + str(aux.second)
+        producto['hora'] = horaComentario
+        socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotofication', 'info': producto}, to=onlineUser[0])
 
 if __name__ == '__main__':
     app.run(host="25.7.209.143")

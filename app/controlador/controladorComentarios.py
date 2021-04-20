@@ -43,4 +43,4 @@ def insertarRespuesta():
     if comentario.agregarRespuesta(msg.get('idComentario')):
         return {'status': 200, 'info':True}
     else:
-        return {'status': 400, 'info':False}
+        return {'status': 400, 'info':False}    

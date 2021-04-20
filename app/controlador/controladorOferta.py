@@ -54,7 +54,7 @@ def insertarOferta():
         oferta = Oferta(tipo="Servicio", nombre=msg.get('nombre'), descripcion=msg.get('descripcion'),
                             precio=msg.get('precio'), estado=True, lugarServicio=msg.get('lugar'),
                             idUsuario=msg.get('idUsuario'))
-
+    print(oferta.tipo)
     if oferta != None and oferta.agregarOferta():
         return {'status': 200, 'info':True}
     else:

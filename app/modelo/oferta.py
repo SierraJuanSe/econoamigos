@@ -79,8 +79,8 @@ class Oferta:
         conn.close()
         return respuesta
 
-    def consultarOfertaEspecificaUsuario(self, codOferta):
-        sql = f"select*from Oferta where  codOferta='{codOferta}'"
+    def consultarTodaOferta(self):
+        sql = f"select*from Oferta where (cantidadProducto >0 or cantidadProducto is null) and Usuario_idUsuario!={self.idUsuario};"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -97,39 +97,17 @@ class Oferta:
             r1['lugar'] = fila[6]
             r1['imagen'] = fila[7]
             r1['cantidad'] = fila[8]
-            r1['idUsuario'] = fila[9]
-            respuesta.append(r1)
-        conn.close()
-        return respuesta
-
-    def consultarTodaOferta(self):
-        sql = f"select*from Oferta where (cantidadProducto >0 or cantidadProducto is null) and Usuario_idUsuario!={self.idUsuario};"
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql, None)
-        respuesta = []
-        for fila in result:
-            r1['id'] = fila[0]
-            r1['tipo'] = fila[1]
-            r1['nombre'] = fila[2]
-            r1['descripcion'] = fila[3]
-            r1['precio'] = fila[4]
-            r1['estado'] = fila[5]
-            r1['lugar'] = fila[6]
-            r1['imagen'] = fila[7]
-            r1['cantidad'] = fila[8]
-            r1['idUsuario'] = fila[9]
+            r1['idUsuario'] = fila[5]
             respuesta.append(r1)
         conn.close()
         return respuesta
 
     def consultarMisOfertas(self):
-        sql = f"select * from Oferta where (cantidadProducto >0 or cantidadProducto is null) and Usuario_idUsuario={self.idUsuario};"
+        sql = f"select*from Oferta where (cantidadProducto >0 or cantidadProducto is null) and Usuario_idUsuario={self.idUsuario};"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
-        result = conn.execute_query(sql)
+        result = conn.execute_query(sql, None)
         respuesta = []
         for fila in result:
             r1 = {}

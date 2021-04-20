@@ -62,4 +62,3 @@ def actualizarTransaccion():
 
 if __name__ == '__main__':
   app.run(host="25.7.209.143")
-
