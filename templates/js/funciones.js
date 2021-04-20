@@ -306,7 +306,7 @@ function mostrarHistorialOfertas(nombre, comprador, ingreso, estado) {
 }
 //Mostrar todas las notificaciones
 function mostrarNotificaciones(hora, concepto) {
-
+    $("#puntoNotificacion").show(); //////////aaaaaaaaaaaaaaaaaaaaaaaa
     notificaciones1C = "";
     notificaciones1C = '<li class="mcd success">' + '<div class="notify_icon">' + '<span class="icon">' + '</span>' + '</div>' + '<div class="notify_data">' +
         '<div class="title">' + hora + '</div>' + '<div class="sub_title">' + concepto + '</div>' + '</div>' + '</li>';
@@ -317,12 +317,11 @@ function mostrarNotificaciones(hora, concepto) {
 
 //Mostrar alertas notificaciones
 function mostrarAlertas(hora, concepto) {
-
+    $("#puntoNotificacion").show(); /////////////////////aaaaaaaaaaaaa
     notificaciones2C = "";
     notificaciones2C = '<div class="toast" role="alert" aria-live="assertive" data-autohide="false" >' + '<div class="toast-header" >' + '<strong class="mr-auto">Nueva Notificación</strong>' +
         '<small class="text-muted">' + hora + '</small>' + '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + '</button>' +
         '</div>' + '<div class="toast-body">' + concepto + '</div>' + '</div>' + '</div>' + '</div>';
-    $("#Alertas").empty();
     $("#Alertas").append(notificaciones2C);
     $('.toast').toast('show');
 }

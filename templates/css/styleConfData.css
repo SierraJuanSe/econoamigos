@@ -593,11 +593,8 @@ section {
 }
 
 .wrapper {
-    width: 5%;
-    margin-top: 0.1%;
-    margin-left: -13%;
+    margin-left: 20%;
 }
-
 .navbar {
     margin-top: 20%;
     display: flex;

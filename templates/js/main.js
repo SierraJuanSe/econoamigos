@@ -1,3 +1,4 @@
+$("#puntoNotificacion").hide();
 let boton = document.getElementById("icono");
 let enlaces = document.getElementById("enlaces");
 let contador = 0;
@@ -415,7 +416,8 @@ $(document).ready(function() {
 
 //Traer Notificaciones
 $("#BotonCampana").click(function() {
-    consultarNotificaciones();
+    $("#puntoNotificacion").hide(); ///////////
+    //consultarNotificaciones();  aaaaaaaaaaaaaaa
 });
 async function traerNotificaciones(notificaciones) {
     $("#BotonCampana").empty();

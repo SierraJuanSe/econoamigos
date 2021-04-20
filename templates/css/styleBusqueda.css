@@ -9,6 +9,7 @@
 body {
     font-family: 'Poppins', sans-serif;
     overflow: auto;
+    z-index: 2;
 }
 
 
@@ -65,7 +66,7 @@ header .textos h1 {
 .saldo {
     font-size: 18px;
     margin: 35px 0;
-    margin-left: 15%;
+    margin-right: -52%;
 }
 
 .enlaces {
@@ -567,21 +568,17 @@ section {
 /*Barra de Busqueda*/
 
 #barraBusqueda {
-    position: absolute;
     top: -1300%;
-    left: 35%;
+    margin-left: 35%;
     width: 26%;
     height: 60px;
-    z-index: -1;
 }
 
 #botonBuscar {
-    position: absolute;
     top: -1400%;
     right: 32%;
     width: auto;
     height: 60px;
-    z-index: -1;
 }
 
 #enlaces {
@@ -631,8 +628,8 @@ section {
 .form-group {
     margin-bottom: 1rem;
 }
-
 .control {
+
     width: 100%;
     height: 60px;
     background: #bdf9eb;
@@ -644,33 +641,28 @@ section {
     font-size: 18px;
     color: #212529;
 }
-
-#letter {
+#letter{
     font-size: 14px;
 }
-
 .lead_text-muted {
     margin-left: 10px;
     color: black;
     font-family: arial
 }
 
-.lead_text-muted2 {
+.lead_text-muted2{
     margin-top: -20px;
     margin-left: 50px;
     color: #a2a2a2;
     font-family: cursive;
 }
-
-#BotonEnviarComentario {
+#BotonEnviarComentario{
     width: 43%;
     height: 50px;
-}
 
+}
 .wrapper {
-    width: 5%;
-    margin-top: 0.1%;
-    margin-left: -13%;
+    margin-left: 20%;
 }
 
 .navbar {
@@ -678,6 +670,8 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    padding: 0;
 }
 
 .navbar .navbar_left .logo a {
