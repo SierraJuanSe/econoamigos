@@ -1,4 +1,11 @@
 var url = "http://25.7.209.143:5000"
+let numNotifications = 0
+
+// Objeto socket que maneja la connection
+const socket = io(url, {
+  autoConnect: false,
+})
+
 
 // Iniciar Sesion
 async function login(correo, contrasenia) {
@@ -293,11 +300,12 @@ async function crearServicio(nombre, descripcion, precio, lugar) {
         "descripcion": descripcion,
         "precio": precio,
         "idUsuario": USUARIO['id'],
-        "lugar": lugar
+        "lugar": lugar,
+        "tipo": "Servicio"
     };
     try {
         result = await $.ajax({
-            url: url + "/insertarServicio",
+            url: url + "/insertarOferta",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -320,11 +328,12 @@ async function crearProducto(nombre, descripcion, precio, imagen, cantidad) {
         "precio": precio,
         "idUsuario": USUARIO['id'],
         "imagen": imagen,
-        "cantidad": cantidad
+        "cantidad": cantidad,
+        "tipo": "Producto"
     };
     try {
         result = await $.ajax({
-            url: url + "/insertarProducto",
+            url: url + "/insertarOferta",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -693,4 +702,22 @@ function readCookie(name) {
 
 function deleteCookie() {
     document.cookie = "token=; max-age=0; path=/";
+    socket.disconnect();
 }
+
+// El servidor envia un id unico confirmando su conexion
+socket.on('sid', (data) => {
+    console.log("sid");
+    socket.emit('userInfo', JSON.parse(readCookie('token')))
+  })
+  
+  // escucha si se ha creado una compra de alguna de sus ofertas publicadas
+  socket.on('buyNotification', (data) => {
+      console.log(data.info.hora,"  ", data.info);
+      let concepto = "Te han comprado "+data.info.nombre+" por $"+data.info.precio;
+      console.log(concepto);
+      mostrarNotificaciones(data.info.hora,concepto);
+      mostrarAlertas(data.info.hora,concepto);
+
+    // aca se llama a la funcion que dibuja la notificacion
+  })

@@ -1,9 +1,9 @@
 //Mostrar nombre del usuario
-//if (window.location.href.includes('menu.html')) {
-mostrarNombre();
-mostrarSaldo();
-//}
-
+if (readCookie('token')) {
+    socket.connect();
+    mostrarNombre();
+    mostrarSaldo();
+}
 
 function mostrarNombre() {
     const USUARIO = JSON.parse(readCookie('token'));
@@ -42,7 +42,7 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
         '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
-        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod'+id+'" type="button" class="close" data-dismiss="modal">&times;</button>' +
+        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod'+codcompra+'" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' +
         '<form name="nombreform">' +
