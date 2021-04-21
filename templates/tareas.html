@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Econoamigos</title>
+    <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
+    <link rel="stylesheet" type="text/css" href="css/styleBusqueda.css">
+    <link rel="icon" type="image/png" href="img/icono.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+    <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/icono.png" alt="" align="left">
+                <h1> Econoamigos</h1>
+
+            </div>
+
+
+            <div class="wrapper">
+                <div class="navbar">
+
+                    <div class="navbar_right">
+                        <div class="notifications">
+                            <div class="icon_wrap"><i id="BotonCampana" class="far fa-bell"><img id="puntoNotificacion" src="img/punto.png" alt="" align="left" style="position: absolute; width:12px; "></i></div>
+
+                            <div class="notification_dd">
+                                <ul id="NotificacionesCampana" class="notification_ul">
+                                    <!-- Aca van las notificaciones del boton de la campana     -->
+                                    <li class="show_all">
+                                        <p class="link">Ver todas mis notificaciones</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="Notificaciones" class="popup">
+                    <div class="shadow"></div>
+                    <div class="inner_popup">
+                        <div class="notification_dd">
+                            <ul id="NotificacionesVentana" class="notification_ul">
+                                <li class="title">
+                                    <p>Mis notificaciones</p>
+                                    <p class="close"><i class="fas fa-times" aria-hidden="true"></i></p>
+                                </li>
+                                <!-- Aca van las notificaciones de la ventana emergente  -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="saldo">
+                Tu saldo: $ <span id="saldoUser"></span>
+            </div>
+            <div class="icono" id="icono">
+                <span> <img src="img/hamburguesa.svg" alt=""></span>
+            </div>
+
+            <div class="enlaces uno" id="enlaces">
+                <a href="menu.html" class="active">Menú Principal</a>
+                <a href="tareas.html">Ofertas Compradas</a>
+                <a href="busqueda.html">Buscador de Ofertas</a>
+                <a href="oferta.html">Publicitar tus Ofertas</a>
+                <a href="solicitudes.html">Solicitudes de mis ofertas</a>
+                <a href="respuestas.html">Comentarios a mis ofertas</a>
+                <a href="finanzas.html">Historial de Transacciones</a>
+                <a href="Servicios.html">Historial de Ofertas</a>
+                <a href="conf.html">Configuración de la cuenta</a>
+                <a href="index.html">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+
+        <div id="Alertas" aria-live="polite" aria-atomic="true" style="position: fixed; min-height: 200px; ">
+            <!-- Position it -->
+            <div style="position: fixed; top: 0; left: -50%;">
+
+            </div>
+        </div>
+
+        <!-- CONTENIDO-->
+
+        <!-- Servicios -->
+        <section class="contenedor">
+
+            <h2 id="Servicios" class="titulos">Productos o Servicios que has adquirido</h2>
+            <p class="lead text-muted">A continuación, podrás ver todas las ofertas que has comprado con su respectivas características. Solo debes presionar el siguiente botón. </p>
+            <button id="Compras" type="button" class="btn">Consultar</button>
+            <div class="Servicios">
+
+                <div class="compras">
+                    <div class="row" id="compras">
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+
+        <!-- Contacto -->
+        <section id="contact">
+            <div class="contenedor">
+                <div class="Servicios">
+                    <div class="Servicio">
+                        <img src="img/oferta.svg " class="Servicio3">
+                        <h6 class="mt-5 ">¿Tienes dudas?</h6>
+                        <p>Eres libre de enviarnos un correo al <b>contacto@econoamigos.com</b></p>
+                    </div>
+                    <div class="Textos">
+                        <h2>Pregúntanos lo que necesites.</h2>
+                        <p class="lead text-muted "> Estamos trabajando para complacerte. Si tienes algún comentario, duda o sugerencia, solo avísanos.</p>
+                        <form class="mt-6 ">
+                            <div class="form-group ">
+                                <input type="text " class="form-control " id="nameC2" placeholder="Nombre ">
+                            </div>
+                            <div class="form-group ">
+                                <input type="email " class="form-control " id="emailC2" placeholder="Correo electrónico ">
+                            </div>
+                            <div class="form-group ">
+                                <input type="text " class="form-control " id="telC2" placeholder="Telefono celular ">
+                            </div>
+                            <div class="form-group ">
+                                <textarea class="form-control " id="comentC2" placeholder="Comentario " rows="5 "></textarea>
+                            </div>
+                            <button id="ContactoO2" type="button" class="btn ">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Pie de página-->
+    <footer>
+        <div class="main-content ">
+
+            <div class="left box ">
+                <h2> Sobre nosotros </h2>
+                <div class="content ">
+                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios a cambio de Ecomonedas, nuestra moneda virtual. </p>
+                    <div class="social ">
+                        <a href="https://github.com/SierraJuanSe/econoamigos "><span class="fab fa-github "></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center box ">
+                <h2> Contáctanos</h2>
+                <div class="content ">
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">janis.salazar01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">jessica.parrado01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">lady.salazar01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">valeria.carvajal01@correo.usa.edu.co</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right box ">
+                <h2> Contáctanos</h2>
+                <div class="content ">
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">juan.sierra01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">luis.vejarano01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">luis.velasquez01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">michael.pinilla01@correo.usa.edu.co</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom ">
+            <center>
+                <span class="credit ">
+                    Creado por <a href="# ">Carvajal - Parrado - Pinilla - Salazar B - Salazar S - Sierra - Vejarano - Velasquez |</a>
+                </span>
+                <span class="far fa-copyright "></span><span> 2021 Todos los Derechos Reservados. </span>
+            </center>
+        </div>
+    </footer>
+    <script src="js/peticiones.js " type="text/javascript "></Script>
+    <script src="js/main.js " type="text/javascript "></Script>
+    <script src="js/funciones.js " type="text/javascript "></Script>
+</body>
+
+</html>

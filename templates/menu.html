@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Econoamigos</title>
+    <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
+    <link rel="icon" type="image/png" href="img/icono.png" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="img/icono.png" alt="" align="left">
+                <h1> Econoamigos</h1>
+
+            </div>
+
+            <div class="wrapper">
+                <div class="navbar">
+
+                    <div class="navbar_right">
+                        <div class="notifications">
+                            <div class="icon_wrap"><i id="BotonCampana" class="far fa-bell"><img id="puntoNotificacion" src="img/punto.png" alt="" align="left" style="position: absolute; width:12px; "></i></div>
+
+                            <div class="notification_dd">
+                                <ul id="NotificacionesCampana" class="notification_ul">
+                                    <!-- Aca van las notificaciones del boton de la campana     -->
+                                    <li class="show_all">
+                                        <p class="link">Ver todas mis notificaciones</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="Notificaciones" class="popup">
+                    <div class="shadow"></div>
+                    <div class="inner_popup">
+                        <div class="notification_dd">
+                            <ul id="NotificacionesVentana" class="notification_ul">
+                                <li class="title">
+                                    <p>Mis notificaciones</p>
+                                    <p class="close"><i class="fas fa-times" aria-hidden="true"></i></p>
+                                </li>
+                                <!-- Aca van las notificaciones de la ventana emergente  -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="saldo">
+                Tu saldo: $ <span id="saldoUser"></span>
+            </div>
+            <div class="icono" id="icono">
+                <span> <img src="img/hamburguesa.svg" alt=""></span>
+            </div>
+
+            <div class="enlaces uno" id="enlaces">
+                <a href="menu.html" class="active">Menú Principal</a>
+                <a href="tareas.html">Ofertas Compradas</a>
+                <a href="busqueda.html">Buscador de Ofertas</a>
+                <a href="oferta.html">Publicitar tus Ofertas</a>
+                <a href="solicitudes.html">Solicitudes de mis ofertas</a>
+                <a href="respuestas.html">Comentarios a mis ofertas</a>
+                <a href="finanzas.html">Historial de Transacciones</a>
+                <a href="Servicios.html">Historial de Ofertas</a>
+                <a href="conf.html">Configuración de la cuenta</a>
+                <a id="cerrarSesion">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+
+        <div id="Alertas" aria-live="polite" aria-atomic="true" style="position: fixed; min-height: 200px; ">
+            <!-- Position it -->
+            <div style="position: fixed; top: 0; left: -50%;">
+
+            </div>
+        </div>
+
+        <!-- CONTENIDO-->
+
+        <!-- Servicios -->
+        <div class="bienvenida">
+            ¡Hola,<span id="nombreUser"></span>! <br>¿Cómo te encuentras hoy?
+        </div>
+        <section class="contenedor">
+            <h2 id="Servicios" class="titulos">¿Qué puedes hacer?</h2>
+            <div class="Servicios">
+                <img src="img/moneda.svg" alt="" class="Servicio">
+                <div class="Textos">
+                    <br><br>
+                    <h3><span>1</span>Búsqueda de Ofertas</h3>
+                    <p class="lead text-muted">Busca los servicios y productos que quieras entre todos los que ofrecen los Econoamigos, para generar ingresos mediante nuestra moneda virtual.</p>
+                    <br>
+                    <h3><span>2</span>Publicitar tus Ofertas</h3>
+                    <p class="lead text-muted"> Crea publicidad de tus productos o servicios que quieras vender para que los demás puedan adquirirlos y ganar Ecomonedas generando así ingresos. <b>Aquí ganamos todos.</b>
+                    </p>
+                    <br>
+                    <h3><span>3</span>Solicitudes a tus ofertas</h3>
+                    <p class="lead text-muted">Podrás ver a las personas que quieren acceder a relizar tu servicio o que desean adquirir tu producto, y tú escogeras tu favorito.
+                    </p>
+                </div>
+            </div>
+            <div class="Servicios">
+                <div class="Textos">
+                    <br><br>
+                    <h3><span>4</span>Ofertas Compradas</h3>
+                    <p class="lead text-muted"> Ver todos los servicios en los que te postulaste para saber como es tu progreso en estos, o ver los productos que adquiriste.</p>
+                    <br>
+                    <h3><span>5</span>Historial de Transacciones</h3>
+                    <p class="lead text-muted"> Revisa los movimientos como ingresos y egresos de la moneda virtual en tu cuenta. Y como ya hemos dicho <b>"Aquí ganamos todos".</b>
+                    </p>
+                    <br>
+                    <h3><span>6</span>Historial de Ofertas</h3>
+                    <p class="lead text-muted">Podrás revisar cuales son los servicios que ya has realizado o los productos que has comprado mediante el uso de Ecomonedas .
+                    </p>
+                </div>
+                <img src="img/chancho.svg" alt="" class="Servicio2">
+            </div>
+        </section>
+
+        <!-- Info de la app -->
+        <section class="form">
+            <h2 id="Informacion" class="titulos">¿Qué es?</h2>
+            <div class="cards">
+                <div class="tarjeta1">
+                    <img src="img/icono.png" class="imgfondo">
+                    <div class="textotarjeta">
+                        <h4>Econoamigos</h4>
+
+                        <h5>Una solución de Economía solidaria</h5>
+
+                        <p>Mediante la inicitiva de ayudar en la brecha de ingresos y egresos de las personas cabeza de hogar nace Economaigos. Aquí podras ofrecer o aceptar servicios, al igual que comprar productos de otras personas iguales a ti para aumentar
+                            tu economía.
+                        </p>
+                    </div>
+                </div>
+                <div class="tarjeta2">
+                    <img src="img/ecomon.png">
+                    <div class="textotarjeta">
+                        <h4>Ecomoneda</h4>
+
+                        <h5>Moneda virtual de Econoamigos</h5>
+
+                        <p>La obtendrás mediante los servicios que realices como remuneración, o mediante el pago de los productos que vendas. También puedes recargar desde tu cuenta bancaria para tener fondos al momento de ofertar algo que necesites.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contact">
+            <div class="contenedor">
+                <div class="Servicios">
+                    <div class="Servicio">
+                        <img src="img/oferta.svg " class="Servicio3">
+                        <h6 class="mt-5 ">¿Tienes dudas?</h6>
+                        <p>Eres libre de enviarnos un correo al <b>contacto@econoamigos.com</b></p>
+                    </div>
+                    <div class="Textos">
+                        <h2>Pregúntanos lo que necesites.</h2>
+                        <p class="lead text-muted "> Estamos trabajando para complacerte. Si tienes algún comentario, duda o sugerencia, solo avísanos.</p>
+                        <form class="mt-6 ">
+                            <div class="form-group">
+                                <input type="text " class="form-control" id="nameC" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <input type="email " class="form-control" id="emailC" placeholder="Correo electrónico">
+                            </div>
+                            <div class="form-group">
+                                <input type="text " class="form-control" id="telC" placeholder="Teléfono celular">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="comentC" placeholder="Comentario" rows="5"></textarea>
+                            </div>
+                            <button id="Contactar" type="button" class="btn">Enviar mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Pie de página-->
+    <footer>
+        <div class="main-content ">
+
+            <div class="left box ">
+                <h2> Sobre nosotros </h2>
+                <div class="content ">
+                    <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios o productos a cambio de Ecomonedas, nuestra moneda virtual. </p>
+                    <div class="social ">
+                        <a href="https://github.com/SierraJuanSe/econoamigos "><span class="fab fa-github "></span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="center box ">
+                <h2> Contáctanos</h2>
+                <div class="content ">
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">janis.salazar01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">jessica.parrado01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">lady.salazar01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">valeria.carvajal01@correo.usa.edu.co</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right box ">
+                <h2> Contáctanos</h2>
+                <div class="content ">
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">juan.sierra01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">luis.vejarano01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">luis.velasquez01@correo.usa.edu.co</span>
+                    </div>
+                    <div class="email ">
+                        <span class="fas fa-envelope "></span>
+                        <span class="text ">michael.pinilla01@correo.usa.edu.co</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bottom ">
+            <center>
+                <span class="credit ">
+                    Creado por <a href="# ">Carvajal - Parrado - Pinilla - Salazar B - Salazar S - Sierra - Vejarano - Velasquez |</a>
+                </span>
+                <span class="far fa-copyright "></span><span> 2021 Todos los Derechos Reservados. </span>
+            </center>
+        </div>
+    </footer>
+    <script src="js/peticiones.js" type="text/javascript"></Script>
+    <script src="js/main.js " type="text/javascript "></Script>
+    <script src="js/funciones.js " type="text/javascript "></Script>
+
+</body>
+
+</html>
