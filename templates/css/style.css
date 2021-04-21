@@ -17,6 +17,10 @@ body {
     z-index: -1;
 }
 
+.fondo2 {
+    display: none;
+}
+
 .container {
     width: 100vw;
     height: 100vh;
@@ -30,6 +34,10 @@ body {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.img2 {
+    margin-left: -5%;
 }
 
 .login {
@@ -213,10 +221,69 @@ a:hover {
     .login {
         justify-content: center;
     }
+    .fondo {
+        position: fixed;
+        display: flex;
+        bottom: 0;
+        right: 0;
+        height: 145%;
+        z-index: -2;
+        transform: rotate(-180deg);
+    }
+    .fondo2 {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        right: 60%;
+        height: 100%;
+        z-index: -2;
+    }
 }
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
     .fondo {
+        right: 80%;
+        height: 135%;
+        transform: rotate(-180deg);
+    }
+    .fondo2 {
+        right: 70%;
+        height: 110%;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .fondo {
+        right: 80%;
+        height: 135%;
+        transform: rotate(-180deg);
+    }
+    .fondo2 {
+        right: 50%;
+        height: 50%;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .login {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        text-align: center;
+        margin-top: 50%;
+    }
+    .fondo2 {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        right: 45%;
+        height: 50%;
+        z-index: -2;
+    }
+}
+
+@media screen and (max-width: 200px) {
+    .fondo2 {
         display: none;
     }
 }

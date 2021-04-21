@@ -37,6 +37,7 @@ body {
 
 .img2 {
     width: 90%;
+    margin-left: -1%;
 }
 
 .img {
@@ -244,10 +245,90 @@ a:hover {
     .login {
         justify-content: center;
     }
+    .fondo {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 45%;
+        height: 110%;
+        z-index: -2;
+        transform: rotate(-180deg);
+    }
+    .fondo2 {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 1;
+        height: 45%;
+        z-index: -1;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .fondo2 {
+        bottom: 0;
+        left: -10%;
+        height: 45%;
+        z-index: -1;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .fondo2 {
+        bottom: 0;
+        left: -20%;
+        height: 45%;
+        z-index: -1;
+    }
 }
 
 @media screen and (max-width: 600px) {
     .fondo {
+        right: 0;
+        left: 50%;
+        height: 110%;
+        z-index: -2;
+        transform: rotate(-180deg);
+    }
+    .fondo2 {
+        left: -7%;
+        height: 25%;
+        z-index: -1;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .fondo {
+        right: 0;
+        left: 0%;
+        top: -30%;
+        height: 100%;
+        z-index: -2;
+        transform: rotate(-215deg);
+    }
+    .fondo2 {
         display: none;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .fondo {
+        right: 0;
+        left: 0%;
+        top: -35%;
+        height: 100%;
+        z-index: -2;
+        transform: rotate(-215deg);
+    }
+}
+
+@media screen and (max-width: 321px) {
+    .fondo {
+        right: 0;
+        left: 5%;
+        top: -25%;
+        height: 100%;
+        z-index: -2;
+        transform: rotate(-215deg);
     }
 }

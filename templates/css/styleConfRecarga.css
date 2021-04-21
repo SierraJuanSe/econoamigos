@@ -555,6 +555,7 @@ section {
 #Info {
     text-align: center;
     background: white;
+    width: auto;
 }
 
 #descripcionServicio {
@@ -589,9 +590,15 @@ section {
     text-align: center;
 }
 
+#recargaR {
+    width: 50%;
+    height: auto;
+}
+
 .wrapper {
     margin-left: 20%;
 }
+
 .navbar {
     margin-top: 20%;
     display: flex;

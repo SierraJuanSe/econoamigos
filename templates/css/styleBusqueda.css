@@ -66,7 +66,7 @@ header .textos h1 {
 .saldo {
     font-size: 18px;
     margin: 35px 0;
-    margin-right: -52%;
+    margin-left: 15%;
 }
 
 .enlaces {
@@ -441,130 +441,6 @@ section {
 }
 
 
-/*Responsive */
-
-@media screen and (max-width:400px) {
-    nav .logo {
-        margin-left: 20px;
-    }
-    .icono {
-        margin-right: 20px;
-    }
-    header .textos h1 {
-        font-size: 65px;
-    }
-}
-
-@media screen and (max-width:700px) {
-    nav .logo h1 {
-        display: none;
-    }
-}
-
-@media screen and (max-width:800px) {
-    .enlaces {
-        position: fixed;
-        height: 100vh;
-        right: 0;
-        width: 100%;
-        flex-direction: column;
-        transition: all 1s ease;
-        background: #1de9b6;
-        /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #ececec, #c9caca);
-        /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #ececec, #c9caca);
-        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-    .Servicios {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-    }
-    .Textos {
-        width: 90%;
-    }
-    .Servicio {
-        width: 60%;
-    }
-    .textotarjeta h4 {
-        font-size: 20px;
-    }
-}
-
-@media screen and (max-width:900px) {
-    footer {
-        position: relative;
-        bottom: 0px;
-    }
-    .main-content {
-        flex-wrap: wrap;
-        flex-direction: column;
-    }
-    .main-content .box {
-        margin: 5px 0;
-    }
-    nav .logo h1 {
-        display: none;
-    }
-    .saldo {
-        margin-left: -10%;
-    }
-}
-
-@media screen and (max-width:1500px) {
-    .cards {
-        flex-direction: column;
-        align-items: center;
-    }
-    .cards .tarjeta1,
-    .cards .tarjeta2 {
-        width: 50%;
-        height: 100%;
-    }
-    .tarjeta1,
-    .tarjeta2 {
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
-    .saldo {
-        margin-right: -49%;
-    }
-}
-
-@media screen and (max-width:1400px) {
-    .saldo {
-        margin-right: 0%;
-    }
-}
-
-@media screen and (max-width:500px) {
-    .cards {
-        flex-direction: column;
-        align-items: center;
-    }
-    .cards .tarjeta1,
-    .cards .tarjeta2 {
-        width: auto;
-        height: auto;
-    }
-    .tarjeta1,
-    .tarjeta2 {
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-    }
-    .textotarjeta h4 {
-        font-size: 14px;
-    }
-    .textotarjeta h5 {
-        font-size: 12px;
-    }
-}
-
-
 /*Barra de Busqueda*/
 
 #barraBusqueda {
@@ -628,8 +504,8 @@ section {
 .form-group {
     margin-bottom: 1rem;
 }
-.control {
 
+.control {
     width: 100%;
     height: 60px;
     background: #bdf9eb;
@@ -641,27 +517,32 @@ section {
     font-size: 18px;
     color: #212529;
 }
-#letter{
+
+#letter {
     font-size: 14px;
 }
+
 .lead_text-muted {
     margin-left: 10px;
     color: black;
     font-family: arial
 }
 
-.lead_text-muted2{
+.lead_text-muted2 {
     margin-top: -20px;
     margin-left: 50px;
     color: #a2a2a2;
     font-family: cursive;
 }
-#BotonEnviarComentario{
+
+#BotonEnviarComentario {
     width: 43%;
     height: 50px;
-
 }
+
 .wrapper {
+    width: 5%;
+    margin-top: 0.5%;
     margin-left: 20%;
 }
 
@@ -670,7 +551,6 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 0;
 }
 
@@ -936,4 +816,245 @@ section {
 
 .popup .notification_dd li.title .close:hover {
     opacity: 0.5;
+}
+
+
+/*Responsive */
+
+@media screen and (max-width:400px) {
+    nav .logo {
+        margin-left: 20px;
+    }
+    .icono {
+        margin-right: 20px;
+    }
+    header .textos h1 {
+        font-size: 65px;
+    }
+}
+
+@media screen and (max-width:700px) {
+    nav .logo h1 {
+        display: none;
+    }
+}
+
+@media screen and (max-width:800px) {
+    .enlaces {
+        position: fixed;
+        height: 100vh;
+        right: 0;
+        width: 100%;
+        flex-direction: column;
+        transition: all 1s ease;
+        background: #1de9b6;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #ececec, #c9caca);
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #ececec, #c9caca);
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+    .Servicios {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+    }
+    .Textos {
+        width: 90%;
+    }
+    .Servicio {
+        width: 60%;
+    }
+    .textotarjeta h4 {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:900px) {
+    footer {
+        position: relative;
+        bottom: 0px;
+    }
+    .main-content {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    .main-content .box {
+        margin: 5px 0;
+    }
+    nav .logo h1 {
+        display: none;
+    }
+    .saldo {
+        margin-left: -10%;
+    }
+}
+
+@media screen and (max-width:1500px) {
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cards .tarjeta1,
+    .cards .tarjeta2 {
+        width: 50%;
+        height: 100%;
+    }
+    .tarjeta1,
+    .tarjeta2 {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .saldo {
+        margin-right: -49%;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .saldo {
+        margin-right: 0%;
+    }
+}
+
+@media screen and (max-width:500px) {
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cards .tarjeta1,
+    .cards .tarjeta2 {
+        width: auto;
+        height: auto;
+    }
+    .tarjeta1,
+    .tarjeta2 {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+    .textotarjeta h4 {
+        font-size: 14px;
+    }
+    .textotarjeta h5 {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width:750px) {
+    nav .logo img {
+        margin-top: 20%;
+        height: 70%;
+        margin-left: -20%;
+    }
+}
+
+@media screen and (max-width:700px) {
+    nav .logo img {
+        margin-top: 15%;
+        height: 70%;
+        margin-left: -40%;
+    }
+    .saldo {
+        margin-left: -30%;
+    }
+    .wrapper {
+        margin-left: 50%;
+    }
+}
+
+@media screen and (max-width:900px) {
+    nav .logo h1 {
+        display: none;
+    }
+    .saldo {
+        margin-left: -20%;
+    }
+}
+
+@media screen and (max-width:1300px) {
+    .wrapper {
+        margin-top: 0.9%;
+    }
+}
+
+@media screen and (max-width:1050px) {
+    .saldo {
+        margin-left: -25%;
+    }
+    .wrapper {
+        width: 5%;
+        margin-top: 1.4%;
+        margin-left: 15%;
+    }
+    .navbar {
+        margin-left: -120%;
+    }
+    nav .logo h1 {
+        margin-top: 10%;
+        font-size: 2.5rem;
+    }
+}
+
+@media screen and (max-width:980px) {
+    nav .logo h1 {
+        margin-top: 12%;
+        font-size: 2.3rem;
+    }
+}
+
+@media screen and (max-width:950px) {
+    nav .logo h1 {
+        margin-top: 12%;
+        font-size: 2.2rem;
+    }
+}
+
+@media screen and (max-width:930px) {
+    nav .logo h1 {
+        margin-top: 20%;
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .saldo {
+        margin-right: 0%;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .wrapper {
+        width: 5%;
+        margin-top: 1.4%;
+        margin-left: 10%;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .wrapper {
+        width: 5%;
+        margin-top: 3%;
+        margin-left: 1%;
+    }
+    .saldo {
+        margin-left: -5%;
+    }
+}
+
+@media screen and (max-width:470px) {
+    nav .logo img {
+        display: none;
+    }
+    .wrapper {
+        width: 5%;
+        margin-top: 6%;
+        margin-left: -5%;
+    }
+    .saldo {
+        margin-top: 11%;
+        font-size: 15px;
+        margin-left: -5%;
+    }
 }
