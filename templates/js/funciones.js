@@ -41,8 +41,8 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
-        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod'+codcompra+'" type="button" class="close" data-dismiss="modal">&times;</button>' +
+        '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
+        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + codcompra + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' +
         '<form name="nombreform">' +
@@ -60,10 +60,9 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
 }
 
 function enviarValoracion(codOferta) {
-    $(".radioBotones").click(async function () {
+    $(".radioBotones").click(async function() {
         var radiovalue = $(this).val();
         if (radiovalue == 0) radiovalue = "ninguno";
-        alert("Valor seleccionado: " + radiovalue)
         var save = await insertarValoracion(codOferta, radiovalue)
     });
 }
@@ -90,7 +89,7 @@ function mostrarComentarios(codComentario, codOferta, descripcion, hora, idUsuar
         comO = '<div class="col-sm-4" id="Card' + codComentario + '">' + '<div class="card">' + '<div class="card-header" id="codOferta' + codComentario + '">Oferta Nº ' + codOferta + '</div>' + '<div class="card-body">' +
             '<h5 class="card-title" id="nombreComentario">' + descripcion + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="horaComentario"> Hora Comentario: ' + hora + '</h6>' +
             '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + codComentario + '">Dar Respuesta</button>' + '<div class="modal" id="myModal' + codComentario + '">' + '<div class="modal-dialog">' +
-            '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title"> Dar Respuesta </h4>' + '<button id="cerrarMod'+codComentario+'" type="button" class="close" data-dismiss="modal">&times;</button>' +
+            '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title"> Dar Respuesta </h4>' + '<button id="cerrarMod' + codComentario + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
             '</div>' + '<div class="modal-body">  <h6> Comentario: </h6> <id="preciomodOfe" class="modal-title">' + descripcion + '<br> <br> <h6> Respuesta: </h6> <textarea class="form-control" id="respuestComentario' + codComentario + '"></textarea>' +
             '<a  id="BotonEnviarRespuesta' + codComentario + '" type="button" class="btn">' + 'Enviar Respuesta' + '</a></div></div></div></div></div></div></div></div></div></div>';
         $("#comentarios").append(comO);
@@ -99,7 +98,7 @@ function mostrarComentarios(codComentario, codOferta, descripcion, hora, idUsuar
 }
 
 function botonEnviarRespuesta(codComentario) {
-    $("#BotonEnviarRespuesta" + codComentario).click(async function () {
+    $("#BotonEnviarRespuesta" + codComentario).click(async function() {
         if ($("#respuestComentario" + codComentario).val() != "") {
             rta = $("#respuestComentario" + codComentario).val();
             save = await crearRespuesta(codComentario, rta);
@@ -170,25 +169,23 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
         '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + id + '">Ver más...</button>' + '<div class="modal" id="myModal' + id + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
-        '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<button type="button" id="vermasbotComentar' + id + '" class="card-link" data-toggle="modal" data-target="#myComment" >' + 'Ver comentarios' + '</button>' +
-        '<div class="modal-body" id="myComment" style="display:none;">' + '<div class="form-group ">' + '<div id=comentariosN'+id+'>' + dibujarComment + '</div>' + '<textarea class="control " id="descripcionComent'+id+'" placeholder="Comentario" rows="5 ">' + '</textarea>' + '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
+        '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<button type="button" id="vermasbotComentar' + id + '" class="card-link" data-toggle="modal" data-target="#myComment' + id + '" >' + 'Ver comentarios' + '</button>' +
+        '<div class="modal-body" id="myComment' + id + '" style="display:none;">' + '<div class="form-group ">' + '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
         '</div>' + '</div>' + '<a id="BotonComprar' + id + '" type="button" class="btn">Comprar</a>' + dibujarPunt +
         '</div></div></div></div></div></div></div></div>';
 
     $("#ofertas").append(ofertasC);
     botonCrearCompra(id, precio);
     botonEnviarComentario(id);
-    cerrarModal();
+    cerrarModal(id);
 
 }
-function cerrarModal() {
 
-
+function cerrarModal(id) {
     $("#cerrarMod").click(async function() {
         console.log("sdsfghjk")
-        $("#myModal").modal("hide");
-        $('#myComment').modal('hide');
-               
+        $('#myComment' + id).modal('hide');
+
     });
 
 }
@@ -199,28 +196,28 @@ function cerrarModal() {
 function checkbox(id, estado, codCompra) {
 
     //Accion de boton al checkbox
-    $("#customCheck" + codCompra).click(function () {
+    $("#customCheck" + codCompra).click(function() {
         accionesCheck(id, codCompra);
     });
 }
 
 
 function botonEnviarComentario(id) {
-    $("#BotonEnviarComentario" + id).click(async function () {
-        if ($("#descripcionComent").val() != "") {
-            commentN = $("#descripcionComent"+id).val();
+    $("#BotonEnviarComentario" + id).click(async function() {
+        if ($("#descripcionComent" + id).val() != "") {
+            commentN = $("#descripcionComent" + id).val();
 
             save = await insertarComentario(id, commentN);
-            if (save == undefined) {
+            if (!save) {
                 swal("Por favor, Intenta más tarde", {
                     icon: "error"
                 });
-            } else {
+            } else if (save) {
                 swal("Comentario Ingresado correctamente", {
                     icon: "success"
                 });
-                comentarioNuevo='<p class="lead_text-muted" id="letter">' +commentN + '</p>';
-                $('#comentariosN'+id).append(comentarioNuevo)
+                comentarioNuevo = '<p class="lead_text-muted" id="letter">' + commentN + '</p>';
+                $('#comentariosN' + id).append(comentarioNuevo)
             }
         } else {
             swal("Error,Ingresa un Comentario", {
@@ -235,7 +232,7 @@ function botonEnviarComentario(id) {
 function botonCrearCompra(idOferta, precio) {
 
 
-    $("#BotonComprar" + idOferta).click(async function () {
+    $("#BotonComprar" + idOferta).click(async function() {
         const USUARIO = JSON.parse(readCookie('token'));
         if (USUARIO['moneda'] > precio) {
             var save = await crearCompra(idOferta, precio);
@@ -261,12 +258,12 @@ function botonCrearCompra(idOferta, precio) {
 function accionesCheck(id, codCompra) {
     //Acciones de la alerta
     swal({
-        title: "¿Estas seguro de cambiar el estado de la solicitud?",
-        text: "Una vez hecha la confirmación no podras revertirlo ",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
+            title: "¿Estas seguro de cambiar el estado de la solicitud?",
+            text: "Una vez hecha la confirmación no podras revertirlo ",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
         .then((willDelete) => {
             if (willDelete) {
                 swal("Tu solicitud ha sido realizada, ya podras Verificar tu saldo", {

@@ -128,7 +128,7 @@ function traerCompras(compras) {
     $("#compras").empty();
     console.log(compras)
     for (const compra of compras) {
-        mostrarCompras(compra['codCompra'], compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen'],compra['codOferta']);
+        mostrarCompras(compra['codCompra'], compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen'], compra['codOferta']);
 
     }
 }
@@ -151,7 +151,9 @@ $("#botonBuscar").click(function() {
 async function traerOfertaEspecifica(ofertas) {
     $("#ofertas").empty();
     for (const oferta of ofertas) {
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen']);
+        var puntuacion = await consultarPromedioValoracion(oferta['id']);
+        var save = await ConsultarComentarios(oferta['id']);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
     }
 }
 
@@ -164,7 +166,7 @@ async function traerOfertas(ofertas) {
     for (const oferta of ofertas) {
         var puntuacion = await consultarPromedioValoracion(oferta['id']);
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'],save, puntuacion);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
     }
 }
 
@@ -176,6 +178,11 @@ $("#VerComentarios").click(function() {
 //Funcion para realizar la busqueda de las solicitudes a ofertas
 async function traerComentarios(comentarios) {
     $("#comentarios").empty();
+    if (comentarios.length == 0) {
+        swal("No tienes comentarios nuevos", {
+            icon: "error"
+        });
+    }
     for (const comentario of comentarios) {
         mostrarComentarios(comentario['codComentario'], comentario['codOferta'], comentario['descripcion'], comentario['hora'], comentario['idUsuario'], comentario['respuesta']);
     }
