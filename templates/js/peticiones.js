@@ -3,7 +3,7 @@ let numNotifications = 0
 
 // Objeto socket que maneja la connection
 const socket = io(url, {
-  autoConnect: false,
+    autoConnect: false,
 })
 
 
@@ -34,7 +34,7 @@ async function login(correo, contrasenia) {
 
 
 // Registrar Usuario
-async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia) {
+async function crearCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia) {
     //Almecena los datos en JSON
     let data = {
         "idUsuario": cedula,
@@ -43,7 +43,7 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
         "emailUsuario": correo,
         "passwordUsuario": contrasenia,
         "telefonoUsuario": telefono,
-        "ocupacionUsuario": ocupacion,
+        "barrioUsuario": barrio,
         "fechaNacimiento": fecha,
         "direccion": direccion,
     };
@@ -135,15 +135,15 @@ async function consultarCompras() {
 
 //ofertasInsertar
 async function insertarValoracion(idOferta, radiovalue) {
-    console.log(idOferta+radiovalue)
+    console.log(idOferta + radiovalue)
     let data = {
         "idOferta": idOferta,
-        "valor":radiovalue
+        "valor": radiovalue
     }
     console.log(JSON.stringify(data));
     try {
         result = await $.ajax({
-            url: url+"/insertarValoracion",
+            url: url + "/insertarValoracion",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -170,7 +170,7 @@ async function consultarPromedioValoracion(id) {
     }
     try {
         result = await $.ajax({
-            url: url+"/consultarPromedioValoracion",
+            url: url + "/consultarPromedioValoracion",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -602,7 +602,7 @@ async function ConsultarComentarios(id) {
     }
     try {
         result = await $.ajax({
-            url: url+"/consultarComentarios",
+            url: url + "/consultarComentarios",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -709,15 +709,15 @@ function deleteCookie() {
 socket.on('sid', (data) => {
     console.log("sid");
     socket.emit('userInfo', JSON.parse(readCookie('token')))
-  })
-  
-  // escucha si se ha creado una compra de alguna de sus ofertas publicadas
-  socket.on('buyNotification', (data) => {
-      console.log(data.info.hora,"  ", data.info);
-      let concepto = "Te han comprado "+data.info.nombre+" por $"+data.info.precio;
-      console.log(concepto);
-      mostrarNotificaciones(data.info.hora,concepto);
-      mostrarAlertas(data.info.hora,concepto);
+})
+
+// escucha si se ha creado una compra de alguna de sus ofertas publicadas
+socket.on('buyNotification', (data) => {
+    console.log(data.info.hora, "  ", data.info);
+    let concepto = "Te han comprado " + data.info.nombre + " por $" + data.info.precio;
+    console.log(concepto);
+    mostrarNotificaciones(data.info.hora, concepto);
+    mostrarAlertas(data.info.hora, concepto);
 
     // aca se llama a la funcion que dibuja la notificacion
-  })
+})
