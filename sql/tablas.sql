@@ -41,7 +41,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `sql10399086`.`Referido` (
   `codReferido` VARCHAR(50) NOT NULL,
-  `valorReferido` VARCHAR(45) NOT NULL,
+  `valorReferido` int NOT NULL,
   PRIMARY KEY (`codReferido`))
 ENGINE = InnoDB;
 

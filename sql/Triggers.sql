@@ -3,7 +3,7 @@ DELIMITER $$
 CREATE TRIGGER ActualizarMonedaRecargaReferido  AFTER INSERT ON Transaccion
 FOR EACH ROW
 BEGIN
-    IF  new.conceptoTransaccion = 'Transferencia Recibida' THEN BEGIN
+    IF  new.conceptoTransaccion = 'Transferencia Recibida' or new.conceptoTransaccion = 'Referido' or new.conceptoTransaccion = 'Bono por Referir' THEN BEGIN
 	update Usuario
 	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
 	where Usuario.idUsuario=new.Usuario_idUsuario;
@@ -11,14 +11,6 @@ BEGIN
 	ELSEIF new.conceptoTransaccion = 'Transferencia Enviada' THEN
 	update Usuario
 	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario-new.valorTransaccion
-	where Usuario.idUsuario=new.Usuario_idUsuario;
-    	ELSEIF new.conceptoTransaccion = 'Referido' THEN
-	update Usuario
-	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
-	where Usuario.idUsuario=new.Usuario_idUsuario;
-    	ELSEIF new.conceptoTransaccion = 'Bono por Referir' THEN
-	update Usuario
-	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
 	where Usuario.idUsuario=new.Usuario_idUsuario;
     END IF;
 END$$transaccion

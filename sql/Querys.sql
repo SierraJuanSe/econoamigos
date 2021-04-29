@@ -42,8 +42,6 @@ select avg(valor) from Valoracion where Oferta_codOferta=3;
 #Cosnultar los comentarios de una oferta
 select*from Comentario where Oferta_codOferta=5;
 
-#Conusltar Todos los barrios
-select*from Barrio;
 
 #consultar las ofertas segun el barrio de la persona
 SELECT * FROM Oferta as o 
@@ -52,15 +50,15 @@ where u.Barrio_CodBarrio=5;
 
 #Actualizar el estado cuando una persona inserta el codigo de referido(Ya se actualiza el saldo con el trigger)
 #Insertar las transacciones de referidos
+SET @codOnewr = (Select idUsuario from Usuario where Referido_codReferido="MiCodigo");
 insert into Transaccion values(null,'Referido',(select valorReferido from Referido where codReferido="MiCodigo"),True,'978676',null);
-insert into Transaccion values(null,'Bono por Referir',10,True,'1002549404',null);
+insert into Transaccion values(null,'Bono por Referir',10,True,@codOnewr,null);
 update Usuario set estadoReferido=True where idUsuario="978676";
 
-
+SET @codOnewr = (Select idUsuario from Usuario where Referido_codReferido="Axh8$m");
 insert into Transaccion values(null,'Referido',(select valorReferido from Referido where codReferido="Axh8$m"),True,'333',null);
-insert into Transaccion values(null,'Bono por Referir',10,True,'23789345',null);
+insert into Transaccion values(null,'Bono por Referir',10,True,@codOnewr,null);
 update Usuario set estadoReferido=True where idUsuario="333";
-
 
 #Borrar la compra si el usuario no acepta la oferta de intercambio
 Delete from Compra where codCompra=5;
