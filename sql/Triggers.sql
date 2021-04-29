@@ -1,9 +1,9 @@
-#Trigger para Actualizar el sueldo por medio de una recarga
+#Trigger para Actualizar el sueldo por medio de una recarga y de los referidos
 DELIMITER $$
-CREATE TRIGGER ActualizarMonedaRecarga  AFTER INSERT ON Transaccion
+CREATE TRIGGER ActualizarMonedaRecargaReferido  AFTER INSERT ON Transaccion
 FOR EACH ROW
 BEGIN
-    IF new.conceptoTransaccion = 'Recarga' or  new.conceptoTransaccion = 'Transferencia Recibida' THEN BEGIN
+    IF  new.conceptoTransaccion = 'Transferencia Recibida' THEN BEGIN
 	update Usuario
 	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
 	where Usuario.idUsuario=new.Usuario_idUsuario;
@@ -12,12 +12,20 @@ BEGIN
 	update Usuario
 	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario-new.valorTransaccion
 	where Usuario.idUsuario=new.Usuario_idUsuario;
+    	ELSEIF new.conceptoTransaccion = 'Referido' THEN
+	update Usuario
+	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
+	where Usuario.idUsuario=new.Usuario_idUsuario;
+    	ELSEIF new.conceptoTransaccion = 'Bono por Referir' THEN
+	update Usuario
+	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+new.valorTransaccion
+	where Usuario.idUsuario=new.Usuario_idUsuario;
     END IF;
 END$$transaccion
 DELIMITER ;
 
 
-#Trigger para Actualizar el sueldo por medio de una Compra
+#Trigger para Actualizar el sueldo por medio de una Compra por economonedas
 DELIMITER $$
 CREATE TRIGGER ActualizarMoneda AFTER UPDATE ON Transaccion
 FOR EACH ROW
