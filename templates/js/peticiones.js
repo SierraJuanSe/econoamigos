@@ -420,14 +420,16 @@ async function consultarOfertaEspecifica(busqueda) {
 }
 
 //Petición para crear compra
-async function crearCompra(id, precio) {
+async function crearCompra(id, precio,metodoPago) {
     const USUARIO = JSON.parse(readCookie('token'));
     console.log(id);
     console.log(precio);
+    console.log(metodoPago);
     let data = {
         "idOferta": id,
         "precio": precio,
         "idUsuario": USUARIO['id']
+        //falta cikicar el metodo de pago
 
     };
     console.log(data);

@@ -292,7 +292,7 @@ function botonCrearCompra(idOferta, precio) {
                 });
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
-                var save = await crearCompra(idOferta, precio);
+                var save = await crearCompra(idOferta, precio,value);
                 if (save) {
                     $("#myModal" + idOferta).modal("hide");
                     swal("Compra Realizada", {
@@ -314,7 +314,7 @@ function botonCrearCompra(idOferta, precio) {
              if (value2!="seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
-                    var save = await crearCompra(idOferta, precio);
+                    var save = await crearCompra(idOferta, precio,value2);
                     if (save) {
                         $("#myModal" + idOferta).modal("hide");
                         swal("Compra Realizada", {
