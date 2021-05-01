@@ -154,7 +154,7 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
         }
     }
     for (const ofert of OfertasOfrecidas) {
-        dibujarofertasPago += '<option value="'+ofert['nombre']+'" id="ButonEconomonedas">'+ofert['nombre']+'</option>';
+        dibujarofertasPago += '<option value="'+ofert['id']+'" id="ButonEconomonedas">'+ofert['nombre']+'</option>';
     }
 
     if (tipo == "Servicio") {
