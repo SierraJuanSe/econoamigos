@@ -669,16 +669,16 @@ async function consultarHistorialOfertas() {
     traerHistorialOfertas(result)
 }
 
-//Peticion para consultar las notificaciones
-async function consultarNotificaciones() {
+//consulta por nombre o descripcion
+async function consultarOfertaFiltrada() {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
-        "id": USUARIO['id']
+        "id": USUARIO["id"]
     }
-    console.log(data.id)
+
     try {
         result = await $.ajax({
-            url: url + "/AAAAAAAAAAA",
+            url: url + "/consultarOfertaFiltrada",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -686,14 +686,22 @@ async function consultarNotificaciones() {
         })
         if (result.status == 200) {
             console.log(result.info)
-            traerNotificaciones(result.info)
+            traerOfertaFiltrada(result.info)
+        } else {
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+            console.log(result.status)
+            return 0;
         }
     } catch (error) {
         console.log(error)
         return 0;
     }
-}
 
+
+    return true;
+}
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }

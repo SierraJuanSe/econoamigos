@@ -444,15 +444,19 @@ section {
 /*Barra de Busqueda*/
 
 #barraBusqueda {
-    top: -1300%;
     margin-left: 35%;
     width: 26%;
     height: 60px;
 }
 
 #botonBuscar {
-    top: -1400%;
-    right: 32%;
+    width: auto;
+    height: 60px;
+    margin: 10px
+}
+
+
+#botonFiltrar {
     width: auto;
     height: 60px;
 }

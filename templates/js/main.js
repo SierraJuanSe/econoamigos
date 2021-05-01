@@ -432,3 +432,18 @@ async function traerNotificaciones(notificaciones) {
         mostrarNotificaciones(notificacion['hora'], notificacion['concepto']);
     }
 }
+
+
+//Buscar Oferta Filtrada
+$("#botonFiltrar").click(function() {
+        consultarOfertaFiltrada()
+});
+
+async function traerOfertaFiltrada(ofertas) {
+    $("#ofertas").empty();
+    for (const oferta of ofertas) {
+        var puntuacion = await consultarPromedioValoracion(oferta['id']);
+        var save = await ConsultarComentarios(oferta['id']);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
+    }
+}
