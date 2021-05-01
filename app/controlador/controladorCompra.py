@@ -21,11 +21,16 @@ def insertarCompra():
     idVendedor = ofert['idUsuario']
     comprador = Usuario(id=msg.get('idUsuario'))
     vendedor = Usuario(id=idVendedor)
-    compra = Compra(precio=int(msg.get('precio')), estado=False, usuario=comprador,
-                  cod_oferta=msg.get('idOferta'))
+    compra = None
+    if msg.get('ofertaCambio'):
+        compra = Compra(ofertaCambio = msg.get('ofertaCambio'),estado=False, usuario=comprador,
+                cod_oferta=msg.get('idOferta'))
+    elif msg.get('precioCompra'):
+        compra = Compra(precio = msg.get('precio'), estado=False, usuario=comprador,
+                        cod_oferta=msg.get('idOferta'))
     isCompra = compra.agregar()
 
-    if isCompra:
+    if isCompra and msg.get('precioCompra'):
         tranCompra = Transaccion(concepto="Compra", usuario=comprador,
                            valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
         tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor,
