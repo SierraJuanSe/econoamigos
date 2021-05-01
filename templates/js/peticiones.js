@@ -420,7 +420,7 @@ async function consultarOfertaEspecifica(busqueda) {
 }
 
 //Petición para crear compra
-async function crearCompra(id, precio,metodoPago) {
+async function crearCompra(id, precio, metodoPago) {
     const USUARIO = JSON.parse(readCookie('token'));
     console.log(id);
     console.log(precio);
@@ -429,7 +429,7 @@ async function crearCompra(id, precio,metodoPago) {
         "idOferta": id,
         "precio": precio,
         "idUsuario": USUARIO['id']
-        //falta cikicar el metodo de pago
+            //falta cikicar el metodo de pago
 
     };
     console.log(data);
@@ -702,6 +702,11 @@ async function consultarOfertaFiltrada() {
 
     return true;
 }
+
+function rechazarSolicitud(codCompra) {
+    return true
+}
+
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }

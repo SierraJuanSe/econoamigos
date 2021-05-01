@@ -55,14 +55,14 @@ async function envioLogin(correo, contrasenia) {
 
 //Registrar usuario Formulario
 $("#Registrar").click(function() {
-
     //Recolectar Datos
     cedula = $("#idR").val();
     nombre = $("#nombreR").val();
     apellido = $("#apellidoR").val();
     correo = $("#correoR").val();
     telefono = $("#telefonoR").val();
-    barrio = $("#barrioR").val();
+    barrio = document.getElementById("barrios").value;
+    console.log(barrio)
     formatofecha = $("#fechaR").val().split("-");
     fecha = formatofecha[0] + '-' + formatofecha[1] + '-' + formatofecha[2];
     direccion = $("#direccionR").val();
@@ -81,6 +81,23 @@ $("#Registrar").click(function() {
     }
 
 });
+
+const barrio = [{ "idBarrio": 1, "nombreBarrio": "Alamos Norte" },
+    { "idBarrio": 2, "nombreBarrio": "Castilla" },
+    { "idBarrio": 3, "nombreBarrio": "La Colina" },
+    { "idBarrio": 4, "nombreBarrio": "Los Rosales" },
+    { "idBarrio": 5, "nombreBarrio": "Salinas" },
+    { "idBarrio": 6, "nombreBarrio": "Suba Compartir" }
+];
+
+$('#barrios').click(function() {
+    // $('#barrios').empty()
+    // $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
+    $.each(barrio, function(idBarrio, nombreBarrio) {
+        $('#barrios').append('<option value=' + nombreBarrio.idBarrio + '>' + nombreBarrio.nombreBarrio + '</option>');
+    });
+});
+
 
 //Funcion para Registrar Usuario
 async function enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia) {

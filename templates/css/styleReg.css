@@ -95,6 +95,21 @@ form {
     transition: .3s;
 }
 
+select {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    color: #555;
+    font-family: 'poppins', sans-serif;
+    height: 40px;
+    padding: 5px;
+    width: 420px;
+}
+
+select:focus {
+    outline: none;
+}
+
 .input-div>div {
     position: relative;
     height: 35px;

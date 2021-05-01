@@ -123,20 +123,66 @@ function botonEnviarRespuesta(codComentario) {
 }
 
 //Mostrar todas las solicitudes a ofertas
-function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, estado) {
+function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, metodopago, pago, estado) {
     //Codigo HTML
+    var feli = "";
     if (!estado) {
+        if (metodopago == "Oferta") {
+            feli = '<button type="button" class="card-link" data-toggle="modal" data-target="#exampleModal' + codCompra + '">Ver más</button>' +
+                '<div class="modal fade" id="exampleModal' + codCompra + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
+                '<div class="modal-dialog" role="document">' +
+                '<div class="modal-content">' +
+                '<div class="modal-header">' +
+                '<h5 class="modal-title" id="exampleModalLabel">Solicitud de Intercambio de Oferta </h5>' +
+                '<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>' +
+                '</div>' +
+                '<div class="modal-body">Oferta: ' + pago + '</div>' +
+                '<div class="modal-footer">' +
+                '<button type="button" class="btn" id="rechazarOferta' + codCompra + '">Rechazar</button>' +
+                '</div></div></div></div>';
+
+        }
         solO = "";
         solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
-            '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+            '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
             '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
+        accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
     }
 }
+
+function accionesBtnRechazar(codCompra) {
+    $("#rechazarOferta" + codCompra).click(async function() {
+        swal({
+                title: "¿Estás seguro de rechazar este intercambio?",
+                text: "Una vez hecha la confirmación no podrás revertirlo ",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    var result = rechazarSolicitud(codCompra);
+                    console.log(result)
+                    if (result) {
+                        $('#exampleModal' + codCompra).modal('hide');
+                    }
+
+                } else {
+                    swal("Error,Intenta más tarde", {
+                        icon: "error"
+                    });
+                }
+            });
+
+
+    });
+}
+
 //Mostrar todas las  ofertas
-function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir,OfertasOfrecidas) {
+function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
     var dibujarComment = "";
     var dibujarPunt = "";
     var dibujarofertasPago = "";
@@ -154,7 +200,7 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
         }
     }
     for (const ofert of OfertasOfrecidas) {
-        dibujarofertasPago += '<option value="'+ofert['id']+'" id="ButonEconomonedas">'+ofert['nombre']+'</option>';
+        dibujarofertasPago += '<option value="' + ofert['id'] + '" id="ButonEconomonedas">' + ofert['nombre'] + '</option>';
     }
 
     if (tipo == "Servicio") {
@@ -174,10 +220,10 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
         '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + id + '">Ver más...</button>' + '<div class="modal" id="myModal' + id + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
-        '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<form class="MetodosDepago1">'+
-        '<label class="cars">'+'Seleccione el metodo de pago'+'</label>'+'<select name="cars" id="cars">'+'<option value="seleccion" >'+'Seleccione'+'</option>'+'<option value="economonedas" id="ButonEconomonedas">'+'Economonedas'+'</option>'+
-        '<option value="oferta">'+'Por productos o servicios ofrecidos'+'</option>'+'</select>'+ '<a id="escogerMetodoPago" type="button" class="MetodoPago" >Click metodo pago</a>'+'</form>'+'<form class="MetodosDepago2" id="metodoPago2id" style="display:none;" >'+
-        '<label class="cars2">'+'Seleccione el servicio o producto por el cual desea pagar'+'</label>'+'<select name="cars2" id="cars2">'+'<option value="seleccion" >'+'Seleccione'+'</option>'+dibujarofertasPago+'</select>'+'</form>'+
+        '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<form class="MetodosDepago1">' +
+        '<label class="cars">' + 'Seleccione el metodo de pago' + '</label>' + '<select name="cars" id="cars">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
+        '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + '</select>' + '<a id="escogerMetodoPago" type="button" class="MetodoPago" >Click metodo pago</a>' + '</form>' + '<form class="MetodosDepago2" id="metodoPago2id" style="display:none;" >' +
+        '<label class="cars2">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + '<select name="cars2" id="cars2">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + '</select>' + '</form>' +
         '<button type="button" id="vermasbotComentar' + id + '" class="card-link" data-toggle="modal" data-target="#myComment' + id + '" >' + 'Ver comentarios' + '</button>' +
         '<div class="modal-body" id="myComment' + id + '" style="display:none;">' + '<div class="form-group ">' + '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
         '</div>' + '</div>' + '<a id="BotonComprar' + id + '" type="button" class="btn">Comprar</a>' + dibujarPunt +
@@ -191,6 +237,7 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
 
 
 }
+
 function seleccionPago() {
     $("#escogerMetodoPago").click(async function() {
         var e = document.getElementById("cars");
@@ -199,26 +246,26 @@ function seleccionPago() {
         var value = e.options[e.selectedIndex].value;
         console.log(value)
 
-        if (value=="seleccion") {
-                swal("Por favor, seleccione una opcion de pago", {
-                    icon: "error"
-                });
+        if (value == "seleccion") {
+            swal("Por favor, seleccione una opcion de pago", {
+                icon: "error"
+            });
         }
-        if(value=="economonedas"){
+        if (value == "economonedas") {
             swal("Se selecciono correctamente", {
-                    icon: "success"
-                });
+                icon: "success"
+            });
             $('.MetodosDepago2').modal('hide');
         }
-        if (value=="oferta") {
-             $('.MetodosDepago2').modal('show');
-             if (value2!="seleccion") {
+        if (value == "oferta") {
+            $('.MetodosDepago2').modal('show');
+            if (value2 != "seleccion") {
                 console.log(value2)
-             }
-            
+            }
+
 
         }
-        
+
     });
 
 }
@@ -280,19 +327,19 @@ function botonCrearCompra(idOferta, precio) {
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value2)
-        if (value=="seleccion") {
-                swal("Por favor, seleccione una opcion de pago", {
-                    icon: "error"
-                });
+        if (value == "seleccion") {
+            swal("Por favor, seleccione una opcion de pago", {
+                icon: "error"
+            });
         }
-        if(value=="economonedas"){
-           
+        if (value == "economonedas") {
+
             swal("Se selecciono correctamente", {
-                    icon: "success"
-                });
+                icon: "success"
+            });
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
-                var save = await crearCompra(idOferta, precio,value);
+                var save = await crearCompra(idOferta, precio, value);
                 if (save) {
                     $("#myModal" + idOferta).modal("hide");
                     swal("Compra Realizada", {
@@ -308,13 +355,13 @@ function botonCrearCompra(idOferta, precio) {
             }
             $('.MetodosDepago2').modal('hide');
         }
-        if (value=="oferta") {
+        if (value == "oferta") {
             console.log(value2)
-             $('.MetodosDepago2').modal('show');
-             if (value2!="seleccion") {
+            $('.MetodosDepago2').modal('show');
+            if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
-                    var save = await crearCompra(idOferta, precio,value2);
+                    var save = await crearCompra(idOferta, precio, value2);
                     if (save) {
                         $("#myModal" + idOferta).modal("hide");
                         swal("Compra Realizada", {
@@ -330,12 +377,12 @@ function botonCrearCompra(idOferta, precio) {
                 }
 
                 console.log(value2)
-             }
-             if(value2=="seleccion"){
+            }
+            if (value2 == "seleccion") {
                 swal("Por favor, seleccione la oferta con la que desea pagar", {
                     icon: "error"
-                 });
-             }
+                });
+            }
         }
 
     });
