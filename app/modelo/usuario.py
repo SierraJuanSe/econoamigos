@@ -2,7 +2,7 @@ from app.utils.conector import Conector, DBINFO
 
 
 class Usuario:
-    def __init__(self, id=None, nombre=None, apellido=None, email=None, password=None, codBarrio=None, codReferido=None):
+    def __init__(self, id=None, nombre=None, apellido=None, email=None, password=None, codBarrio=None):
         self.id = id
         self.nombre = nombre
         self.apellido = apellido
@@ -14,7 +14,7 @@ class Usuario:
         self.direccion = None
         self.estadoReferido = False
         self.codBarrio = codBarrio
-        self.codReferido = codReferido
+        self.codReferido = None
 
 
     def registro(self):
@@ -28,6 +28,15 @@ class Usuario:
             conn.close()
             return True
         return False
+
+    def registroCodigo(self):
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        sql = f"insert into Referido values('{self.codReferido}',1000);"
+        conn.connect()
+        conn.execute_query(sql)
+        conn.commit_change()
+        conn.close()
 
     def ingreso(self):
         sql = f"select * from Usuario as u where u.emailUsuario='{self.email}' && u.contraseñaUsuario=sha('{self.password}');"
@@ -44,7 +53,9 @@ class Usuario:
             self.fechaNac = result[0][6]
             self.moneda = result[0][7]
             self.direccion = result[0][8]
+            self.estadoReferido = result[0][9]
             self.codBarrio = result[0][10]
+            self.codReferido = result[0][11]
             return True
         return False
 
@@ -125,7 +136,7 @@ class Usuario:
     def referirUsuario(self):
         sql = f"SET @sql = (Select idUsuario from Usuario where Referido_codReferido='{self.codReferido}');"
         sql2 = f"insert into Transaccion values(null,'Referido',(select valorReferido from Referido where codReferido='{self.codReferido}'),True,'{self.id}',null);"
-        sql3 = f"insert into Transaccion values(null,'Bono por Referir',10,True,@sql,null);"
+        sql3 = f"insert into Transaccion values(null,'Bono por Referir',1000,True,@sql,null);"
         sql4 = f"update Usuario set estadoReferido=True where idUsuario='{self.id}';"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
