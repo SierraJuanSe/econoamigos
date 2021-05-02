@@ -25,12 +25,12 @@ def insertarCompra():
     if msg.get('ofertaCambio'):
         compra = Compra(ofertaCambio = msg.get('ofertaCambio'),estado=False, usuario=comprador,
                 cod_oferta=msg.get('idOferta'))
-    elif msg.get('precioCompra'):
+    elif msg.get('precio'):
         compra = Compra(precio = msg.get('precio'), estado=False, usuario=comprador,
                         cod_oferta=msg.get('idOferta'))
     isCompra = compra.agregar()
 
-    if isCompra and msg.get('precioCompra'):
+    if isCompra and msg.get('precio'):
         tranCompra = Transaccion(concepto="Compra", usuario=comprador,
                            valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
         tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor,
