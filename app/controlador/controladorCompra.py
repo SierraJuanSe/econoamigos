@@ -39,8 +39,20 @@ def insertarCompra():
         tranIngreso.agregar()
         notificateCompra(vendedor, ofert)
         return {'status': 200, 'info':True}
+    elif isCompra and msg.get('ofertaCambio'):
+        return {'status': 200, 'info': True}
     else:
         return {'status': 400, 'info': False}
+
+# Al negar un intercambio se elimina la compra
+@bp.route('/negarIntercambio', methods=['POST'])
+def negarIntercambio():
+    msg = request.get_json()
+    comp = Compra(id=msg.get('idCompra'))
+    if comp.no_aceptar_intercambio():
+        return {'status': 200, 'info':True}
+    else:
+        return {'status': 400, 'info':False}
 
 # Retorna todas las ofertas que el usuario adquirió
 @bp.route('/consultarOfertasCompradas', methods=['POST'])

@@ -3,7 +3,7 @@ from app.utils.conector import Conector, DBINFO
 
 
 class Compra:
-    def __init__(self, id=None, ofertaCambio = None, precio=None, estado=None, usuario=None, cod_oferta=None):
+    def __init__(self, id=None, ofertaCambio = "null", precio="null", estado=None, usuario=None, cod_oferta=None):
         self.id = id
         self.ofertaCambio = ofertaCambio
         self.precio = precio
