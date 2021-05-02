@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_socketio import SocketIO
 from flask_cors import CORS
+from flask_mail import Mail
 from config import Config
 
 socketio = SocketIO(cors_allowed_origins='*')
 cors = CORS()
+mail = Mail()
 onlineUsers = {}
 
 def create_app(config_class=Config):
@@ -14,12 +16,16 @@ def create_app(config_class=Config):
 
   cors.init_app(app)
   socketio.init_app(app)
+  mail.init_app(app)
 
   from app.controlador import bp as controlador_bp
   app.register_blueprint(controlador_bp)
   
   from app.notifications import bp as notifications_bp
   app.register_blueprint(notifications_bp)
+
+  from app.mail import bp as mail_bp
+  app.register_blueprint(mail_bp)
 
   return app
 
