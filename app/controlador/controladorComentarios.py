@@ -28,8 +28,9 @@ def consultarMisComentarios():
 @bp.route('/insertarComentario', methods=['POST'])
 def insertarComentario():
     msg = request.get_json()
+    user = Usuario(id=msg.get('idUsuario'))
     comentario = Comentario(descripcionComentario=msg.get('comentario'),Oferta_codOferta=msg.get('idOferta'),
-                            Usuario_idUsuario=msg.get('idUsuario'))
+                            usuario=user)
     if comentario.agregarComentario():
         return {'status': 200, 'info':True}
     else:

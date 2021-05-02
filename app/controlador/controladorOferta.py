@@ -19,6 +19,17 @@ def consultarOfertas():
     else:
         return {'status': 404}
 
+# Trae todas las ofertas del barrio del usuario
+@bp.route('/consultarOfertasBarrio', methods=['POST'])
+def consultarOfertasMiBarrio():
+    msg = request.get_json()
+    ofertas = Oferta(idUsuario=msg.get('id'), codBarrio =msg.get('codBarrio'))
+    res = ofertas.consultarOfertasMiBarrio()
+    if len(res) != 0:
+        return {'status': 200, 'info': res}
+    else:
+        return {'status': 404}
+
 # Trae todas las ofertas publicadas por el usuario
 @bp.route('/consultarMisOfertas', methods=['POST'])
 def consultarMisOfertas():

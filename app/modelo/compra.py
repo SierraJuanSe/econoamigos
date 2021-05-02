@@ -3,15 +3,16 @@ from app.utils.conector import Conector, DBINFO
 
 
 class Compra:
-    def __init__(self, id=None, precio=None, estado=None, usuario=None, cod_oferta=None):
+    def __init__(self, id=None, ofertaCambio = "null", precio="null", estado=None, usuario=None, cod_oferta=None):
         self.id = id
+        self.ofertaCambio = ofertaCambio
         self.precio = precio
         self.estado = estado
         self.usuario = usuario
         self.cod_oferta = cod_oferta
 
     def agregar(self):
-        sql = f"insert into Compra values(null,{self.precio},{self.estado},{self.cod_oferta},'{self.usuario.id}');"
+        sql = f"insert into Compra values(null,{self.ofertaCambio},{self.precio},false,{self.cod_oferta},'{self.usuario.id}');"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -39,6 +40,7 @@ class Compra:
             r['estado'] = fila[5]
             r['lugar'] = fila[6]
             r['imagen'] = fila[7]
+            r['cantidad'] = fila[8]
             r['codCompra'] = fila[-1]
             res.append(r)
         conn.close()
@@ -83,6 +85,16 @@ class Compra:
         conn.execute_query(sql)
         conn.commit_change()
         conn.execute_query(sql2)
+        conn.commit_change()
+        conn.close()
+        return True
+
+    def no_aceptar_intercambio(self):
+        sql = f"Delete from Compra where codCompra={self.id};"
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        conn.execute_query(sql)
         conn.commit_change()
         conn.close()
         return True

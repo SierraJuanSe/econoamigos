@@ -21,11 +21,16 @@ def insertarCompra():
     idVendedor = ofert['idUsuario']
     comprador = Usuario(id=msg.get('idUsuario'))
     vendedor = Usuario(id=idVendedor)
-    compra = Compra(precio=int(msg.get('precio')), estado=False, usuario=comprador,
-                  cod_oferta=msg.get('idOferta'))
+    compra = None
+    if msg.get('ofertaCambio'):
+        compra = Compra(ofertaCambio = msg.get('ofertaCambio'),estado=False, usuario=comprador,
+                cod_oferta=msg.get('idOferta'))
+    elif msg.get('precio'):
+        compra = Compra(precio = msg.get('precio'), estado=False, usuario=comprador,
+                        cod_oferta=msg.get('idOferta'))
     isCompra = compra.agregar()
 
-    if isCompra:
+    if isCompra and msg.get('precio'):
         tranCompra = Transaccion(concepto="Compra", usuario=comprador,
                            valor=int(msg.get('precio')), estado=False, idCompra= compra.id)
         tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor,
@@ -34,8 +39,20 @@ def insertarCompra():
         tranIngreso.agregar()
         notificateCompra(vendedor, ofert)
         return {'status': 200, 'info':True}
+    elif isCompra and msg.get('ofertaCambio'):
+        return {'status': 200, 'info': True}
     else:
         return {'status': 400, 'info': False}
+
+# Al negar un intercambio se elimina la compra
+@bp.route('/negarIntercambio', methods=['POST'])
+def negarIntercambio():
+    msg = request.get_json()
+    comp = Compra(id=msg.get('idCompra'))
+    if comp.no_aceptar_intercambio():
+        return {'status': 200, 'info':True}
+    else:
+        return {'status': 400, 'info':False}
 
 # Retorna todas las ofertas que el usuario adquirió
 @bp.route('/consultarOfertasCompradas', methods=['POST'])

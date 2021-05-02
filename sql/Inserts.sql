@@ -1,56 +1,80 @@
+#Insertar un barrio
+insert into Barrio values(null,"Alcazares");
+insert into Barrio values(null,"Santa Barbara");
+insert into Barrio values(null,"El Refugio");
+insert into Barrio values(null,"Santa Elena");
+insert into Barrio values(null,"Pardo Rubio");
+insert into Barrio values(null,"Barrancas");
+insert into Barrio values(null,"Santa Teresa");
+insert into Barrio values(null,"Villa Luz");
+insert into Barrio values(null,"Villa Oliva");
+insert into Barrio values(null,"La liberia");
+insert into Barrio values(null,"Santa Monica");
+insert into Barrio values(null,"La Calleja");
+insert into Barrio values(null,"Santa Ana");
+
+#Insertar un codigo de referido
+insert into Referido values("MiCodigo",1000);
+insert into Referido values("Axh8$m",200);
+insert into Referido values("Er)2;0",112);
+insert into Referido values("qwerty",1000);
+
 #Insertar un usuario
-insert into Usuario values('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','Estudinate','2001-01-1',0,'Cll 434,Villa de Leyva');
-insert into Usuario values('23789345','Juan','Rodriguez','jaun@gmail.com','1234sas5','345345423','Contador','1991-08-1',0,'Cll 434,Cali');
-insert into Usuario values('978676','Lina','Pulido','Lina@gmail.com','fksjdfh','654645','Secretaria','2000-08-1',0,'Cll 12,Bogotá');
-insert into Usuario values('333','Juan','Mecanico','Mecanico@gmail.com','vfvfvf','3102765467','Mecanico','2003-04-1',0,'cll 43 n3.2,Bogotá');
+insert into Usuario values('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','2001-01-1',100,'Cll 434,Villa de Leyva',false,5,"MiCodigo");
+insert into Usuario values('23789345','Juan','Rodriguez','jaun@gmail.com','1234sas5','345345423','1991-08-1',100,'Cll 434,Cali',false,1,"Axh8$m");
+insert into Usuario values('978676','Lina','Pulido','Lina@gmail.com','fksjdfh','654645','2000-08-1',100,'Cll 12,Bogotá',false,7,"Er)2;0");
+insert into Usuario values('333','Juan','Mecanico','Mecanico@gmail.com','vfvfvf','3102765467','2003-04-1',100,'cll 43 n3.2,Bogotá',false,9,"qwerty");
 select*from usuario;
 
 #Insertar una Oferta de tipo producto
-insert into Oferta values(null,'Producto',"celular iphone 6","Es un celular bonito",1200000,true,null,'https//:www.imagen.jpg',10,'1002549404');
-insert into Oferta values(null,'Producto',"Mesa de estudio","Es muy comodo",200000,true,null,'https//:www.imagen.jpg',10,'23789345');
-insert into Oferta values(null,'Producto',"Mesa de trabajo","Es muy comodo",100000,true,null,'https//:www.imagen.jpg',10,'23789345');
-insert into Oferta values(null,'Producto',"Posillos de porcelana","Posillos con tematicas varias",10000,true,null,'https//:www.imagen.jpg',10,'978676');
-insert into Oferta values(null,'Producto',"Posillos de porcelana","Posillos con tematicas varias",10000,true,null,'https//:www.imagen.jpg',0,'978676');
+insert into Oferta values(null,'Producto',"celular iphone 6","Es un celular bonito",100,true,null,'https//:www.imagen.jpg',10,'1002549404');
+insert into Oferta values(null,'Producto',"Mesa de estudio","Es muy comodo",20,true,null,'https//:www.imagen.jpg',10,'23789345');
+insert into Oferta values(null,'Producto',"Mesa de trabajo","Es muy comodo",10,true,null,'https//:www.imagen.jpg',10,'23789345');
+insert into Oferta values(null,'Producto',"Posillos de porcelana","Posillos con tematicas varias",10,true,null,'https//:www.imagen.jpg',10,'978676');
+insert into Oferta values(null,'Producto',"Posillos de porcelana","Posillos con tematicas varias",7,true,null,'https//:www.imagen.jpg',0,'978676');
 
 Select*from Oferta where tipo='Producto';
 
 #Insertar una Oferta de tipo Servicio
-insert into Oferta values(null,'Servicio',"Servicio de niñera","Puedo cuidar a us hijos",40000,true,'Norte de Bogotá',null,null,'978676');
-insert into Oferta values(null,'Servicio',"Servicio de carpinteria","Puedo cuidar aarreglar tus muebles",400000,true,'Sur de Bogotá',null,null,'23789345');
-insert into Oferta values(null,'Servicio',"Servicio de Mecanica","Puedo arreglar carros y motos",50000,true,'Bogotá',null,null,'333');
-insert into Oferta values(null,'Servicio',"Mantenimiento de cocina","Ofrezco el servicio para que su cocina este limpia",100000,true,'Villa de Leyva',null,null,'333');
+insert into Oferta values(null,'Servicio',"Servicio de niñera","Puedo cuidar a us hijos",20,true,'Norte de Bogotá',null,null,'978676');
+insert into Oferta values(null,'Servicio',"Servicio de carpinteria","Puedo cuidar aarreglar tus muebles",10,true,'Sur de Bogotá',null,null,'23789345');
+insert into Oferta values(null,'Servicio',"Servicio de Mecanica","Puedo arreglar carros y motos",18,true,'Bogotá',null,null,'333');
+insert into Oferta values(null,'Servicio',"Mantenimiento de cocina","Ofrezco el servicio para que su cocina este limpia",10,true,'Villa de Leyva',null,null,'333');
 Select*from Oferta where tipo='Servicio';
 
-#Insertar una Recarga
-insert into Transaccion values(null,'Recarga',1200000,true,'1002549404',null);
-insert into Transaccion values(null,'Recarga',1100000,true,'23789345',null);
-insert into Transaccion values(null,'Recarga',1100000,true,'978676',null);
-insert into Transaccion values(null,'Recarga',800000,true,'333',null);
 
-#Insertar una Compra
-insert into Compra values(null,1200000,false,1,'333');
-insert into Compra values(null,1200000,false,1,'978676');
-insert into Compra values(null,1200000,false,6,'1002549404');
-insert into Compra values(null,1200000,false,2,'978676');
+#Insertar una Compra por economoneda como medio de pago
+insert into Compra values(null,null,100,false,1,'333');
+insert into Compra values(null,null,100,false,1,'978676');
+insert into Compra values(null,null,20,false,6,'1002549404');
+insert into Compra values(null,null,20,false,2,'978676');
+
+#Insertar una Compra por intercambio de oferta como medio de pago
+insert into Compra values(null,8,null,false,3,'333');
+insert into Compra values(null,9,null,false,4,'333');
+insert into Compra values(null,2,null,false,7,'23789345');
+insert into Compra values(null,6,null,false,9,'978676');
 Select*from Compra;
 
 #Insertar Transacciones a vendedor y comprador
-insert into Transaccion values(null,'Ingreso',1200000,false,'1002549404',1);
-insert into Transaccion values(null,'Compra',1200000,false,'333',1);
-insert into Transaccion values(null,'Ingreso',1200000,false,'1002549404',2);
-insert into Transaccion values(null,'Compra',1100000,false,'978676',2);
-insert into Transaccion values(null,'Ingreso',1200000,false,'23789345',3);
-insert into Transaccion values(null,'Compra',1100000,false,'1002549404',3);
-insert into Transaccion values(null,'Ingreso',1200000,false,'978676',4);
-insert into Transaccion values(null,'Compra',1100000,false,'23789345',4);
+insert into Transaccion values(null,'Ingreso',100,false,'1002549404',1);
+insert into Transaccion values(null,'Compra',100,false,'333',1);
+insert into Transaccion values(null,'Ingreso',20,false,'1002549404',2);
+insert into Transaccion values(null,'Compra',20,false,'978676',2);
+insert into Transaccion values(null,'Ingreso',10,false,'23789345',3);
+insert into Transaccion values(null,'Compra',10,false,'1002549404',3);
+insert into Transaccion values(null,'Ingreso',10,false,'978676',4);
+insert into Transaccion values(null,'Compra',10,false,'23789345',4);
 Select*from Transaccion;
 
 #Insertar una Transferencia
-insert into Transaccion values(null,'Transferencia Recibida',200000,True,'1002549404',null);
-insert into Transaccion values(null,'Transferencia Enviada',20000,True,'333',null);
+insert into Transaccion values(null,'Transferencia Recibida',20,True,'1002549404',null);
+insert into Transaccion values(null,'Transferencia Enviada',20,True,'333',null);
 
-insert into Transaccion values(null,'Transferencia Recibida',50000,True,'23789345',null);
-insert into Transaccion values(null,'Transferencia Enviada',50000,True,'978676',null);
+insert into Transaccion values(null,'Transferencia Recibida',5,True,'23789345',null);
+insert into Transaccion values(null,'Transferencia Enviada',5,True,'978676',null);
+
+
 
 #Insertar un comentario
 insert into comentario values(null,"Es un buen celular aunque es muy delicado",DATE_FORMAT(NOW( ), "%H:%i:%S" ),null,1,'333');
