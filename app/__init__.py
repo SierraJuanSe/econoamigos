@@ -24,8 +24,8 @@ def create_app(config_class=Config):
   from app.notifications import bp as notifications_bp
   app.register_blueprint(notifications_bp)
 
-  from app.mail import bp as mail_bp
-  app.register_blueprint(mail_bp)
+  from app.email import bp as email_bp
+  app.register_blueprint(email_bp)
 
   return app
 

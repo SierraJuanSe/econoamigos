@@ -1,0 +1,11 @@
+Querido {{user.nombre}}
+
+{% if product.tipo == "producto" %}
+Te informamos que alguien te ha comprado el producto: {{product.nombre}}
+{% else %}
+Te informamos que alguien te ha comprado el servicio: {{product.nombre}}
+{% endif %}
+
+Con amor,
+
+El quipo de econoamigos.
