@@ -7,8 +7,6 @@ import random
 
 @bp.route('/user')
 def inicio():
-    # u = Usuario(id="1111111111", email='juansebastiansierrac@gmail.com')
-    # print(u.existUser())
     return jsonify(Usuario.queryAll())
 
 # Creación de un nuevo usuario
