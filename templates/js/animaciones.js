@@ -82,21 +82,36 @@ $("#Registrar").click(function() {
 
 });
 
-const barrio = [{ "idBarrio": 1, "nombreBarrio": "Alamos Norte" },
-    { "idBarrio": 2, "nombreBarrio": "Castilla" },
-    { "idBarrio": 3, "nombreBarrio": "La Colina" },
-    { "idBarrio": 4, "nombreBarrio": "Los Rosales" },
-    { "idBarrio": 5, "nombreBarrio": "Salinas" },
-    { "idBarrio": 6, "nombreBarrio": "Suba Compartir" }
-];
 
-$('#barrios').click(function() {
-    // $('#barrios').empty()
-    // $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
-    $.each(barrio, function(idBarrio, nombreBarrio) {
-        $('#barrios').append('<option value=' + nombreBarrio.idBarrio + '>' + nombreBarrio.nombreBarrio + '</option>');
+
+if (window.location.href.includes('registro.html')){
+    console.log("Si");
+    $('#barrios').empty()
+    $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
+    $.getJSON("js/BarrioO.json", function(result){
+        $.each(result, function(i, field){
+            for (var j=0; j<=field.length;j++){
+                $('#barrios').append('<option value=' + (j+1) + '>' + field[j] + '</option>'); 
+            }
+          });
     });
-});
+}
+
+/*
+$('#barrios').click(function() {
+    $('#barrios').empty()
+    $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
+    $.getJSON("js/BarrioO.json", function(result){
+        $.each(result, function(i, field){
+            for (var j=0; j<=field.length;j++){
+                $('#barrios').append('<option value=' + (j+1) + '>' + field[j] + '</option>'); 
+            }
+          });
+    });
+   /* $.each(barrio, function(idBarrio, nombreBarrio) {
+        $('#barrios').append('<option value=' + nombreBarrio.idBarrio + '>' + nombreBarrio.nombreBarrio + '</option>');
+    });*/
+//});
 
 
 //Funcion para Registrar Usuario

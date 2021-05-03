@@ -22,10 +22,10 @@ async function login(correo, contrasenia) {
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-        console.log(result)
-        window.token = JSON.stringify(result.token);
-        setCookie(token);
-        console.log(readCookie('token'))
+        if(result.info){
+            window.token = JSON.stringify(result.token);
+            setCookie(token);
+        }
         return result.info;
     } catch (error) {
         console.log(error)
