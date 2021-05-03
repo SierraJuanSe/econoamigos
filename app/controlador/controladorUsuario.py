@@ -21,7 +21,7 @@ def registrarUsuario():
         u = Usuario()
         isValid = u.from_dict(msg)
         if not isValid[0]:
-            response[0]["info"] = False; response[0]["message"] = isValid[1]; response[1] = 400
+            response = create_response(response, False, isValid[1], 400)
             return tuple(response)
 
         if not u.existsUser():
@@ -30,15 +30,13 @@ def registrarUsuario():
             u.codReferido = u.nombre + u.apellido + has
             u.registroCodigo()
             if not u.registro():
-                response[0]["info"] = False; response[0]["message"] = "BAD_REGISTRO"; response[1] = 400
-                return tuple(response)
+                response = create_response(response, False, "BAD_REGISTRO", 400)
 
         else:
-            response[0]["info"] = False; response[0]["message"] = "EXISTS_USER"; response[1] = 400
-            return tuple(response)
+            response = create_response(response, False, "EXISTS_USER", 400)
 
     else:
-        response[0]["info"] = False; response[0]["message"] = isValid[1]; response[1] = 400
+        response = create_response(response, False, isValid[1], 400)
 
     return tuple(response)
 
@@ -46,15 +44,23 @@ def registrarUsuario():
 @bp.route('/ingreso', methods = ['POST'])
 def ingresar():
     msg = request.get_json()
-    usuarioReg = Usuario(email = msg.get('emailUsuario'), password= msg.get('passwordUsuario'))
-    if usuarioReg.ingreso():
-        respuesta = {"status": 200, "info": True, "token":{'id': usuarioReg.id, 'nombre': usuarioReg.nombre, 'apellido': usuarioReg.apellido,
-                 'telefono': usuarioReg.tel, 'codBarrio': usuarioReg.codBarrio,
-                 'fecha_Nacimiento': usuarioReg.fechaNac, 'moneda': usuarioReg.moneda, 'direccion': usuarioReg.direccion,
-                 'estadoReferido': usuarioReg.estadoReferido, 'codReferido': usuarioReg.codReferido}}
-        return respuesta
+    response = [{"status": 200,"info": True, "message": "OK", "token":None}, 200]
+    isValid = validateLoginForm(msg) 
+    if isValid[0]:
+        u = Usuario()
+        isValid = u.from_dict(msg)
+        if isValid[0]:
+            if u.ingreso():
+                response[0]["token"] = u.create_token()
+            else:
+                response = create_response(response, False, "BAD_LOGIN", 400)
+        else:
+            response = create_response(response, False, isValid[1], 400)
+            
     else:
-        return {"status": 400,"info": False, "token":""}
+        response = create_response(response, False, isValid[1], 400)
+
+    return tuple(response)
 
 # Actualiza la información del usuario a excepción de su correo y fecha de nacimiento
 @bp.route('/actualizarUsuario', methods=['POST'])
@@ -119,3 +125,17 @@ def validateRegisterForm(form_data):
             return 0, "MISSING_FIELD"
 
     return 1, "OK"
+
+def validateLoginForm(form_data):
+    fields = ['emailUsuario', 'passwordUsuario']
+    for field in fields:
+        if not field in form_data:
+            return 0, "MISSING_FIELD"
+
+    return 1, "OK"
+
+
+def create_response(response, info, message, status_code):
+    response[0]["info"] = info; response[0]["message"] = message 
+    response[0]["status"] = status_code; response[1] = status_code
+    return response

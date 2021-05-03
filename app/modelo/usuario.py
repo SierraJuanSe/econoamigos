@@ -1,5 +1,5 @@
 from app.utils.conector import Conector, DBINFO
-from app.utils.conection import Connection
+from app.utils.connection import Connection
 
 
 class Usuario:
@@ -145,20 +145,34 @@ class Usuario:
     
     def from_dict(self, form_data):
         try:
-            self.id = int(form_data['idUsuario'])
-            self.nombre = form_data['nombreUsuario']
-            self.apellido = form_data['apellidoUsuario']
-            self.email = form_data['emailUsuario']
-            self.password = form_data['passwordUsuario']
-            self.codBarrio = form_data['codBarrio']
-            self.tel = int(form_data['telefonoUsuario'])
-            self.ocupacion = form_data['ocupacionUsuario']
-            self.fecha_Nacimiento = form_data['fechaNacimiento']
-            self.direccion = form_data['direccion']
+            if 'idUsuario' in form_data: self.id = int(form_data['idUsuario'])
+            if 'nombreUsuario' in form_data: self.nombre = form_data['nombreUsuario']
+            if 'apellidoUsuario' in form_data: self.apellido = form_data['apellidoUsuario']
+            if 'emailUsuario' in form_data: self.email = form_data['emailUsuario']
+            if 'passwordUsuario' in form_data: self.password = form_data['passwordUsuario']
+            if 'codBarrio' in form_data: self.codBarrio = form_data['codBarrio']
+            if 'telefonoUsuario' in form_data: self.tel = int(form_data['telefonoUsuario'])
+            if 'ocupacionUsuario' in form_data: self.ocupacion = form_data['ocupacionUsuario']
+            if 'fechaNacimiento' in form_data: self.fecha_Nacimiento = form_data['fechaNacimiento']
+            if 'direccion' in form_data: self.direccion = form_data['direccion']
             return 1, "OK"
         except ValueError:
             return 0, "VALUE_ERROR"
     
+    def create_token(self):
+        return {
+            'id': self.id, 
+            'nombre': self.nombre, 
+            'apellido': self.apellido, 
+            'telefono': self.tel,
+            'codBarrio': self.codBarrio,
+            'fecha_Nacimiento': self.fechaNac, 
+            'moneda': self.moneda,
+            'direccion': self.direccion, 
+            'estadoReferido': self.estadoReferido, 
+            'codReferido': self.codReferido
+        }
+
     @staticmethod
     def queryAll():
         query = "SELECT * from Usuario"
