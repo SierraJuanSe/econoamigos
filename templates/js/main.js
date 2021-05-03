@@ -447,3 +447,37 @@ async function traerOfertaFiltrada(ofertas) {
         mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
     }
 }
+
+//TraerCodigoreferente mio
+$("#BotonConsultarR").click(function() {
+    consultarCodigoReferente()
+});
+
+async function TraerCodigoreferente(codigos) {
+    $("#BotonConsultarR").empty();
+    for (const codigo of codigos) {
+        mostrarCodigo(codigo['codigo']);
+    }
+}
+
+//Mandar codigo amigo
+$("#BotonValidarR").click(async function() {
+    codigo=$("#Validar").val();
+    if(codigo==""){
+        swal("No ha ingresado el código requerido", {
+            icon: "error"
+        });
+    }else{
+        save = await enviarcodigoReferente(codigo);
+            if (save) {
+                swal("Se validó el código con éxito", {
+                    icon: "success"
+                });
+            } else {
+                swal("No se pudo validar el código", {
+                    icon: "error"
+                });
+            }
+    }
+   
+});

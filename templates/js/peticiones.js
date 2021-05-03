@@ -702,6 +702,52 @@ async function consultarOfertaFiltrada() {
 
     return true;
 }
+//consulta mi codigo referido
+if(window.location.href .includes('confRecarga.html')) {
+    console.log("Si");
+    $('#BotonConsultarR').empty()
+    $('#BotonConsultarR').append('<option value=0>Obtener Código</option>')
+    //var USUARIO = JSON.parse(readCookie('token'));
+    var USUARIO = {codReferido:12345};
+    console.log(USUARIO)
+    if(USUARIO!=null && USUARIO!=""){
+        referido = USUARIO["codReferido"]
+        const mostrarcodigo = (codigo) => {
+            $("#micodreferido").val(codigo);
+          }
+          mostrarcodigo(referido);
+    }else{
+         swal("No se pudo validar el código", {
+                    icon: "error"
+                });
+    }
+} 
+
+
+
+//enviar el codigo de mi amiguis
+async function enviarCodigoReferente(codigo) {
+    var USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idUsuario": USUARIO['id'],
+        
+    }
+    console.log(JSON.stringify(data));
+    try {
+        result = await $.ajax({
+            url: url + "/referirUsuario",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result.info);
+        return result.info;
+    } catch (error) {
+        console.log(error)
+    }
+    console.log(data);
+}
 
 function rechazarSolicitud(codCompra) {
     return true

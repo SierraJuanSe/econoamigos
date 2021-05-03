@@ -97,41 +97,37 @@
   </div>
 </div>
 
-        <!-- CONTENIDO-->
-        <div id="Info">
-            <form>
-                <br>
-                <br>
-                <div class="img">
-                    <img id="fotoForms" src="img/moneyConf.svg" width="35%" height="35%" align="left"> </div>
-                <h2 id="descripcionServicio" align="left">Aquí puedes recargar tu cuenta con la cantidad que desees. Recuerda que ese monto hará parte del número de Ecomonedas que tengas en tu cuenta para comprar en la plataforma.</h2>
-                <br>
-                <br>
-                <br>
-                <br>
-                <div id="cuadroRecarga">
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fas fa-hand-holding-usd"></i>
-                        </div>
-                        <div class="div">
-                            <h3>Recarga</h3>
-                            <input type="text" class="input" id="recargaR">
-                            <h6>Ingresa el valor que deseas recargar</h6>
+       <!-- CONTENIDO-->
+        <div class="contenedor">
+            <h2 id="Servicios" class="titulos">Refiere a tus amigos y gana!</h2><br>
+            <div id="tarjetas" class="row">
+                <div class="col-sm-6">
+                    <div class="card" align="center">
+                        <div class="card-body">
+                            <h2 id="Nombre1" class="card-title" align="center">Tu código es</h2>
+                            <input type="text" class="input" id="micodreferido" value="" disabled></input>
+                            <br>
+                            <p id="descripcion" class="card-text">Comparte tu código y gana por cada interacción que realicen tus amigos.</p>
+                            <button id="BotonConsultarR" type="button" class="btn"></button>
                         </div>
                     </div>
-                    <br>
-                    <button id="BotonRecargar" type="button" class="btn">Recargar</button>
-                    <div class="input-div one">
-                        <div class="i">
-                            <i class="fas fa-donate"></i>
-                            <h3>Transferencia</h3>
-                            <h6>Transfiere de tu saldo al Econoamigo que deseas</h6>
-                        </div>
-                    </div>
-                    <a href="transferencias.html" id="BtnTransferencia" type="button" class="btn">Transferir</a>
                 </div>
-           </div>
+                <div class="col-sm-6">
+                    <div class="card" align="center">
+                        <div class="card-body">
+                            <h2 id="Nombre2" class="card-title" align="center">El código es</h2>
+                            <input type="text" class="input" id="Validar">
+                            <br>
+                            <p id="Precio" class="card-text">Aqui ingresarás el código de un Econoamigo conocido con el que quieras interactuar .</p>
+                            <p id="LugarDescripcion" class="card-text"></p>
+                            <button id="BotonValidarR" type="button" class="btn">Validar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </main>
     <!-- Pie de página-->
     <br>
