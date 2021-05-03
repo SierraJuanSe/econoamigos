@@ -1,31 +1,46 @@
 from app.controlador import bp
 from app.modelo.usuario import Usuario
 from app.modelo.transaccion import Transaccion
-from flask import request
+from flask import request, jsonify
+from hashlib import md5
 import random
 
-@bp.route('/')
+@bp.route('/user')
 def inicio():
-    return("Inicio Usuario")
+    # u = Usuario(id="1111111111", email='juansebastiansierrac@gmail.com')
+    # print(u.existUser())
+    return jsonify(Usuario.queryAll())
 
 # Creación de un nuevo usuario
 @bp.route('/registro', methods=['POST'])
 def registrarUsuario():
     msg = request.get_json()
-    nuevo = Usuario(id = msg.get('idUsuario'), nombre = msg.get('nombreUsuario'),
-               apellido = msg.get('apellidoUsuario'), email = msg.get('emailUsuario'),
-               password = msg.get('passwordUsuario'), codBarrio= msg.get('codBarrio'))
-    nuevo.tel = msg.get('telefonoUsuario')
-    nuevo.ocupacion = msg.get('ocupacionUsuario')
-    nuevo.fechaNac = msg.get('fechaNacimiento')
-    nuevo.direccion = msg.get('direccion')
-    nuevo.moneda = 100
-    nuevo.codReferido = nuevo.nombre + nuevo.apellido +str(random.randint(0,2000))
-    nuevo.registroCodigo()
-    if nuevo.registro():
-        return {"status": 200, "info": True}
+    response = [{"status": 200,"info": True, "message": "OK"}, 200]
+    isValid = validateRegisterForm(msg)
+    if isValid[0]:
+        u = Usuario()
+        isValid = u.from_dict(msg)
+        if not isValid[0]:
+            response[0]["info"] = False; response[0]["message"] = isValid[1]; response[1] = 400
+            return tuple(response)
+
+        if not u.existsUser():
+            u.moneda = 100
+            has = md5(u.email.encode()).hexdigest()[:5]
+            u.codReferido = u.nombre + u.apellido + has
+            u.registroCodigo()
+            if not u.registro():
+                response[0]["info"] = False; response[0]["message"] = "BAD_REGISTRO"; response[1] = 400
+                return tuple(response)
+
+        else:
+            response[0]["info"] = False; response[0]["message"] = "EXISTS_USER"; response[1] = 400
+            return tuple(response)
+
     else:
-        return {"status": 400,"info": False}
+        response[0]["info"] = False; response[0]["message"] = isValid[1]; response[1] = 400
+
+    return tuple(response)
 
 # Permite o no el ingreso a la plataforma
 @bp.route('/ingreso', methods = ['POST'])
@@ -92,5 +107,15 @@ def referirUsuario():
     else:
         return {'status': 400, 'info':False, 'moneda': ""}
 
-if __name__ == '__main__':
-  app.run(host="25.7.209.143")
+
+
+def validateRegisterForm(form_data):
+    fields = [
+        'idUsuario', 'nombreUsuario', 'apellidoUsuario', 
+        'emailUsuario', 'passwordUsuario', 'codBarrio', 
+        'telefonoUsuario', 'ocupacionUsuario', 'fechaNacimiento', 'direccion']
+    for field in fields:
+        if not field in form_data:
+            return 0, "MISSING_FIELD"
+
+    return 1, "OK"

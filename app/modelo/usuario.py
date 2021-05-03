@@ -1,4 +1,5 @@
 from app.utils.conector import Conector, DBINFO
+from app.utils.conection import Connection
 
 
 class Usuario:
@@ -16,18 +17,23 @@ class Usuario:
         self.codBarrio = codBarrio
         self.codReferido = None
 
-
     def registro(self):
-        if not self.existe_email():
-            sql = f"insert into Usuario values('{self.id}','{self.nombre}','{self.apellido}','{self.email}',sha('{self.password}'),'{self.tel}','{self.fechaNac}','{self.moneda}','{self.direccion}','{self.estadoReferido}','{self.codBarrio}','{self.codReferido}'); "
-            conn = Conector(DBINFO['host'], DBINFO['user'],
-                            DBINFO['password'], DBINFO['database'])
-            conn.connect()
-            conn.execute_query(sql)
-            conn.commit_change()
-            conn.close()
-            return True
-        return False
+        query = f"insert into Usuario values('{self.id}','{self.nombre}','{self.apellido}','{self.email}',sha('{self.password}'),'{self.tel}','{self.fechaNac}','{self.moneda}','{self.direccion}','{self.estadoReferido}','{self.codBarrio}','{self.codReferido}'); "
+        c = Connection()
+        cs = c.getCursor()
+        r = cs.execute(query)
+        if r:
+            c.commit()
+        c.close()
+        return r
+        
+    def existsUser(self):
+        query = "SELECT * from Usuario WHERE emailUsuario=%s OR idUsuario=%s"
+        cc = Connection().getCursor("DictCursor")
+        r = cc.execute(query, (self.email, self.id))
+        cc.close()
+        if r:
+            return cc.fetchone()
 
     def registroCodigo(self):
         conn = Conector(DBINFO['host'], DBINFO['user'],
@@ -75,7 +81,6 @@ class Usuario:
         except:
             return False
 
-
     def consultar(self):
         sql = f"select * from Usuario as u where u.idUsuario='{self.id}';"
         conn = Conector(DBINFO['host'], DBINFO['user'],
@@ -96,17 +101,6 @@ class Usuario:
             pass
         conn.close()
         return r, result[0][7]
-
-    def existe_email(self):
-        sql = 'select * from Usuario where `emailUsuario`=%s'
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql, (self.email, ))
-        conn.close()
-        if result:
-            return True
-        return False
 
     def crear_codReferido(self):
         sql = f"insert into Referido values('{self.codReferido}','200'); "
@@ -148,4 +142,28 @@ class Usuario:
         conn.commit_change()
         conn.close()
         return True
-        
+    
+    def from_dict(self, form_data):
+        try:
+            self.id = int(form_data['idUsuario'])
+            self.nombre = form_data['nombreUsuario']
+            self.apellido = form_data['apellidoUsuario']
+            self.email = form_data['emailUsuario']
+            self.password = form_data['passwordUsuario']
+            self.codBarrio = form_data['codBarrio']
+            self.tel = int(form_data['telefonoUsuario'])
+            self.ocupacion = form_data['ocupacionUsuario']
+            self.fecha_Nacimiento = form_data['fechaNacimiento']
+            self.direccion = form_data['direccion']
+            return 1, "OK"
+        except ValueError:
+            return 0, "VALUE_ERROR"
+    
+    @staticmethod
+    def queryAll():
+        query = "SELECT * from Usuario"
+        cc = Connection().getCursor("DictCursor")
+        r = cc.execute(query)
+        cc.close()
+        if r:
+            return cc.fetchall()
