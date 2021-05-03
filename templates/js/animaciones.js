@@ -97,22 +97,6 @@ if (window.location.href.includes('registro.html')){
     });
 }
 
-/*
-$('#barrios').click(function() {
-    $('#barrios').empty()
-    $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
-    $.getJSON("js/BarrioO.json", function(result){
-        $.each(result, function(i, field){
-            for (var j=0; j<=field.length;j++){
-                $('#barrios').append('<option value=' + (j+1) + '>' + field[j] + '</option>'); 
-            }
-          });
-    });
-   /* $.each(barrio, function(idBarrio, nombreBarrio) {
-        $('#barrios').append('<option value=' + nombreBarrio.idBarrio + '>' + nombreBarrio.nombreBarrio + '</option>');
-    });*/
-//});
-
 
 //Funcion para Registrar Usuario
 async function enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia) {
