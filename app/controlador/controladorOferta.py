@@ -1,14 +1,15 @@
+from flask import request, jsonify
 from app.controlador import bp
 from app.modelo.oferta import Oferta
 from app.modelo.usuario import Usuario
 from app.utils.formValidations import validate_getpublications, create_response
-from flask import request
 
 
 
-# @app.route('/')
-# def inicio():
-#     return("Inicio Producto")
+@bp.route('/publications')
+def publications():
+    o = Oferta().consultarOferta(22)
+    return jsonify({"solo":o.__dict__, "todos": Oferta.queryAll()})
 
 # Trae todas las ofertas excepto las que el usuario ofertó
 @bp.route('/consultarOfertas', methods=['POST'])
