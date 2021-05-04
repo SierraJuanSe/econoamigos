@@ -85,7 +85,7 @@ def actualizarEstadoCompra():
     msg = request.get_json()
     comp = Compra(id=msg.get('idCompra'))
     if comp.actualizar_estado():
-        aux, moneda = Usuario(id=msg.get('idUsuario')).consultar()
+        _, moneda = Usuario(id=msg.get('idUsuario')).get()
         return {'status': 200, 'info':True, 'moneda': moneda}
     else:
         return {'status': 400, 'info':False}

@@ -1,5 +1,7 @@
+from hashlib import md5
+import random
 from app.utils.conector import Conector, DBINFO
-from app.utils.connection import Connection
+from app.utils.connection import Connection, TYPE_CURSOR
 
 
 class Usuario:
@@ -18,12 +20,12 @@ class Usuario:
         self.codReferido = None
 
     def registro(self):
-        query = f"insert into Usuario values('{self.id}','{self.nombre}','{self.apellido}','{self.email}',sha('{self.password}'),'{self.tel}','{self.fechaNac}','{self.moneda}','{self.direccion}','{self.estadoReferido}','{self.codBarrio}','{self.codReferido}'); "
+        query = "insert into Usuario values('%s',%s,%s,%s,sha(%s),%s,%s,%s,%s,%s,%s,%s); "
+        data = (self.id, self.nombre, self.apellido, self.email, self.password, self.tel, self.fechaNac, self.moneda, self.direccion, self.estadoReferido, self.codBarrio, self.codReferido)
         c = Connection()
         cs = c.getCursor()
-        r = cs.execute(query)
-        if r:
-            c.commit()
+        r = cs.execute(query, data)
+        if r: c.commit()
         c.close()
         return r
         
@@ -36,33 +38,46 @@ class Usuario:
             return cc.fetchone()
 
     def registroCodigo(self):
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        sql = f"insert into Referido values('{self.codReferido}',1000);"
-        conn.connect()
-        conn.execute_query(sql)
-        conn.commit_change()
-        conn.close()
+        query = "insert into Referido values(%s, 1000)"
+        c = Connection()
+        cs = c.getCursor()
+        try:
+            r = cs.execute(query, (self.codReferido,))
+            if r: c.commit()
+            c.close()
+            return r
+        except:
+            c.close()
+            return 0
+            
+    def existsCodeRef(self):
+        query = "SELECT * from Referido WHERE codReferido=%s"
+        c = Connection()
+        cs = c.getCursor()
+        cs.execute(query)
+        c.close()
+        return cs.fetchone()
 
     def ingreso(self):
-        sql = f"select * from Usuario as u where u.emailUsuario='{self.email}' && u.contraseñaUsuario=sha('{self.password}');"
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql)
-        conn.close()
-        if result:
-            self.id = result[0][0]
-            self.nombre = result[0][1]
-            self.apellido = result[0][2]
-            self.tel = result[0][5]
-            self.fechaNac = result[0][6]
-            self.moneda = result[0][7]
-            self.direccion = result[0][8]
-            self.estadoReferido = result[0][9]
-            self.codBarrio = result[0][10]
-            self.codReferido = result[0][11]
-            return True
+        query = "SELECT * from Usuario WHERE emailUsuario=%s AND contraseñaUsuario=sha(%s)"
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        r = cs.execute(query, (self.email, self.password))
+        if r:
+            rr = cs.fetchone()
+            self.id = rr['idUsuario']
+            self.nombre = rr['nombreUsuario']
+            self.apellido = rr['apellidoUsuario']
+            self.email = rr['emailUsuario']
+            self.tel = rr['telefonoUsuario']
+            self.fechaNac = rr['fechaNacUsuario']
+            self.moneda = rr['totalMonedaUsuario']
+            self.direccion = rr['direccion']
+            self.estadoReferido = rr['estadoReferido']
+            self.codBarrio = rr['Barrio_codBarrio']
+            self.codReferido = rr['Referido_codReferido']
+            return r
+        c.close()
         return False
 
     def actualizar(self):
@@ -81,26 +96,27 @@ class Usuario:
         except:
             return False
 
-    def consultar(self):
-        sql = f"select * from Usuario as u where u.idUsuario='{self.id}';"
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql)
-        r = {}
-        print(result)
-        try:
-            if result:
-                r['nombre'] = result[0][1]
-                r['apellido'] = result[0][2]
-                r['telefono'] = result[0][5]
-                r['direccion'] = result[0][8]
-                r['barrio'] = result[0][10]
-                r['codigo'] = result[0][11]
-        except:
-            pass
-        conn.close()
-        return r, result[0][7]
+    def get(self):
+        query = "SELECT * from Usuario WHERE idUsuario=%s"
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        r = cs.execute(query, (self.id, ))
+        if r:
+            rr = cs.fetchone()
+            self.id = rr['idUsuario']
+            self.nombre = rr['nombreUsuario']
+            self.apellido = rr['apellidoUsuario']
+            self.email = rr['emailUsuario']
+            self.tel = rr['telefonoUsuario']
+            self.fechaNac = rr['fechaNacUsuario']
+            self.moneda = rr['totalMonedaUsuario']
+            self.direccion = rr['direccion']
+            self.estadoReferido = rr['estadoReferido']
+            self.codBarrio = rr['Barrio_codBarrio']
+            self.codReferido = rr['Referido_codReferido']
+            del rr["contraseñaUsuario"]
+            return rr, self.moneda
+        return r, 0
 
     def crear_codReferido(self):
         sql = f"insert into Referido values('{self.codReferido}','200'); "
@@ -153,7 +169,7 @@ class Usuario:
             if 'codBarrio' in form_data: self.codBarrio = form_data['codBarrio']
             if 'telefonoUsuario' in form_data: self.tel = int(form_data['telefonoUsuario'])
             if 'ocupacionUsuario' in form_data: self.ocupacion = form_data['ocupacionUsuario']
-            if 'fechaNacimiento' in form_data: self.fecha_Nacimiento = form_data['fechaNacimiento']
+            if 'fechaNacimiento' in form_data: self.fechaNac = form_data['fechaNacimiento']
             if 'direccion' in form_data: self.direccion = form_data['direccion']
             return 1, "OK"
         except ValueError:
@@ -172,6 +188,9 @@ class Usuario:
             'estadoReferido': self.estadoReferido, 
             'codReferido': self.codReferido
         }
+    
+    def create_codeRef(self):
+        self.codReferido = self.nombre+md5(self.email.encode()).hexdigest()[:10]
 
     @staticmethod
     def queryAll():

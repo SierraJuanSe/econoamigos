@@ -2,7 +2,7 @@ from app.controlador import bp
 from app.modelo.usuario import Usuario
 from app.modelo.transaccion import Transaccion
 from flask import request, jsonify
-from hashlib import md5
+from app.utils.formValidations import validateLoginForm, validateRegisterForm, create_response
 import random
 
 @bp.route('/user')
@@ -24,9 +24,10 @@ def registrarUsuario():
 
         if not u.existsUser():
             u.moneda = 100
-            has = md5(u.email.encode()).hexdigest()[:5]
-            u.codReferido = u.nombre + u.apellido + has
-            u.registroCodigo()
+            u.create_codeRef()
+            if not u.registroCodigo():
+                response = create_response(response, False, "BAD_REGISTRO_COD_REF", 400)
+                return tuple(response)
             if not u.registro():
                 response = create_response(response, False, "BAD_REGISTRO", 400)
 
@@ -79,7 +80,7 @@ def actualizarUsuario():
 def consultar():
     msg = request.get_json()
     usuarioCon = Usuario(id = msg.get('id'))
-    respuesta, moneda = usuarioCon.consultar()
+    respuesta, moneda = usuarioCon.get()
     if respuesta != {}:
         respuesta = {'status': 200, 'info': respuesta}
     else:
@@ -94,7 +95,7 @@ def insertarRecarga():
     tran = Transaccion(concepto="Recarga", usuario=user,
                            valor=msg.get('valor'), estado=True)
     if tran.agregar():
-        aux, moneda = user.consultar()
+        _, moneda = user.get()
         return {'status': 200, 'info':True, 'moneda': moneda}
     else:
         return {'status': 400, 'info':False, 'moneda': ""}
@@ -106,34 +107,8 @@ def referirUsuario():
     user = Usuario(id=msg.get('idUsuario'))
     user.codReferido = msg.get('codReferido')
     if user.referirUsuario():
-        aux, moneda = user.consultar()
+        _, moneda = user.get()
         return {'status': 200, 'info':True, 'moneda': moneda}
     else:
         return {'status': 400, 'info':False, 'moneda': ""}
 
-
-
-def validateRegisterForm(form_data):
-    fields = [
-        'idUsuario', 'nombreUsuario', 'apellidoUsuario', 
-        'emailUsuario', 'passwordUsuario', 'codBarrio', 
-        'telefonoUsuario', 'ocupacionUsuario', 'fechaNacimiento', 'direccion']
-    for field in fields:
-        if not field in form_data:
-            return 0, "MISSING_FIELD"
-
-    return 1, "OK"
-
-def validateLoginForm(form_data):
-    fields = ['emailUsuario', 'passwordUsuario']
-    for field in fields:
-        if not field in form_data:
-            return 0, "MISSING_FIELD"
-
-    return 1, "OK"
-
-
-def create_response(response, info, message, status_code):
-    response[0]["info"] = info; response[0]["message"] = message 
-    response[0]["status"] = status_code; response[1] = status_code
-    return response

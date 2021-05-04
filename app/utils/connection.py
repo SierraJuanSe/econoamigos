@@ -7,6 +7,13 @@ DBINFO = {
   'database': "econoamigosBD"
 }
 
+TYPE_CURSOR =  {
+  "Cursor": None,
+  "SSCursor": pymysql.cursors.SSCursor,
+  "DictCursor": pymysql.cursors.DictCursor,
+  "SSDictCursor": pymysql.cursors.SSDictCursor
+}
+
 class Connection(object):
   _connection = None
 
@@ -37,7 +44,6 @@ class Connection(object):
 
   def commit(self):
     if self.isOpen():
-      print("Hago el commit")
       self.conn.commit()
 
   def rollblack(self):
@@ -48,15 +54,9 @@ class Connection(object):
     return self.conn.open
 
   def getCursor(self, c="Cursor"):
-    cc = {
-      "Cursor": None,
-      "SSCursor": pymysql.cursors.SSCursor,
-      "DictCursor": pymysql.cursors.DictCursor,
-      "SSDictCursor": pymysql.cursors.SSDictCursor
-    }
     if not self.isOpen():
       self.connect()
-    return self.conn.cursor(cc[c])
+    return self.conn.cursor(TYPE_CURSOR[c])
 
 if __name__ == '__main__':
   c1 = Connection()
@@ -67,4 +67,5 @@ if __name__ == '__main__':
   c2.connect()
   print(c1.isOpen())
   cc = c1.getCursor("DictCursor")
-  print(cc)
+  cc.execute("SELECT * FROM Barrio")
+  print(cc.fetchall())

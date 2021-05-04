@@ -31,7 +31,7 @@ def insertarTransferencia():
     tranFrom = Transaccion(concepto="Transferencia Enviada", usuario=userFrom,
                        valor=msg.get('valor'), estado=True)
     if tranFrom.agregar() and tranTo.agregar():
-        aux, moneda = userFrom.consultar()
+        _, moneda = userFrom.get()
         return {'status': 200, 'info':True, 'moneda':moneda}
     else:
         return {'status': 400, 'info':False}

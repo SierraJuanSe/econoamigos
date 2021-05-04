@@ -1,5 +1,7 @@
 from app.controlador import bp
 from app.modelo.oferta import Oferta
+from app.modelo.usuario import Usuario
+from app.utils.formValidations import validate_getpublications, create_response
 from flask import request
 
 
@@ -12,12 +14,17 @@ from flask import request
 @bp.route('/consultarOfertas', methods=['POST'])
 def consultarOfertas():
     msg = request.get_json()
-    ofertas = Oferta(idUsuario=msg.get('id'))
-    res = ofertas.consultarTodaOferta()
-    if len(res) != 0:
-        return {'status': 200, 'info': res}
+    response = [{"status": 200,"info": {}, "message": "OK"}, 200]
+    isValid = validate_getpublications(msg)
+    if isValid[0]:
+        u = Usuario(id=msg.get('id'))
+        ofertas = Oferta(idUsuario=u.id)
+        response[0]["info"]["ofertas"] = ofertas.consultarTodaOferta()
+        response[0]["info"]["misofertas"] = ofertas.consultarMisOfertas()
     else:
-        return {'status': 404}
+        response = create_response(response, False, isValid[1], 400)
+
+    return tuple(response)
 
 # Trae todas las ofertas del barrio del usuario
 @bp.route('/consultarOfertasBarrio', methods=['POST'])

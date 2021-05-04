@@ -1,5 +1,6 @@
 
 from app.utils.conector import Conector, DBINFO
+from app.utils.connection import Connection
 
 
 class Compra:
@@ -48,33 +49,18 @@ class Compra:
 
     def consultar_ofertas_vendidas(self):
         # Consultar Quienes realizaron las compras de los Productos realizados por el usuario
-        sql = f"SELECT Compra.codCompra,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion, " \
-              f"Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra, Oferta.precioOferta " \
-              f"FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and Oferta.Usuario_idUsuario='{self.usuario.id}') " \
-              f"INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);"
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        res = []
-        conn.connect()
-        result = conn.execute_query(sql)
-        try:
-            for fila in result:
-                 r = {}
-                 r['codCompra'] = fila[0]
-                 r['id'] = fila[1]
-                 r['nombre'] = fila[2]
-                 r['apellido'] = fila[3]
-                 r['telefono'] = fila[4]
-                 r['direccion'] = fila[5]
-                 r['oferta'] = fila[7]
-                 r['estado'] = fila[8]
-                 r['precio'] = fila[9]
-                 res.append(r)
-
-        except:
-            pass
-        conn.close()
-        return res
+        query = "SELECT Compra.codCompra,(select nombreOferta FROM Oferta where codOferta=Compra.ofertaCambio) as           nombreOfertaCambio,\
+            Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,\
+            Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra,Compra.precioCompra\
+            FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and \
+            Oferta.Usuario_idUsuario=%s) INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario)" 
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        r = cs.execute(query, (self.usuario.id, ))
+        rr = cs.fetchall()
+        c.close()
+        return rr
+        
 
     def actualizar_estado(self):
         sql = f"Update Compra SET Compra.estadoCompra=True where Compra.codCompra={self.id};"

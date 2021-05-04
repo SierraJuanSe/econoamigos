@@ -15,6 +15,5 @@ def disconnect():
 
 @socketio.on('userInfo')
 def userInfo(data):
-  print(data)
   user = request.sid
   onlineUsers[user] = data
