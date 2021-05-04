@@ -163,10 +163,10 @@ $("#BotonOfertas").click(function() {
 });
 async function traerOfertas(ofertas) {
     $("#ofertas").empty();
-    for (const oferta of ofertas) {
+    for (const oferta of ofertas.ofertas) {
         var puntuacion = await consultarPromedioValoracion(oferta['id']);
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion,ofertas.misofertas);
     }
 }
 
@@ -192,8 +192,14 @@ async function traerComentarios(comentarios) {
 //Funcion para realizar la busqueda de las solicitudes a ofertas
 async function traerSolicitudes(solicitudes) {
     $("#solicitudes").empty();
+    var metodo="";
     for (const solicitud of solicitudes) {
-        mostrarSolicitudes(solicitud['codCompra'], solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
+        if (solicitud['nombreOfertaCambio']==null) {
+            metodo="Economonedas";
+        } else {
+            metodo="Oferta";
+        }
+        mostrarSolicitudes(solicitud['codCompra'], solicitud['idUsuario'], solicitud['nombreUsuario'], solicitud['apellidoUsuario'], solicitud['telefonoUsuario'], solicitud['direccion'], solicitud['nombreOferta'],metodo,solicitud['nombreOfertaCambio'], solicitud['estadoCompra']);
     }
 }
 
@@ -439,12 +445,12 @@ $("#botonFiltrar").click(function() {
         consultarOfertaFiltrada()
 });
 
-async function traerOfertaFiltrada(ofertas) {
+async function traerOfertas(ofertas) {
     $("#ofertas").empty();
-    for (const oferta of ofertas) {
+    for (const oferta of ofertas.ofertas) {
         var puntuacion = await consultarPromedioValoracion(oferta['id']);
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion,ofertas.misofertas);
     }
 }
 

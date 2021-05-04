@@ -1,4 +1,4 @@
-var url = "http://25.7.209.143:5000"
+var url = "http://25.106.79.205:5000"
 let numNotifications = 0
 
 // Objeto socket que maneja la connection
@@ -26,9 +26,11 @@ async function login(correo, contrasenia) {
             window.token = JSON.stringify(result.token);
             setCookie(token);
         }
+        console.log(result.responseJSON)
+
         return result.info;
     } catch (error) {
-        console.log(error)
+        console.log(error.responseJSON)
     }
 }
 
@@ -43,10 +45,11 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, barrio, f
         "emailUsuario": correo,
         "passwordUsuario": contrasenia,
         "telefonoUsuario": telefono,
-        "barrioUsuario": barrio,
+        "codBarrio": barrio,
         "fechaNacimiento": fecha,
         "direccion": direccion,
     };
+    console.log(data)
 
     try {
         result = await $.ajax({
@@ -56,9 +59,10 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, barrio, f
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
+        console.log(result.responseJSON)
         return result.info;
     } catch (error) {
-        console.log(error)
+        console.log(error.responseJSON)
 
     }
 }
@@ -422,15 +426,12 @@ async function consultarOfertaEspecifica(busqueda) {
 //Petición para crear compra
 async function crearCompra(id, precio, metodoPago) {
     const USUARIO = JSON.parse(readCookie('token'));
-    console.log(id);
-    console.log(precio);
-    console.log(metodoPago);
     let data = {
         "idOferta": id,
         "precio": precio,
-        "idUsuario": USUARIO['id']
+        "idUsuario": USUARIO['id'],
+        "ofertaCambio":metodoPago,
             //falta cikicar el metodo de pago
-
     };
     console.log(data);
     try {
@@ -749,8 +750,23 @@ async function enviarCodigoReferente(codigo) {
     console.log(data);
 }
 
-function rechazarSolicitud(codCompra) {
-    return true
+async function rechazarSolicitud(codCompra) {
+    var data={
+        "idCompra":codCompra
+    }
+    try {
+        result = await $.ajax({
+            url: url + "/negarIntercambio",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result.info);
+        return result.info;
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 function setCookie(token) {
