@@ -1,4 +1,5 @@
 from app.utils.conector import Conector, DBINFO
+from app.utils.connection import Connection
 
 
 class Transaccion:
@@ -60,3 +61,12 @@ class Transaccion:
         result = conn.execute_query(sql)
         conn.close()
         return result[0][0]
+
+    @staticmethod
+    def queryAll():
+        query = "SELECT * from Transaccion"
+        cc = Connection().getCursor("DictCursor")
+        r = cc.execute(query)
+        cc.close()
+        if r:
+            return cc.fetchall()

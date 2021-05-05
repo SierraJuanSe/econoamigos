@@ -12,7 +12,7 @@ class Comentario:
     def agregarComentario(self):
         aux = datetime.now()
         horaComentario = str(aux.hour)+":"+str(aux.minute)+":"+str(aux.second)
-        sql = f"insert into Comentario values('{None}','{self.descripcionComentario}','{horaComentario}','{self.respuestaComentario}','{self.Oferta_codOferta}','{self.Usuario_idUsuario}');"
+        sql = f"insert into Comentario values('{None}','{self.descripcionComentario}','{horaComentario}','{self.respuestaComentario}','{self.Oferta_codOferta}','{self.usuario.id}');"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -41,7 +41,7 @@ class Comentario:
         return r
 
     def consultarMisComentarios(self):
-        sql = f"select*from Comentario, Oferta where Comentario.Oferta_codOferta=Oferta.codOferta and Oferta.Usuario_idUsuario={self.usuario.id};"
+        sql = f"select*from Comentario, Oferta where Comentario.Oferta_codOferta=Oferta.codOferta and Oferta.Usuario_idUsuario={self.usuario.id} and Comentario.respuestaComentario = '';"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()

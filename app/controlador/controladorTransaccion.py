@@ -1,12 +1,12 @@
+from flask import request, jsonify
 from app.controlador import bp
 from app.modelo.transaccion import Transaccion
 from app.modelo.usuario import Usuario
 from app.modelo.compra import Compra
-from flask import request
 
-# @app.route('/')
-# def inicio():
-#     return("Inicio Transaccion")
+@bp.route('/transactions')
+def transactions():
+    return jsonify(Transaccion.queryAll())
 
 # Se crea una transacción que por defecto estará en estado pendiente
 @bp.route('/insertarTransaccion', methods=['POST'])
@@ -31,7 +31,7 @@ def insertarTransferencia():
     tranFrom = Transaccion(concepto="Transferencia Enviada", usuario=userFrom,
                        valor=msg.get('valor'), estado=True)
     if tranFrom.agregar() and tranTo.agregar():
-        aux, moneda = userFrom.consultar()
+        _, moneda = userFrom.get()
         return {'status': 200, 'info':True, 'moneda':moneda}
     else:
         return {'status': 400, 'info':False}

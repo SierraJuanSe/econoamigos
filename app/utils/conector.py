@@ -1,12 +1,19 @@
 import pymysql
-
+''''
 DBINFO = {
     'host' : "jovenesdcberna.co",
     'user' : "devOcean",
     'password': "devOceanEconoamigos",
     'database': "econoamigos"
-}
+}'''
 
+
+DBINFO = {
+    'host' : "econoamigos.com",
+    'user' : "devOceanDB",
+    'password': "devOceanEconoamigos",
+    'database': "econoamigosBD"
+}
 
 class Conector:
 
