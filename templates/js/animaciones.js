@@ -55,20 +55,20 @@ async function envioLogin(correo, contrasenia) {
 
 //Registrar usuario Formulario
 $("#Registrar").click(function() {
-
     //Recolectar Datos
     cedula = $("#idR").val();
     nombre = $("#nombreR").val();
     apellido = $("#apellidoR").val();
     correo = $("#correoR").val();
     telefono = $("#telefonoR").val();
-    ocupacion = $("#ocupacionR").val();
+    barrio = document.getElementById("barrios").value;
+    console.log(barrio)
     formatofecha = $("#fechaR").val().split("-");
     fecha = formatofecha[0] + '-' + formatofecha[1] + '-' + formatofecha[2];
     direccion = $("#direccionR").val();
     contrasenia = $("#passR").val();
     //Verificar datos
-    if (cedula == "" || nombre == "" || apellido == "" || correo == "" || telefono == "" || ocupacion == "" || fecha == "" || direccion == "" || contrasenia == "") {
+    if (cedula == "" || nombre == "" || apellido == "" || correo == "" || telefono == "" || barrio == "" || fecha == "" || direccion == "" || contrasenia == "") {
         swal("Error", "Por favor, Ingrese todos los datos", "error");
     } else if (isNaN(cedula)) {
         swal("Error", "Ingrese solo el número de documento, sin puntos o letras", "error");
@@ -77,15 +77,31 @@ $("#Registrar").click(function() {
     } else if (isNaN(telefono)) {
         swal("Error", "Por favor, Ingrese un número de teléfono válido", "error");
     } else {
-        enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia); //Llamado a funcion guardar
+        enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia); //Llamado a funcion guardar
     }
 
 });
 
+
+
+if (window.location.href.includes('registro.html')){
+    console.log("Si");
+    $('#barrios').empty()
+    $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
+    $.getJSON("js/BarrioO.json", function(result){
+        $.each(result, function(i, field){
+            for (var j=0; j<=field.length;j++){
+                $('#barrios').append('<option value=' + (j+1) + '>' + field[j] + '</option>'); 
+            }
+          });
+    });
+}
+
+
 //Funcion para Registrar Usuario
-async function enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia) {
+async function enviarcreacionCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia) {
     //Envia los datos a la funcion crearCuenta ubicada en peticiones.js
-    var save = await crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia)
+    var save = await crearCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia)
     if (save == 1) {
         swal("Gracias", "¡Ya eres parte de esta familia!", "success").then((value) => {
             location.href = "index.html";

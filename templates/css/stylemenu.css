@@ -967,3 +967,13 @@ input[type="radio"]:checked~label {
         margin-left: -5%;
     }
 }
+
+.card-link {
+    border: none;
+    color: blue;
+    display: block;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}

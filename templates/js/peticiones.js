@@ -1,9 +1,9 @@
-var url = "http://25.7.209.143:5000"
+var url = "http://25.106.79.205:5000"
 let numNotifications = 0
 
 // Objeto socket que maneja la connection
 const socket = io(url, {
-  autoConnect: false,
+    autoConnect: false,
 })
 
 
@@ -22,19 +22,21 @@ async function login(correo, contrasenia) {
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
-        console.log(result)
-        window.token = JSON.stringify(result.token);
-        setCookie(token);
-        console.log(readCookie('token'))
+        if(result.info){
+            window.token = JSON.stringify(result.token);
+            setCookie(token);
+        }
+        console.log(result.responseJSON)
+
         return result.info;
     } catch (error) {
-        console.log(error)
+        console.log(error.responseJSON)
     }
 }
 
 
 // Registrar Usuario
-async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion, fecha, direccion, contrasenia) {
+async function crearCuenta(cedula, nombre, apellido, correo, telefono, barrio, fecha, direccion, contrasenia) {
     //Almecena los datos en JSON
     let data = {
         "idUsuario": cedula,
@@ -43,10 +45,11 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
         "emailUsuario": correo,
         "passwordUsuario": contrasenia,
         "telefonoUsuario": telefono,
-        "ocupacionUsuario": ocupacion,
+        "codBarrio": barrio,
         "fechaNacimiento": fecha,
         "direccion": direccion,
     };
+    console.log(data)
 
     try {
         result = await $.ajax({
@@ -56,9 +59,10 @@ async function crearCuenta(cedula, nombre, apellido, correo, telefono, ocupacion
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
+        console.log(result.responseJSON)
         return result.info;
     } catch (error) {
-        console.log(error)
+        console.log(error.responseJSON)
 
     }
 }
@@ -135,15 +139,15 @@ async function consultarCompras() {
 
 //ofertasInsertar
 async function insertarValoracion(idOferta, radiovalue) {
-    console.log(idOferta+radiovalue)
+    console.log(idOferta + radiovalue)
     let data = {
         "idOferta": idOferta,
-        "valor":radiovalue
+        "valor": radiovalue
     }
     console.log(JSON.stringify(data));
     try {
         result = await $.ajax({
-            url: url+"/insertarValoracion",
+            url: url + "/insertarValoracion",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -170,7 +174,7 @@ async function consultarPromedioValoracion(id) {
     }
     try {
         result = await $.ajax({
-            url: url+"/consultarPromedioValoracion",
+            url: url + "/consultarPromedioValoracion",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -420,15 +424,14 @@ async function consultarOfertaEspecifica(busqueda) {
 }
 
 //Petición para crear compra
-async function crearCompra(id, precio) {
+async function crearCompra(id, precio, metodoPago) {
     const USUARIO = JSON.parse(readCookie('token'));
-    console.log(id);
-    console.log(precio);
     let data = {
         "idOferta": id,
         "precio": precio,
-        "idUsuario": USUARIO['id']
-
+        "idUsuario": USUARIO['id'],
+        "ofertaCambio":metodoPago,
+            //falta cikicar el metodo de pago
     };
     console.log(data);
     try {
@@ -602,7 +605,7 @@ async function ConsultarComentarios(id) {
     }
     try {
         result = await $.ajax({
-            url: url+"/consultarComentarios",
+            url: url + "/consultarComentarios",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
@@ -667,28 +670,88 @@ async function consultarHistorialOfertas() {
     traerHistorialOfertas(result)
 }
 
-//Peticion para consultar las notificaciones
-async function consultarNotificaciones() {
+//consulta por nombre o descripcion
+async function consultarOfertaFiltrada() {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
-        "id": USUARIO['id']
+        "id": USUARIO["id"],
+        "codBarrio":USUARIO["codBarrio"]
     }
-    console.log(data.id)
+console.log(data);
     try {
         result = await $.ajax({
-            url: url + "/AAAAAAAAAAA",
+            url: url + "/consultarOfertasBarrio",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
         if (result.status == 200) {
-            console.log(result.info)
-            traerNotificaciones(result.info)
+            console.log(result)
+            traerOfertas(result.info)
+        } else {
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+            console.log(result.status)
         }
     } catch (error) {
         console.log(error)
-        return 0;
+    }
+
+
+    return true;
+}
+
+
+
+
+//enviar el codigo de mi amiguis
+async function enviarCodigoReferente(codigo) {
+    var USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idUsuario": USUARIO['id'],
+        "codReferido":codigo
+    }
+    console.log(JSON.stringify(data));
+    try {
+        result = await $.ajax({
+            url: url + "/referirUsuario",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+            USUARIO['moneda'] = result.moneda;
+            USUARIO['estadoReferido']=true;
+            window.token = JSON.stringify(USUARIO);
+            setCookie(token);
+            actualizarMonedaVista(result.moneda);
+
+        console.log(result.info);
+        return result.info;
+    } catch (error) {
+        console.log(error)
+    }
+    console.log(data);
+}
+
+async function rechazarSolicitud(codCompra) {
+    var data={
+        "idCompra":codCompra
+    }
+    try {
+        result = await $.ajax({
+            url: url + "/negarIntercambio",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        console.log(result.info);
+        return result.info;
+    } catch (error) {
+        console.log(error)
     }
 }
 
@@ -709,15 +772,15 @@ function deleteCookie() {
 socket.on('sid', (data) => {
     console.log("sid");
     socket.emit('userInfo', JSON.parse(readCookie('token')))
-  })
-  
-  // escucha si se ha creado una compra de alguna de sus ofertas publicadas
-  socket.on('buyNotification', (data) => {
-      console.log(data.info.hora,"  ", data.info);
-      let concepto = "Te han comprado "+data.info.nombre+" por $"+data.info.precio;
-      console.log(concepto);
-      mostrarNotificaciones(data.info.hora,concepto);
-      mostrarAlertas(data.info.hora,concepto);
+})
+
+// escucha si se ha creado una compra de alguna de sus ofertas publicadas
+socket.on('buyNotification', (data) => {
+    console.log(data.info.hora, "  ", data.info);
+    let concepto = "Te han comprado " + data.info.nombre + " por $" + data.info.precio;
+    console.log(concepto);
+    mostrarNotificaciones(data.info.hora, concepto);
+    mostrarAlertas(data.info.hora, concepto);
 
     // aca se llama a la funcion que dibuja la notificacion
-  })
+})

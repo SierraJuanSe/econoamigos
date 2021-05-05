@@ -163,10 +163,10 @@ $("#BotonOfertas").click(function() {
 });
 async function traerOfertas(ofertas) {
     $("#ofertas").empty();
-    for (const oferta of ofertas) {
+    for (const oferta of ofertas.ofertas) {
         var puntuacion = await consultarPromedioValoracion(oferta['id']);
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion);
+        mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion,ofertas.misofertas);
     }
 }
 
@@ -191,9 +191,16 @@ async function traerComentarios(comentarios) {
 
 //Funcion para realizar la busqueda de las solicitudes a ofertas
 async function traerSolicitudes(solicitudes) {
+    console.log(solicitudes)
     $("#solicitudes").empty();
+    var metodo="";
     for (const solicitud of solicitudes) {
-        mostrarSolicitudes(solicitud['codCompra'], solicitud['id'], solicitud['nombre'], solicitud['apellido'], solicitud['telefono'], solicitud['direccion'], solicitud['oferta'], solicitud['estado']);
+        if (solicitud['nombreOfertaCambio']==null) {
+            metodo="Economonedas";
+        } else {
+            metodo="Oferta";
+        }
+        mostrarSolicitudes(solicitud['codCompra'], solicitud['idUsuario'], solicitud['nombreUsuario'], solicitud['apellidoUsuario'], solicitud['telefonoUsuario'], solicitud['direccion'], solicitud['nombreOferta'],metodo,solicitud['nombreOfertaCambio'], solicitud['estadoCompra']);
     }
 }
 
@@ -377,7 +384,7 @@ async function traerHistorialOfertas(Ofertas) {
     $("#Ofertas").append(titulos);
 
     for (const Ofertones of Ofertas) {
-        mostrarHistorialOfertas(Ofertones['oferta'], Ofertones['nombre'], Ofertones['precio'].toString(), Ofertones['estado'])
+        mostrarHistorialOfertas(Ofertones['codOferta'], Ofertones['nombreOferta'], Ofertones['precioCompra'].toString(), Ofertones['estadoCompra'])
     }
 }
 ////////////////////// Notificaciones
@@ -432,3 +439,59 @@ async function traerNotificaciones(notificaciones) {
         mostrarNotificaciones(notificacion['hora'], notificacion['concepto']);
     }
 }
+
+
+//Buscar Oferta Filtrada
+$("#botonFiltrar").click(function() {
+        consultarOfertaFiltrada()
+});
+
+async function traerOfertas(ofertas) {
+    $("#ofertas").empty();
+    for (const oferta of ofertas.ofertas) {
+        mostrarOfertas(oferta['codOferta'], oferta['Tipo'], oferta['nombreOferta'], oferta['descripcionOferta'], oferta['precioOferta'], oferta['lugarServicio'], oferta['cantidadProducto'], oferta['imagenProducto'], oferta['comentarios'], oferta['puntuacion'],ofertas.misofertas);
+    }
+}
+
+//TraerCodigoreferente mio
+$("#BotonConsultarR").click(function() {
+    consultarCodigoReferente()
+});
+
+async function TraerCodigoreferente(codigos) {
+    $("#BotonConsultarR").empty();
+    for (const codigo of codigos) {
+        mostrarCodigo(codigo['codigo']);
+    }
+}
+
+//Mandar codigo amigo
+$("#BotonValidarR").click(async function() {
+    var USUARIO = JSON.parse(readCookie('token'));
+    codigo=$("#Validar").val();
+    if(codigo==""){
+        swal("No ha ingresado el código requerido", {
+            icon: "error"
+        });
+    }else{
+        if (USUARIO['estadoReferido']) {
+            swal("No puedes Ingresar otro codigo de referido", {
+                icon: "error"
+            });
+        }else{
+        save = await enviarCodigoReferente(codigo);
+            if (save) {
+                swal("Se validó el código con éxito y se cargo a tu saldo", {
+                    icon: "success"
+                });
+
+            } else {
+                swal("No se pudo validar el código", {
+                    icon: "error"
+                });
+            }
+
+        }
+    }
+   
+});
