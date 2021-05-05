@@ -191,13 +191,13 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
     for (var i = 0; i < recibir; i++) {
         dibujarPunt += '<label >⭐</label>'
     }
-    if (recibir == 0) {
+    if (recibir == 0  || recibir==null) {
         dibujarPunt += '<label >☆☆☆☆☆</label>'
     }
     for (const coment of comentarios) {
-        dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcion'] + '</p>';
-        if (coment['respuesta']) {
-            dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuesta'] + '</p>'
+        dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcionComentario'] + '</p>';
+        if (coment['respuesta']!="") {
+            dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuestaComentario'] + '</p>'
         }
     }
     console.log(OfertasOfrecidas)
@@ -224,7 +224,7 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<form class="MetodosDepago1">' +
         '<label class="cars">' + 'Seleccione el metodo de pago' + '</label>' + '<select name="cars" id="cars'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
-        '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + '</select>' + '<a id="escogerMetodoPago'+id+'" type="button" class="MetodoPago" >Click metodo pago</a>' + '</form>' + '<form class="MetodosDepago2" id="metodoPago2id" style="display:none;" >' +
+        '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + '</select>' + '<a id="escogerMetodoPago'+id+'" type="button" class="MetodoPago" >Click metodo pago</a>' + '</form>' + '<form class="MetodosDepago2'+id+'" id="metodoPago2id'+id+'" style="display:none;" >' +
         '<label class="cars2">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + '<select name="cars2" id="cars2'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + '</select>' + '</form>' +
         '<button type="button" id="vermasbotComentar' + id + '" class="card-link" data-toggle="modal" data-target="#myComment' + id + '" >' + 'Ver comentarios' + '</button>' +
         '<div class="modal-body" id="myComment' + id + '" style="display:none;">' + '<div class="form-group ">' + '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
@@ -257,10 +257,10 @@ function seleccionPago(id) {
             swal("Se selecciono correctamente", {
                 icon: "success"
             });
-            $('.MetodosDepago2').modal('hide');
+            $('.MetodosDepago2'+id).modal('hide');
         }
         if (value == "oferta") {
-            $('.MetodosDepago2').modal('show');
+            $('.MetodosDepago2'+id).modal('show');
             if (value2 != "seleccion") {
                 console.log(value2)
             }
@@ -276,7 +276,7 @@ function seleccionPago(id) {
 function cerrarModal(id) {
     $("#cerrarMod").click(async function() {
         $('#myComment' + id).modal('hide');
-        $('.MetodosDepago2').modal('hide');
+        $('.MetodosDepago2'+id).modal('hide');
 
     });
 
@@ -357,11 +357,11 @@ function botonCrearCompra(idOferta, precio) {
             } else if ((USUARIO['moneda'] < precio)) {
                 swal("Error", "No tienes suficiente saldo para adquirir este producto", "error");
             }
-            $('.MetodosDepago2').modal('hide');
+            $('.MetodosDepago2'+idOferta).modal('hide');
         }
         if (value == "oferta") {
             console.log(value2)
-            $('.MetodosDepago2').modal('show');
+            $('.MetodosDepago2'+idOferta).modal('show');
             if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
@@ -461,3 +461,21 @@ function mostrarAlertas(hora, concepto) {
     $("#Alertas").append(notificaciones2C);
     $('.toast').toast('show');
 }
+
+if(window.location.href .includes('confRecarga.html')) {
+    console.log("Si");
+    $('#BotonConsultarR').empty()
+    $('#BotonConsultarR').append('<option value=0>Obtener Código</option>')
+    var USUARIO = JSON.parse(readCookie('token'));
+    if(USUARIO!=null && USUARIO!=""){
+        referido = USUARIO["codReferido"]
+        const mostrarcodigo = (codigo) => {
+            $("#micodreferido").val(codigo);
+          }
+          mostrarcodigo(referido);
+    }else{
+         swal("No se pudo validar el código", {
+                    icon: "error"
+                });
+    }
+} 

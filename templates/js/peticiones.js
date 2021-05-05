@@ -674,55 +674,35 @@ async function consultarHistorialOfertas() {
 async function consultarOfertaFiltrada() {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
-        "id": USUARIO["id"]
+        "id": USUARIO["id"],
+        "codBarrio":USUARIO["codBarrio"]
     }
-
+console.log(data);
     try {
         result = await $.ajax({
-            url: url + "/consultarOfertaFiltrada",
+            url: url + "/consultarOfertasBarrio",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
         if (result.status == 200) {
-            console.log(result.info)
-            traerOfertaFiltrada(result.info)
+            console.log(result)
+            traerOfertas(result.info)
         } else {
             swal("No se han encontrado coincidencias con tu búsqueda", {
                 icon: "error"
             });
             console.log(result.status)
-            return 0;
         }
     } catch (error) {
         console.log(error)
-        return 0;
     }
 
 
     return true;
 }
-//consulta mi codigo referido
-if(window.location.href .includes('confRecarga.html')) {
-    console.log("Si");
-    $('#BotonConsultarR').empty()
-    $('#BotonConsultarR').append('<option value=0>Obtener Código</option>')
-    //var USUARIO = JSON.parse(readCookie('token'));
-    var USUARIO = {codReferido:12345};
-    console.log(USUARIO)
-    if(USUARIO!=null && USUARIO!=""){
-        referido = USUARIO["codReferido"]
-        const mostrarcodigo = (codigo) => {
-            $("#micodreferido").val(codigo);
-          }
-          mostrarcodigo(referido);
-    }else{
-         swal("No se pudo validar el código", {
-                    icon: "error"
-                });
-    }
-} 
+
 
 
 
@@ -731,7 +711,7 @@ async function enviarCodigoReferente(codigo) {
     var USUARIO = JSON.parse(readCookie('token'));
     let data = {
         "idUsuario": USUARIO['id'],
-        
+        "codReferido":codigo
     }
     console.log(JSON.stringify(data));
     try {
@@ -742,6 +722,12 @@ async function enviarCodigoReferente(codigo) {
             dataType: 'json',
             contentType: "application/json; charset=utf-8"
         })
+            USUARIO['moneda'] = result.moneda;
+            USUARIO['estadoReferido']=true;
+            window.token = JSON.stringify(USUARIO);
+            setCookie(token);
+            actualizarMonedaVista(result.moneda);
+
         console.log(result.info);
         return result.info;
     } catch (error) {
