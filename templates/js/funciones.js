@@ -465,12 +465,11 @@ function mostrarAlertas(hora, concepto) {
 if(window.location.href .includes('confRecarga.html')) {
     console.log("Si");
     $('#BotonConsultarR').empty()
-    $('#BotonConsultarR').append('<option value=0>Obtener Código</option>')
     var USUARIO = JSON.parse(readCookie('token'));
     if(USUARIO!=null && USUARIO!=""){
         referido = USUARIO["codReferido"]
         const mostrarcodigo = (codigo) => {
-            $("#micodreferido").val(codigo);
+            $("#micodreferido").append(codigo);
           }
           mostrarcodigo(referido);
     }else{
