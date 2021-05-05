@@ -106,12 +106,21 @@ def insertarRecarga():
 def referirUsuario():
     msg = request.get_json()
     response = [{"status": 200,"info": True, "message": "OK", "monenda":None}, 200]
-    user = Usuario(id=msg.get('idUsuario'))
-    user.codReferido = msg.get('codReferido')
-    if user.referirUsuario():
-        _, moneda = user.get()
-        response[0]["moneda"] = moneda
-    else:
-        response = create_response(response, False, "BAD_REFERIDO", 400)
+    u = Usuario(id=msg['idUsuario'])
+    u.get()
+    codref = u.existsCodeRef(msg['codReferido'])
+    if codref:
+        if u.estadoReferido:
+            response[0]["moneda"] = u.moneda
+            response = create_response(response, False, "BAD_YA_RECLAMO", 400)
+            return tuple(response)
+        if codref['codReferido'] != u.codReferido:
+            if u.referirUsuario(codref):
+                _, moneda = u.get()
+                response[0]["moneda"] = moneda
+            else:
+                response = create_response(response, False, "BAD_REFERIDO", 400)
+        else:
+            response = create_response(response, False, "BAD_MISMO_CODIGO", 400)
     return tuple(response)
 

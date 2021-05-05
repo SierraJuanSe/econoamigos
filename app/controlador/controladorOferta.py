@@ -4,8 +4,6 @@ from app.modelo.oferta import Oferta
 from app.modelo.usuario import Usuario
 from app.utils.formValidations import validate_getpublications, create_response
 
-
-
 @bp.route('/publications')
 def publications():
     o = Oferta().consultarOferta(22)
@@ -31,12 +29,11 @@ def consultarOfertas():
 @bp.route('/consultarOfertasBarrio', methods=['POST'])
 def consultarOfertasMiBarrio():
     msg = request.get_json()
+    response = [{"status": 200,"info": {}, "message": "OK"}, 200]
     ofertas = Oferta(idUsuario=msg.get('id'), codBarrio =msg.get('codBarrio'))
-    res = ofertas.consultarOfertasMiBarrio()
-    if len(res) != 0:
-        return {'status': 200, 'info': res}
-    else:
-        return {'status': 404}
+    response[0]["info"]["ofertas"] = ofertas.consultarOfertasMiBarrio()
+    response[0]["info"]["misofertas"] = ofertas.consultarMisOfertas()
+    return tuple(response)
 
 # Trae todas las ofertas publicadas por el usuario
 @bp.route('/consultarMisOfertas', methods=['POST'])
@@ -78,7 +75,3 @@ def insertarOferta():
         return {'status': 200, 'info':True}
     else:
         return {'status': 400, 'info':False}
-
-
-if __name__ == '__main__':
-  app.run(host="25.7.209.143")

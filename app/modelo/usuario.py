@@ -48,32 +48,34 @@ class Usuario:
             c.close()
             return 0
             
-    def existsCodeRef(self):
+    def existsCodeRef(self, code):
         query = "SELECT * from Referido WHERE codReferido=%s"
         c = Connection()
-        cs = c.getCursor()
-        cs.execute(query)
+        cs = c.getCursor("DictCursor")
+        cs.execute(query, (code, ))
         c.close()
         return cs.fetchone()
 
     def ingreso(self):
-        query = "SELECT * from Usuario WHERE emailUsuario=%s AND contraseñaUsuario=sha(%s)"
+        query = "SELECT idUsuario, nombreUsuario as nombre, apellidoUsuario as apellido, emailUsuario,\
+            telefonoUsuario as telefono, fechaNacUsuario, totalMonedaUsuario, direccion, estadoReferido,\
+            Barrio_codBarrio, codReferido from Usuario INNER JOIN Referido on Usuario.idUsuario=Referido.Usuario_idUsuario WHERE emailUsuario=%s AND contraseñaUsuario=sha(%s)"
         c = Connection()
         cs = c.getCursor("DictCursor")
         r = cs.execute(query, (self.email, self.password))
         if r:
             rr = cs.fetchone()
             self.id = rr['idUsuario']
-            self.nombre = rr['nombreUsuario']
-            self.apellido = rr['apellidoUsuario']
+            self.nombre = rr['nombre']
+            self.apellido = rr['apellido']
             self.email = rr['emailUsuario']
-            self.tel = rr['telefonoUsuario']
+            self.tel = rr['telefono']
             self.fechaNac = rr['fechaNacUsuario']
             self.moneda = rr['totalMonedaUsuario']
             self.direccion = rr['direccion']
             self.estadoReferido = rr['estadoReferido']
             self.codBarrio = rr['Barrio_codBarrio']
-            self.codReferido = rr['Referido_codReferido']
+            self.codReferido = rr['codReferido']
             return r
         c.close()
         return False
@@ -122,18 +124,15 @@ class Usuario:
         r = cs.execute(query, (self.id, ))
         return cs.fetchone()
 
-    def referirUsuario(self):
-        query1 = "SET @sql = (Select idUsuario from Usuario where Referido_codReferido=%s);"
-        query2 = "insert into Transaccion values(null,'Referido',(select valorReferido from Referido where codReferido=%s),True,%s,null);"
-        query3 = "insert into Transaccion values(null,'Bono por Referir',1000,True,@sql,null);"
-        query4 = "update Usuario set estadoReferido=True where idUsuario=%s;"
+    def referirUsuario(self, codref):
+        query1 = "insert into Transaccion values(%s,%s,%s,%s,%s,%s);"
+        query2 = "update Usuario set estadoReferido=True where idUsuario=%s;"
         c = Connection()
         cs = c.getCursor()
         try:
-            cs.execute(query1, (self.codReferido, ))
-            cs.execute(query2, (self.codReferido, self.id))
-            cs.execute(query3)
-            cs.execute(query4, (self.id, ))
+            cs.execute(query1, (None,'Referido',codref['valorReferido'],True, self.id, None))
+            cs.execute(query1, (None,'Bono por Referir',10,True, codref['Usuario_idUsuario'], None))
+            cs.execute(query2, (self.id, ))
             c.commit()
             cs.close()
             c.close()
@@ -173,7 +172,7 @@ class Usuario:
         }
     
     def create_codeRef(self):
-        self.codReferido = self.nombre+md5(self.email.encode()).hexdigest()[:10]
+        self.codReferido = self.nombre.strip()+md5(self.email.encode()).hexdigest()[:10]
 
     @staticmethod
     def queryAll():

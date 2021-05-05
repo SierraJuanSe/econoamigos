@@ -34,13 +34,17 @@ def insertarCompra():
         tranIngreso = Transaccion(concepto="Ingreso", usuario=vendedor, valor=int(msg['precio']), estado=False, idCompra= compra.id)
         try:
             tranCompra.agregar()
-            tranIngreso.agregar()
+            tranIngreso.agregar() 
             notificateCompra(vendedor, oferta)
             send_sale_notification_email(vendedor, oferta)
             send_purchase_notification_email(comprador, oferta)
         except:
             response = create_response(response, False, "BAD_TRANSACTION", 500)
             return tuple(response)
+    elif compra_succeed and isCambio:
+        notificateCompra(vendedor, oferta)
+        send_sale_notification_email(vendedor, oferta)
+        send_purchase_notification_email(comprador, oferta)
     else:
         response = create_response(response, False, "BAD_COMPRA", 500)
 
@@ -100,6 +104,3 @@ def notificateCompra(vendor, producto):
         horaComentario = str(aux.hour) + ":" + str(aux.minute) + ":" + str(aux.second)
         p['hora'] = horaComentario
         socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotification', 'info': p}, to=onlineUser[0])
-
-if __name__ == '__main__':
-    app.run(host="25.7.209.143")

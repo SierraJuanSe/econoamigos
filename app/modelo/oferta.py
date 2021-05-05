@@ -1,5 +1,6 @@
 from app.utils.conector import Conector, DBINFO
 from app.utils.connection import Connection
+from app.utils.format import formatH
 
 class Oferta:
 
@@ -80,27 +81,19 @@ class Oferta:
         return respuesta
 
     def consultarTodaOferta(self):
-        sql = f"select*from Oferta where (cantidadProducto >0 or cantidadProducto is null) and Usuario_idUsuario!={self.idUsuario};"
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql, None)
-        respuesta = []
-        for fila in result:
-            r1 = {}
-            r1['id'] = fila[0]
-            r1['tipo'] = fila[1]
-            r1['nombre'] = fila[2]
-            r1['descripcion'] = fila[3]
-            r1['precio'] = fila[4]
-            r1['estado'] = fila[5]
-            r1['lugar'] = fila[6]
-            r1['imagen'] = fila[7]
-            r1['cantidad'] = fila[8]
-            r1['idUsuario'] = fila[5]
-            respuesta.append(r1)
-        conn.close()
-        return respuesta
+        query = "select *,(SELECT AVG(valor) from Valoracion WHERE Valoracion.Oferta_codOferta=Oferta.codOferta) as puntuacion from Oferta where (cantidadProducto >0 or cantidadProducto is null) AND Usuario_idUsuario != %s"
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        cs.execute(query, (self.idUsuario, ))
+        r = cs.fetchall()
+        q = "SELECT * from Comentario WHERE Oferta_codOferta=%s"
+        for p in r:
+            cs.execute(q, (p['codOferta'],))
+            comentarios = list(map(formatH, cs.fetchall()))
+            p['comentarios'] = comentarios
+        cs.close()
+        c.close()
+        return r
 
     def consultarMisOfertas(self):
         query = "select * from Oferta where (cantidadProducto >0 or cantidadProducto is null) and Usuario_idUsuario=%s"
@@ -110,27 +103,20 @@ class Oferta:
         return cs.fetchall()
     
     def consultarOfertasMiBarrio(self):
-        sql = f"SELECT * FROM Oferta as o INNER JOIN Usuario as u ON u.idUsuario=o.Usuario_idUsuario where u.Barrio_CodBarrio={self.codBarrio} and Usuario_idUsuario!={self.idUsuario};"
-        conn = Conector(DBINFO['host'], DBINFO['user'],
-                        DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql, None)
-        respuesta = []
-        for fila in result:
-            r1 = {}
-            r1['id'] = fila[0]
-            r1['tipo'] = fila[1]
-            r1['nombre'] = fila[2]
-            r1['descripcion'] = fila[3]
-            r1['precio'] = fila[4]
-            r1['estado'] = fila[5]
-            r1['lugar'] = fila[6]
-            r1['imagen'] = fila[7]
-            r1['cantidad'] = fila[8]
-            r1['idUsuario'] = fila[5]
-            respuesta.append(r1)
-        conn.close()
-        return respuesta
+        query = "select Oferta.*, (SELECT AVG(valor) from Valoracion WHERE Valoracion.Oferta_codOferta=Oferta.codOferta) as puntuacion\
+            from Oferta INNER JOIN Usuario ON Usuario.idUsuario=Oferta.Usuario_idUsuario where (cantidadProducto >0 or cantidadProducto is null) AND Usuario_idUsuario != %s and Usuario.Barrio_CodBarrio=%s"
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        cs.execute(query, (self.idUsuario, self.codBarrio))
+        r = cs.fetchall()
+        q = "SELECT * from Comentario WHERE Oferta_codOferta=%s"
+        for p in r:
+            cs.execute(q, (p['codOferta'],))
+            comentarios = list(map(formatH, cs.fetchall()))
+            p['comentarios'] = comentarios
+        cs.close()
+        c.close()
+        return r
 
     def to_dict(self):
         return {
@@ -151,6 +137,12 @@ class Oferta:
         query = "SELECT * from Oferta"
         cc = Connection().getCursor("DictCursor")
         r = cc.execute(query)
+        publications = cc.fetchall()
+        q = "SELECT * from Comentario WHERE Oferta_codOferta=%s"
+        for p in publications:
+            cc.execute(q, (p['codOferta'],))
+            comentarios = list(map(formatH, cc.fetchall()))
+            p['comentarios'] = comentarios
         cc.close()
         if r:
-            return cc.fetchall()
+            return publications
