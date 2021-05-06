@@ -199,6 +199,7 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
         if (coment['respuesta']!="") {
             dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuestaComentario'] + '</p>'
         }
+        console.log("#myComment" + id);
     }
     console.log(OfertasOfrecidas)
     for (const ofert of OfertasOfrecidas) {
@@ -220,16 +221,17 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
     ofertasC = '<div class="col-sm-4" id="' + id + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="descripcionOferta">' + descripcion + '</h6>' + '<p class="card-text" id="precioOferta">' + precio + '</p>' +
         '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + id + '">Ver más...</button>' + '<div class="modal" id="myModal' + id + '">' + '<div class="modal-dialog">' +
-        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod" type="button" class="close" data-dismiss="modal">&times;</button>' +
+        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod'+id+'" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<form class="MetodosDepago1">' +
-        '<label class="cars">' + 'Seleccione el metodo de pago' + '</label>' + '<select name="cars" id="cars'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
+        '<label class="cars0">' + 'Seleccione el metodo de pago' + '</label>' + '<select class="cars" name="cars" id="cars'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
         '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + '</select>' + '<a id="escogerMetodoPago'+id+'" type="button" class="MetodoPago" >Click metodo pago</a>' + '</form>' + '<form class="MetodosDepago2'+id+'" id="metodoPago2id'+id+'" style="display:none;" >' +
-        '<label class="cars2">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + '<select name="cars2" id="cars2'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + '</select>' + '</form>' +
+        '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + '<select class="cars2" name="cars2" id="cars2'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + '</select>' + '</form>' +
         '<button type="button" id="vermasbotComentar' + id + '" class="card-link" data-toggle="modal" data-target="#myComment' + id + '" >' + 'Ver comentarios' + '</button>' +
         '<div class="modal-body" id="myComment' + id + '" style="display:none;">' + '<div class="form-group ">' + '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
         '</div>' + '</div>' + '<a id="BotonComprar' + id + '" type="button" class="btn">Comprar</a>' + dibujarPunt +
         '</div></div></div></div></div></div></div></div>';
+
 
     $("#ofertas").append(ofertasC);
     botonCrearCompra(id, precio);
@@ -272,10 +274,9 @@ function seleccionPago(id) {
 
 }
 
-
 function cerrarModal(id) {
-    $("#cerrarMod").click(async function() {
-        $('#myComment' + id).modal('hide');
+    $('#cerrarMod'+ id).click(async function() {
+        $('#myComment' + id ).modal('hide');
         $('.MetodosDepago2'+id).modal('hide');
 
     });
