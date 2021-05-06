@@ -576,10 +576,10 @@ section {
 
 #fotoForms3 {
     position: absolute;
-    width: 35%;
-    height: 40%;
+    width: 44%;
+    height: 43%;
     left: 62%;
-    top: 53%;
+    top: 75%
 }
 
 #GuardarCambios {
@@ -864,4 +864,8 @@ section {
 
 .popup .notification_dd li.title .close:hover {
     opacity: 0.5;
+}
+
+.input{
+    width: 30%;
 }
