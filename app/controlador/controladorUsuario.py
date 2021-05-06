@@ -70,6 +70,9 @@ def actualizarUsuario():
     if isValid[0]:
         if not u.actualizar():
             response = create_response(response, False, "BAD_UPDATE", 400)
+        else:
+            u.get()
+            response[0]["token"] = u.create_token()    
     else:
         response = create_response(response, False, isValid[1], 400)
     return tuple(response)

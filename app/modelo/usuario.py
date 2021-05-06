@@ -90,8 +90,9 @@ class Usuario:
             if r: c.commit()
             c.close()
             return r
-        except:
+        except Exception as e:
             c.close()
+            print(e)
             return 0
 
     def get(self):

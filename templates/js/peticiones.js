@@ -1,4 +1,4 @@
-var url = "http://25.106.79.205:5000"
+var url = "http://127.0.0.1:5000"
 let numNotifications = 0
 
 // Objeto socket que maneja la connection
@@ -486,7 +486,7 @@ async function consultarDatosConfiguracion() {
 }
 
 //Peticón para modificar datos usuarios
-async function ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, direccion, password) {
+async function ModificarDatosUsuario(nombre, apellido, telefono, barrio, direccion, password) {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
         "idUsuario": USUARIO['id'],
@@ -494,7 +494,7 @@ async function ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, dire
         "apellidoUsuario": apellido,
         "passwordUsuario": password,
         "telefonoUsuario": telefono,
-        "ocupacionUsuario": ocupacion,
+        "codBarrio": barrio,
         "direccionUsuario": direccion
 
     };
@@ -507,6 +507,8 @@ async function ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, dire
             contentType: "application/json; charset=utf-8"
         })
         console.log(result.info);
+        window.token = JSON.stringify(result.token);
+        setCookie(token);
         return result.info;
     } catch (error) {
         console.log(error)

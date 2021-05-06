@@ -227,7 +227,7 @@ async function traerDatosUsuario(datos) {
     $("#nombreR").val(datos["nombre"]);
     $("#apellidoR").val(datos["apellido"]);
     $("#telefonoR").val(datos["telefono"]);
-    $("#ocupacionR").val(datos["ocupacion"]);
+    $("#barrios").val(datos["Barrio_codBarrio"]);
     $("#direccionR").val(datos["direccion"]);
 
 
@@ -239,11 +239,11 @@ $("#GuardarCambios").click(async function() {
     nombre = $("#nombreR").val();
     apellido = $("#apellidoR").val();
     telefono = $("#telefonoR").val();
-    ocupacion = $("#ocupacionR").val();
+    barrio = $("#barrios").val();
     direccion = $("#direccionR").val();
     password = $("#passR").val();
     password2 = $("#passR2").val();
-    if (nombre == "" || apellido == "" || telefono == "" || ocupacion == "" || direccion == "") {
+    if (nombre == "" || apellido == "" || telefono == "" || barrio == 0 || direccion == "") {
         swal("Error", "Selecciona el botón Consultar Datos para traer tu información", "error");
     } else if (password == "" || password2 == "") {
         swal("Error", "Por favor, Ingrese la contraseña y su validación", "error");
@@ -251,8 +251,9 @@ $("#GuardarCambios").click(async function() {
         swal("Error", "Las contraseñas no coinciden", "error");
     } else {
 
-        save = await ModificarDatosUsuario(nombre, apellido, telefono, ocupacion, direccion, password);
+        save = await ModificarDatosUsuario(nombre, apellido, telefono, barrio, direccion, password);
         if (save) {
+            
             swal("Se actualizaron los datos con éxito", {
                 icon: "success"
             });
