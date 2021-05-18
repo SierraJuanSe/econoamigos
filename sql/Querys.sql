@@ -62,3 +62,6 @@ update Usuario set estadoReferido=True where idUsuario="333";
 
 #Borrar la compra si el usuario no acepta la oferta de intercambio
 Delete from Compra where codCompra=5;
+
+#consultar el chat de una compra
+select*from Mensaje where Compra_codCompra=4;
