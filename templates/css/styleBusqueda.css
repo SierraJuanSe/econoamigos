@@ -121,6 +121,7 @@ header .textos h1 {
 /*Footer*/
 
 footer {
+    position: relative;
     color: #d9d9d9;
     padding: 10px 0 20px 0;
     bottom: 0px;
@@ -410,6 +411,7 @@ section {
     padding: 1.5rem 1rem;
     font-weight: 300;
     border: 0;
+    resize: none;
 }
 
 .form-control:focus {
@@ -454,7 +456,6 @@ section {
     height: 60px;
     margin: 10px
 }
-
 
 #botonFiltrar {
     width: auto;
@@ -1065,8 +1066,8 @@ section {
 }
 
 
-
 /*cambios*/
+
 .cars {
     cursor: alias;
     display: block;
@@ -1087,9 +1088,11 @@ section {
     font-size: 14px;
     text-align-last: center;
 }
+
+
 /*cambio linea 484     margin-top: 1rem;*/
 
-.MetodoPago{
+.MetodoPago {
     display: block;
     width: 25%;
     height: 26px;
@@ -1109,8 +1112,9 @@ section {
     text-align: center;
     color: white;
 }
-.cars2{
-display: block;
+
+.cars2 {
+    display: block;
     width: 40%;
     height: 35px;
     border-radius: 25px;

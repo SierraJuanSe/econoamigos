@@ -41,7 +41,8 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
+        '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<button type="button" id="verchat' + codcompra + '" class="card-link">Chatea</button>' +
+        '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + codcompra + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' +
@@ -57,6 +58,13 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
 
     $("#compras").append(ofertasC);
     enviarValoracion(codOferta)
+    abrirChat(codcompra, nombre);
+}
+
+function abrirChat(codcompra, nombre) {
+    $("#verchat" + codcompra).click(async function() {
+        openChat(codcompra, nombre)
+    });
 }
 
 function enviarValoracion(codOferta) {
@@ -168,7 +176,7 @@ function accionesBtnRechazar(codCompra) {
                     console.log(result)
                     if (result) {
                         $('#exampleModal' + codCompra).modal('hide');
-                        $('#filasol'+codCompra).remove()
+                        $('#filasol' + codCompra).remove()
                     }
 
                 } else {
@@ -191,12 +199,12 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
     for (var i = 0; i < recibir; i++) {
         dibujarPunt += '<label >⭐</label>'
     }
-    if (recibir == 0  || recibir==null) {
+    if (recibir == 0 || recibir == null) {
         dibujarPunt += '<label >☆☆☆☆☆</label>'
     }
     for (const coment of comentarios) {
         dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcionComentario'] + '</p>';
-        if (coment['respuesta']!="") {
+        if (coment['respuesta'] != "") {
             dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuestaComentario'] + '</p>'
         }
         console.log("#myComment" + id);
@@ -221,12 +229,12 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
     ofertasC = '<div class="col-sm-4" id="' + id + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="descripcionOferta">' + descripcion + '</h6>' + '<p class="card-text" id="precioOferta">' + precio + '</p>' +
         '<button type="button" id="vermasbot" class="card-link" data-toggle="modal" data-target="#myModal' + id + '">Ver más...</button>' + '<div class="modal" id="myModal' + id + '">' + '<div class="modal-dialog">' +
-        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod'+id+'" type="button" class="close" data-dismiss="modal">&times;</button>' +
+        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + id + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">' + cantidad + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + lugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' + '<form class="MetodosDepago1">' +
-        '<label class="cars0">' + 'Seleccione el metodo de pago' + '</label>' + '<select class="cars" name="cars" id="cars'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
-        '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + '</select>' + '<a id="escogerMetodoPago'+id+'" type="button" class="MetodoPago" >Click metodo pago</a>' + '</form>' + '<form class="MetodosDepago2'+id+'" id="metodoPago2id'+id+'" style="display:none;" >' +
-        '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + '<select class="cars2" name="cars2" id="cars2'+id+'">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + '</select>' + '</form>' +
+        '<label class="cars0">' + 'Seleccione el metodo de pago' + '</label>' + '<select class="cars" name="cars" id="cars' + id + '">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
+        '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + '</select>' + '<a id="escogerMetodoPago' + id + '" type="button" class="MetodoPago" >Click metodo pago</a>' + '</form>' + '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" style="display:none;" >' +
+        '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + '<select class="cars2" name="cars2" id="cars2' + id + '">' + '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + '</select>' + '</form>' +
         '<button type="button" id="vermasbotComentar' + id + '" class="card-link" data-toggle="modal" data-target="#myComment' + id + '" >' + 'Ver comentarios' + '</button>' +
         '<div class="modal-body" id="myComment' + id + '" style="display:none;">' + '<div class="form-group ">' + '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
         '</div>' + '</div>' + '<a id="BotonComprar' + id + '" type="button" class="btn">Comprar</a>' + dibujarPunt +
@@ -243,9 +251,9 @@ function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, 
 }
 
 function seleccionPago(id) {
-    $("#escogerMetodoPago"+id).click(async function() {
-        var e = document.getElementById("cars"+id);
-        var e2 = document.getElementById("cars2"+id);
+    $("#escogerMetodoPago" + id).click(async function() {
+        var e = document.getElementById("cars" + id);
+        var e2 = document.getElementById("cars2" + id);
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value)
@@ -259,10 +267,10 @@ function seleccionPago(id) {
             swal("Se selecciono correctamente", {
                 icon: "success"
             });
-            $('.MetodosDepago2'+id).modal('hide');
+            $('.MetodosDepago2' + id).modal('hide');
         }
         if (value == "oferta") {
-            $('.MetodosDepago2'+id).modal('show');
+            $('.MetodosDepago2' + id).modal('show');
             if (value2 != "seleccion") {
                 console.log(value2)
             }
@@ -275,9 +283,9 @@ function seleccionPago(id) {
 }
 
 function cerrarModal(id) {
-    $('#cerrarMod'+ id).click(async function() {
-        $('#myComment' + id ).modal('hide');
-        $('.MetodosDepago2'+id).modal('hide');
+    $('#cerrarMod' + id).click(async function() {
+        $('#myComment' + id).modal('hide');
+        $('.MetodosDepago2' + id).modal('hide');
 
     });
 
@@ -325,8 +333,8 @@ function botonCrearCompra(idOferta, precio) {
 
 
     $("#BotonComprar" + idOferta).click(async function() {
-        var e = document.getElementById("cars"+idOferta);
-        var e2 = document.getElementById("cars2"+idOferta);
+        var e = document.getElementById("cars" + idOferta);
+        var e2 = document.getElementById("cars2" + idOferta);
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value2)
@@ -343,7 +351,7 @@ function botonCrearCompra(idOferta, precio) {
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
 
-              console.log(value);
+                console.log(value);
                 var save = await crearCompra(idOferta, precio, null);
                 if (save) {
                     $("#myModal" + idOferta).modal("hide");
@@ -358,11 +366,11 @@ function botonCrearCompra(idOferta, precio) {
             } else if ((USUARIO['moneda'] < precio)) {
                 swal("Error", "No tienes suficiente saldo para adquirir este producto", "error");
             }
-            $('.MetodosDepago2'+idOferta).modal('hide');
+            $('.MetodosDepago2' + idOferta).modal('hide');
         }
         if (value == "oferta") {
             console.log(value2)
-            $('.MetodosDepago2'+idOferta).modal('show');
+            $('.MetodosDepago2' + idOferta).modal('show');
             if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
@@ -463,19 +471,19 @@ function mostrarAlertas(hora, concepto) {
     $('.toast').toast('show');
 }
 
-if(window.location.href .includes('confRecarga.html')) {
+if (window.location.href.includes('confRecarga.html')) {
     console.log("Si");
     $('#BotonConsultarR').empty()
     var USUARIO = JSON.parse(readCookie('token'));
-    if(USUARIO!=null && USUARIO!=""){
+    if (USUARIO != null && USUARIO != "") {
         referido = USUARIO["codReferido"]
         const mostrarcodigo = (codigo) => {
             $("#micodreferido").append(codigo);
-          }
-          mostrarcodigo(referido);
-    }else{
-         swal("No se pudo validar el código", {
-                    icon: "error"
-                });
+        }
+        mostrarcodigo(referido);
+    } else {
+        swal("No se pudo validar el código", {
+            icon: "error"
+        });
     }
-} 
+}
