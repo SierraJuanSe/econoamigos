@@ -285,6 +285,17 @@ footer {
     margin: auto;
 }
 
+.contenedores {
+    align-items: center;
+    position: center;
+    width: 200%;
+    max-width: 2000px;
+    padding-left: 100%;
+    margin: 50px;
+    justify-content: center;
+    
+}
+
 .Servicio,
 .Servicio2 {
     width: 50%;
@@ -864,6 +875,10 @@ section {
         justify-content: center;
         align-items: center;
         margin: auto;
+    }
+    .contenedores{
+        padding: 0%;
+        width: 100%;
     }
     .Textos {
         width: 90%;
