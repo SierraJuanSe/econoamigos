@@ -261,17 +261,17 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             '<div class="caja">'+
             '<form class="MetodosDepago1">' +
             '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
-            '<select class="cars" name="cars" id="cars' + id + '">' + 
+            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
-            '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
+            '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
             '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
-            '</select>' + 
-            '<a id="escogerMetodoPago' + id + '" type="button" class="MetodoPago" >M.Pago</a>' + 
+            '</select>' +
             '</form>' + 
-            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" style="display:none;" >' +
+            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
             '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
             '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
+            
             '</select>' + 
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
@@ -288,43 +288,44 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
         botonVolver(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas);
         botonCrearCompra(id, precio);
         botonEnviarComentario(id);
-        cerrarModal(id);
-        seleccionPago(id);
+        cerrarModal(id);    
         });
         $("#regresar").empty();
 
 }
 
 function seleccionPago(id) {
-    $("#escogerMetodoPago"+id).click(async function() {
-        var e = document.getElementById("cars"+id);
-        var e2 = document.getElementById("cars2"+id);
-        var value2 = e2.options[e2.selectedIndex].value;
-        var value = e.options[e.selectedIndex].value;
-        console.log(value)
+    console.log(id)
+    var e = document.getElementById("cars"+id);
+    console.log(e)
+    var e2 = document.getElementById("cars2"+id);
+    var value = e.options[e.selectedIndex].value;
+    var value2 = e2.options[e2.selectedIndex].value;
+       
+    console.log(value)
 
-        if (value == "seleccion") {
-            swal("Por favor, seleccione una opcion de pago", {
-                icon: "error"
-            });
+    if (value == "seleccion") {
+        swal("Por favor, seleccione una opcion de pago", {
+            icon: "error"
+        });
+        $('.MetodosDepago2'+id).hide();
+    }
+    if (value == "economonedas") {
+        swal("Se selecciono correctamente", {
+            icon: "success"
+        });
+        $('.MetodosDepago2'+id).hide();
+    }
+    if (value == "oferta") {
+        $('.MetodosDepago2'+id).show();
+        if (value2 != "seleccion") {
+            console.log(value2)
         }
-        if (value == "economonedas") {
-            swal("Se selecciono correctamente", {
-                icon: "success"
-            });
-            $('.MetodosDepago2'+id).modal('hide');
-        }
-        if (value == "oferta") {
-            $('.MetodosDepago2'+id).modal('show');
-            if (value2 != "seleccion") {
-                console.log(value2)
-            }
 
 
-        }
+    }
 
-    });
-
+ 
 }
 
 function cerrarModal(id) {
