@@ -13,18 +13,19 @@ insert into Barrio values(null,"Santa Monica");
 insert into Barrio values(null,"La Calleja");
 insert into Barrio values(null,"Santa Ana");
 
-#Insertar un codigo de referido
-insert into Referido values("MiCodigo",1000);
-insert into Referido values("Axh8$m",200);
-insert into Referido values("Er)2;0",112);
-insert into Referido values("qwerty",1000);
-
 #Insertar un usuario
-insert into Usuario values('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','2001-01-1',100,'Cll 434,Villa de Leyva',false,5,"MiCodigo");
-insert into Usuario values('23789345','Juan','Rodriguez','jaun@gmail.com','1234sas5','345345423','1991-08-1',100,'Cll 434,Cali',false,1,"Axh8$m");
-insert into Usuario values('978676','Lina','Pulido','Lina@gmail.com','fksjdfh','654645','2000-08-1',100,'Cll 12,Bogotá',false,7,"Er)2;0");
-insert into Usuario values('333','Juan','Mecanico','Mecanico@gmail.com','vfvfvf','3102765467','2003-04-1',100,'cll 43 n3.2,Bogotá',false,9,"qwerty");
+insert into Usuario values('1002549404','Luis Felipe','Velasquez Puentes','felipe@gmail.com','12345','3222328138','2001-01-1',100,'Cll 434,Villa de Leyva',false,5);
+insert into Usuario values('23789345','Juan','Rodriguez','jaun@gmail.com','1234sas5','345345423','1991-08-1',100,'Cll 434,Cali',false,1);
+insert into Usuario values('978676','Lina','Pulido','Lina@gmail.com','fksjdfh','654645','2000-08-1',100,'Cll 12,Bogotá',false,7);
+insert into Usuario values('333','Juan','Mecanico','Mecanico@gmail.com','vfvfvf','3102765467','2003-04-1',100,'cll 43 n3.2,Bogotá',false,9);
 select*from usuario;
+
+#Insertar un codigo de referido
+insert into Referido values("MiCodigo",1000,'1002549404');
+insert into Referido values("Axh8$m",200,'978676');
+insert into Referido values("Er)2;0",112,'333');
+insert into Referido values("qwerty",1000,'23789345');
+
 
 #Insertar una Oferta de tipo producto
 insert into Oferta values(null,'Producto',"celular iphone 6","Es un celular bonito",100,true,null,'https//:www.imagen.jpg',10,'1002549404');
@@ -98,6 +99,21 @@ insert into Valoracion values(null,5,3);
 insert into Valoracion values(null,2,3);
 select *from Valoracion;
 
+#Insertar MEnsajes de un chat
+insert Into Mensaje values(null,"Buenos Dias como esta?",'1002549404','333',1);
+insert Into Mensaje values(null,"Cuando me envia el producto?",'1002549404','333',1);
+insert Into Mensaje values(null,"esta misma tarde señor",'333','1002549404',1);
+insert Into Mensaje values(null,"Gracias",'1002549404','333',1);
+
+
+insert Into Mensaje values(null,"Buenos Dias",'978676','23789345',4);
+insert Into Mensaje values(null,"Bunos dias",'23789345','978676',4);
+insert Into Mensaje values(null,"Disculpe, como instalo la mesa?",'978676','23789345',4);
+insert Into Mensaje values(null,"Tienes que leer las instruciones",'23789345','978676',4);
+
+
+
+select*from Mensaje;
 
 
 
