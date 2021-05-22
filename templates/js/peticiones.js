@@ -3,9 +3,15 @@ let numNotifications = 0
 
 // Objeto socket que maneja la connection
 const socket = io(url, {
+    reconnectionAttempts: 10,
     autoConnect: false,
 })
 
+const socketChat = io(url+'/chat')
+socketChat.connect()
+if(socketChat.connected){
+    console.log(socketChat.io);
+}
 
 // Iniciar Sesion
 async function login(correo, contrasenia) {

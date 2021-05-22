@@ -63,6 +63,7 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     enviarValoracion(codOferta)
     abrirChat(codcompra, nombre);
     sendMessage(codcompra);
+    socketChat.emit('join', {room: 'room'+codcompra})
 
     mensajetemp = [{
         codMensaje: 1,
@@ -210,7 +211,7 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         sendMessage(codCompra);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
-
+        socketChat.emit('join', {room: 'room'+codCompra})
         mensajetemp = [{
             codMensaje: 1,
             destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar

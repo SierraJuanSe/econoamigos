@@ -1,10 +1,10 @@
 import pymysql
 
 DBINFO = {
-  'host' : "econoamigos.com",
-  'user' : "devOceanDB",
-  'password': "devOceanEconoamigos",
-  'database': "econoamigosBD"
+  'host' : "localhost",
+  'user' : "econoamigos",
+  'password': "Econoamigos.eco123",
+  'database': "sql10399086"
 }
 
 TYPE_CURSOR =  {
