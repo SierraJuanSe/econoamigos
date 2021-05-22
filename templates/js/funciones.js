@@ -505,8 +505,8 @@ function botonCrearCompra(idOferta, precio) {
 
 
     $("#BotonComprar" + idOferta).click(async function() {
-        var e = document.getElementById("cars" + idOferta);
-        var e2 = document.getElementById("cars2" + idOferta);
+        var e = document.getElementById("cars"+idOferta);
+        var e2 = document.getElementById("cars2"+idOferta);
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value2)
@@ -523,10 +523,10 @@ function botonCrearCompra(idOferta, precio) {
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
 
-                console.log(value);
+              console.log(value);
                 var save = await crearCompra(idOferta, precio, null);
                 if (save) {
-                    $("#myModal" + idOferta).modal("hide");
+                    $("#myModal" + idOferta).hide();
                     swal("Compra Realizada", {
                         icon: "success"
                     });
@@ -538,17 +538,17 @@ function botonCrearCompra(idOferta, precio) {
             } else if ((USUARIO['moneda'] < precio)) {
                 swal("Error", "No tienes suficiente saldo para adquirir este producto", "error");
             }
-            $('.MetodosDepago2' + idOferta).modal('hide');
+            $('.MetodosDepago2'+idOferta).hide();
         }
         if (value == "oferta") {
             console.log(value2)
-            $('.MetodosDepago2' + idOferta).modal('show');
+            $('.MetodosDepago2'+idOferta).show();
             if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
                     var save = await crearCompra(idOferta, null, value2);
                     if (save) {
-                        $("#myModal" + idOferta).modal("hide");
+                        $("#myModal" + idOferta).hide();
                         swal("Compra Realizada", {
                             icon: "success"
                         });
