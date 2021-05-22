@@ -41,7 +41,8 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<button type="button" id="verchat' + codcompra + '" class="card-link">Chatea</button>' +
+        '<div class="container"><div class="row"><div class="col">' + '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '"><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
+        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>' +
         '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + codcompra + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
@@ -57,14 +58,60 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
         '</div></div></div></div></div></div></div></div>';
 
     $("#compras").append(ofertasC);
+    var temp = drawChat(codcompra, nombre);
+    $('#chatContainer').append(temp);
     enviarValoracion(codOferta)
     abrirChat(codcompra, nombre);
+    sendMessage(codcompra);
+
+    mensajetemp = [{
+        codMensaje: 1,
+        destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+        Usuario_idUsuario: "1010029624",
+        desMensaje: "Te amo",
+        Compra_codCompra: "003",
+        time: "21:35"
+    }, {
+        codMensaje: 2,
+        destinatario: "1010029624",
+        Usuario_idUsuario: "1000257419",
+        desMensaje: "Yo más",
+        Compra_codCompra: "003",
+        time: "21:37"
+    }, {
+        codMensaje: 3,
+        destinatario: "1000257419",
+        Usuario_idUsuario: "1010029624",
+        desMensaje: "Que haces?",
+        Compra_codCompra: "003",
+        time: "21:40"
+    }, {
+        codMensaje: 4,
+        destinatario: "1010029624",
+        Usuario_idUsuario: "1000257419",
+        desMensaje: "Extrañarte",
+        Compra_codCompra: "003",
+        time: "21:43"
+    }]
+    mostrarMensajes(mensajetemp)
 }
 
 function abrirChat(codcompra, nombre) {
     $("#verchat" + codcompra).click(async function() {
-        openChat(codcompra, nombre)
+        $('#chat' + codcompra).show()
     });
+}
+
+function mostrarMensajes(mensajes) {
+    for (const mensaje of mensajes) {
+        //Aqui se va a llmar a la cookie para validar la posición
+        console.log(mensaje['codMensaje'])
+        if (mensaje['destinatario'] != "1000257419") {
+            drawMsgOut(mensaje)
+        } else {
+            drawRecivedMsg(mensaje)
+        }
+    }
 }
 
 function enviarValoracion(codOferta) {
@@ -152,12 +199,48 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         }
         solO = "";
         solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
-            '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+            '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
+            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
             '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
+        var temp = drawChat(codCompra, oferta);
+        $('#chatContainer').append(temp);
+        abrirChat(codCompra, oferta);
+        sendMessage(codCompra);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
+
+        mensajetemp = [{
+            codMensaje: 1,
+            destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+            Usuario_idUsuario: "1010029624",
+            desMensaje: "Te amo",
+            Compra_codCompra: "003",
+            time: "21:35"
+        }, {
+            codMensaje: 2,
+            destinatario: "1010029624",
+            Usuario_idUsuario: "1000257419",
+            desMensaje: "Yo más",
+            Compra_codCompra: "003",
+            time: "21:37"
+        }, {
+            codMensaje: 3,
+            destinatario: "1000257419",
+            Usuario_idUsuario: "1010029624",
+            desMensaje: "Que haces?",
+            Compra_codCompra: "003",
+            time: "21:40"
+        }, {
+            codMensaje: 4,
+            destinatario: "1010029624",
+            Usuario_idUsuario: "1000257419",
+            desMensaje: "Extrañarte",
+            Compra_codCompra: "003",
+            time: "21:43"
+        }]
+        mostrarMensajes(mensajetemp)
     }
 }
 

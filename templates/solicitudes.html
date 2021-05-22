@@ -3,6 +3,7 @@
 
 <head>
     <title>Econoamigos</title>
+    <link rel="stylesheet" href="css/styleChat.css">
     <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
     <link rel="stylesheet" type="text/css" href="css/stylesol.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
@@ -116,6 +117,7 @@
                                 <th scope="col" class="name">Dirección</th>
                                 <th scope="col">Oferta</th>
                                 <th scope="col">Método de Pago </th>
+                                <th scope="col" class="estado">Contacto</th>
                                 <th scope="col" class="estado">Aprobado</th>
                             </tr>
                         </thead>
@@ -129,6 +131,9 @@
             </div>
             </div>
         </section>
+        <div id="chatContainer" class="chat-container">
+
+        </div>
 
 
         <!-- Contacto -->
@@ -237,9 +242,12 @@
     </footer>
 
     <script src="js/peticiones.js " type="text/javascript "></Script>
+    <script src="js/chat.js"></script>
     <script src="js/main.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
-    <script> window.onload=consultarSolicitudes();</script>
+    <script>
+        window.onload = consultarSolicitudes();
+    </script>
 </body>
 
 </html>

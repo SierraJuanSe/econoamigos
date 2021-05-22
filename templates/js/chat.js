@@ -13,17 +13,18 @@ $(document).on('click', '.close-chat', function() {
 });
 
 //Enviar
-$(document).on('click', '.btn-send', function() {
-    sendMsg(this)
-});
-
-//Enter para enviar documento
-$(document).on('keypress', '.ipt-chat', function(e) {
-    if (e.keyCode == 13 && !e.shiftKey) {
-        e.preventDefault();
-        sendMsg(this)
-    }
-});
+function sendMessage(codCompra) {
+    $("#btnSend" + codCompra).click(async function() {
+        sendMsg(codCompra)
+    });
+    //Enter para enviar documento
+    $('#inputchat' + codCompra).keypress(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            sendMsg(codCompra);
+        }
+    });
+}
 
 /* Funciones para las funciones de click */
 
@@ -41,8 +42,8 @@ function closeChat(chat_page) {
 }
 
 //Enviar Mensaje
-function sendMsg(btn) {
-    let info = getInfoMsgOut(btn)
+function sendMsg(codCompra) {
+    let info = getInfoMsgOut(codCompra)
     if (info.msg != '') {
         drawMsgOut(info)
             // websocket.send(JSON.stringify(info))
@@ -50,83 +51,73 @@ function sendMsg(btn) {
 }
 
 //Recolectar Datos
-function getInfoMsgOut(btn) {
+function getInfoMsgOut(codCompra) {
     //const USUARIO = JSON.parse(readCookie('token'));
-    let msg = $(btn).parent().children('ipt-cha').val();
-    let chat = $(btn).parent().parent().parent().parent().attr('id');
+    let msg = $('#inputchat' + codCompra).val();
+    let chat = "chat" + codCompra;
     let today = new Date()
     let time = today.getHours() + ':' + today.getMinutes();
 
     info = {
-        type: 'msg',
-        from: "Val", ///JSON.parse(USUARIO['nombre']), //Ajustar
-        to: chat,
-        msg: msg,
+        destinatario: "1000257419",
+        Usuario_idUsuario: "1010029624",
+        desMensaje: msg,
+        Compra_codCompra: codCompra,
         time: time
     }
-    $(btn).parent().children('.ipt-chat').val('')
+    $('#inputchat' + codCompra).val('');
     console.log(info)
     return info
 }
 
-//Pintar en pantalla el mensaje
+//Pintar en pantalla el mensaje del emisor
 function drawMsgOut(info) {
-    let chatPage = $('#' + info.to).find('.msg-page');
+    let chatPage = $('#chat' + info.Compra_codCompra).find('.msg-page');
     let outgoingMSg = '<div class="outgoing-chats"><div class="outgoing-msg-inbox">\
-                    <p>' + info.msg + '</p><span class="time-send">' + info.time + '</span></div></div>'
+                    <p>' + info.desMensaje + '</p><span class="time-send">' + info.time + '</span></div></div>'
     chatPage.append(outgoingMSg).parent().animate({ scrollTop: chatPage.prop("scrollHeight") }, 500);
 }
 
 /* Funciones para agregar un nuevo chat */
 
-//Abrir pestaña nueva
-function openChat(codcompra, grupo) {
-    let chatCont = $('#chatContainer')
-
-    if (chatsActivos.includes(grupo)) {
-        $('#chat' + grupo).show()
-    } else {
-        chatCont.append(drawChat(codcompra, grupo))
-        chatsActivos.push(grupo)
-    }
-}
-
 //Pintar pestaña de nuevo chat
 function drawChat(codcompra, grupo) {
-    let chatDiv = '<div class="chati"><div id="' + grupo + '" class="chat" value>' +
+    let chatDiv = '<div class="chati" ><div id="chat' + codcompra + '"  style= "display: none;" class="chat" value>' +
         '<div class="msg-header"><div class="msg-header-name"><h4>' + grupo + '</h4></div>' +
         '<div class="header-icons">' +
         '<i class="min-chat fas fa-minus"></i><i class="close-chat fas fa-times"></i></div></div>' +
         '<div class="chat-page">' +
         '<div class="msg-inbox">' +
-        '<div class="chats"><div class="msg-page"></div></div></div>' +
+        '<div class="chats"><div class="msg-page" id="msginbox' + codcompra + '"></div></div></div>' +
         '<div class="msg-bottom">' +
         '<div class="input-group">' +
-        '<textarea type="text" class="form-control ipt-chat' + codcompra + '" placeholder="Escribe un mensaje" rows="1"></textarea>' +
-        '<div class="input-group-append btn-send">' +
+        '<textarea type="text" class="form-control ipt-chat" id="inputchat' + codcompra + '"  placeholder="Escribe un mensaje" rows="1"></textarea>' +
+        '<div class="input-group-append btn-send" id="btnSend' + codcompra + '">' +
         '<span class="input-group-text"><i class="fab fa-telegram-plane fa-lg"></i></span>' +
         '</div></div></div></div></div></div>'
     return chatDiv
 }
+
 /* Funciones para la respuesta*/
-/*
+
+//Funcion de Pruebas
 function reciveMsg(mensaje) {
-    let msg = JSON.parse(mensaje.data);
-
-    if (msg.type === 'msg') {
-        if (msg.from === actualUsuario.nombre) {
-            drawMsgOut(msg)
-        } else {
-            drawRecivedMsg(msg);
-        }
+    msg = {
+        codMensaje: 1,
+        destinatario: "1000257419",
+        Usuario_idUsuario: "1010029624",
+        desMensaje: "Te amo",
+        Compra_codCompra: "003",
+        time: "21:35"
     }
-}
-*/
-function drawRecivedMsg(msg) {
-    let chatPage = $('#' + msg.to).find('.msg-page');
-    let recivedMsg = '<div class="received-chats"><div class="received-msg-inbox">\
-    <p><span class="sender">' + msg.from + '</span>' + msg.msg + '</p>\
-    <span class="time-send">' + msg.time + '</span></div></div>'
+    drawRecivedMsg(msg);
 
+}
+
+function drawRecivedMsg(msg) {
+    let chatPage = $('#chat' + msg.Compra_codCompra).find('.msg-page');
+    let recivedMsg = '<div class="received-chats"><div class="received-msg-inbox">\
+      <p>' + msg.desMensaje + '</p>\
+      <span class="time-send">' + msg.time + '</span></div></div>'
     chatPage.append(recivedMsg).parent().animate({ scrollTop: chatPage.prop("scrollHeight") }, 500);
 }
