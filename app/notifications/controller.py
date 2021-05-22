@@ -21,17 +21,17 @@ def userInfo(data):
 
 @socketio.on('connect', namespace='/chat')
 def connect():
-  print('se conecto a chat')
+  pass
 
 @socketio.on('disconnect', namespace='/chat')
 def disconnect():
-  print('se desconecto de chat')
+  pass
 
 
 @socketio.on('join', namespace='/chat')
 def join(data):
   data['newUser'] = request.sid
-  print('Se une a la sala')
+  print('Se une a la sala', data)
   join_room(data['room'])
   emit('join', data, to=data['room'], namespace='/chat')
 
@@ -45,5 +45,6 @@ def leave(data):
 
 @socketio.on('message', namespace='/chat')
 def message(data):
-  print('Se une a la sala')
+  print(data)
   emit('message', data, to=data['room'], include_self=False, namespace='/chat')
+  emit('chatNotification', data, to=data['room'], include_self=False, namespace='/chat')

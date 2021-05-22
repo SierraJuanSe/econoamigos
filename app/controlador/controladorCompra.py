@@ -104,3 +104,4 @@ def notificateCompra(vendor, producto):
         horaComentario = str(aux.hour) + ":" + str(aux.minute) + ":" + str(aux.second)
         p['hora'] = horaComentario
         socketio.emit('buyNotification', {'sid':onlineUser[0], 'status':'newNotification', 'info': p}, to=onlineUser[0])
+

@@ -46,7 +46,7 @@ function sendMsg(codCompra) {
     let info = getInfoMsgOut(codCompra)
     if (info.msg != '') {
         drawMsgOut(info)
-            // websocket.send(JSON.stringify(info))
+        socketChat.emit('message', info)
     }
 }
 
@@ -54,7 +54,6 @@ function sendMsg(codCompra) {
 function getInfoMsgOut(codCompra) {
     //const USUARIO = JSON.parse(readCookie('token'));
     let msg = $('#inputchat' + codCompra).val();
-    let chat = "chat" + codCompra;
     let today = new Date()
     let time = today.getHours() + ':' + today.getMinutes();
 
@@ -63,10 +62,10 @@ function getInfoMsgOut(codCompra) {
         Usuario_idUsuario: "1010029624",
         desMensaje: msg,
         Compra_codCompra: codCompra,
+        room : 'room'+codCompra,
         time: time
     }
     $('#inputchat' + codCompra).val('');
-    console.log(info)
     return info
 }
 
@@ -121,3 +120,11 @@ function drawRecivedMsg(msg) {
       <span class="time-send">' + msg.time + '</span></div></div>'
     chatPage.append(recivedMsg).parent().animate({ scrollTop: chatPage.prop("scrollHeight") }, 500);
 }
+
+socketChat.on('message', drawRecivedMsg)
+
+socketChat.on('chatNotification', (data) => {
+    console.log(data);
+    mostrarNotificaciones(data.time, "tienes un nuevo mensaje");
+    mostrarAlertas(data.time, "tienes un nuevo mensaje");
+});
