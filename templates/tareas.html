@@ -3,10 +3,12 @@
 
 <head>
     <title>Econoamigos</title>
+    <link rel="stylesheet" href="css/styleChat.css">
     <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
     <link rel="stylesheet" type="text/css" href="css/styleBusqueda.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
@@ -101,8 +103,8 @@
         <section class="contenedor">
 
             <h2 id="Servicios" class="titulos">Productos o Servicios que has adquirido</h2>
-            <p class="lead text-muted">A continuación, podrás ver todas las ofertas que has comprado con su respectivas características. Solo debes presionar el siguiente botón. </p>
-            <button id="Compras" type="button" class="btn">Consultar</button>
+            <p class="lead text-muted">A continuación, podrás ver todas las ofertas que has comprado con su respectivas características. </p>
+            <!--<button id="Compras" type="button" class="btn">Consultar</button>-->
             <div class="Servicios">
 
                 <div class="compras">
@@ -113,6 +115,9 @@
             </div>
             </div>
         </section>
+        <div id="chatContainer" class="chat-container">
+
+        </div>
 
 
         <!-- Contacto -->
@@ -220,9 +225,13 @@
             </center>
         </div>
     </footer>
+
+
     <script src="js/peticiones.js " type="text/javascript "></Script>
+    <script src="js/chat.js"></script>
     <script src="js/main.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
+    <script> window.onload=consultarCompras();</script>
 </body>
 
 </html>

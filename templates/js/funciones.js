@@ -41,7 +41,9 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '">Ver más...</button>' + '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
+        '<div class="container"><div class="row"><div class="col">' + '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '"><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
+        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>' +
+        '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + codcompra + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
         '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' +
@@ -56,7 +58,60 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
         '</div></div></div></div></div></div></div></div>';
 
     $("#compras").append(ofertasC);
+    var temp = drawChat(codcompra, nombre);
+    $('#chatContainer').append(temp);
     enviarValoracion(codOferta)
+    abrirChat(codcompra, nombre);
+    sendMessage(codcompra);
+
+    mensajetemp = [{
+        codMensaje: 1,
+        destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+        Usuario_idUsuario: "1010029624",
+        desMensaje: "Te amo",
+        Compra_codCompra: "003",
+        time: "21:35"
+    }, {
+        codMensaje: 2,
+        destinatario: "1010029624",
+        Usuario_idUsuario: "1000257419",
+        desMensaje: "Yo más",
+        Compra_codCompra: "003",
+        time: "21:37"
+    }, {
+        codMensaje: 3,
+        destinatario: "1000257419",
+        Usuario_idUsuario: "1010029624",
+        desMensaje: "Que haces?",
+        Compra_codCompra: "003",
+        time: "21:40"
+    }, {
+        codMensaje: 4,
+        destinatario: "1010029624",
+        Usuario_idUsuario: "1000257419",
+        desMensaje: "Extrañarte",
+        Compra_codCompra: "003",
+        time: "21:43"
+    }]
+    mostrarMensajes(mensajetemp)
+}
+
+function abrirChat(codcompra, nombre) {
+    $("#verchat" + codcompra).click(async function() {
+        $('#chat' + codcompra).show()
+    });
+}
+
+function mostrarMensajes(mensajes) {
+    for (const mensaje of mensajes) {
+        //Aqui se va a llmar a la cookie para validar la posición
+        console.log(mensaje['codMensaje'])
+        if (mensaje['destinatario'] != "1000257419") {
+            drawMsgOut(mensaje)
+        } else {
+            drawRecivedMsg(mensaje)
+        }
+    }
 }
 
 function enviarValoracion(codOferta) {
@@ -144,12 +199,48 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         }
         solO = "";
         solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
-            '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+            '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
+            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
             '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
+        var temp = drawChat(codCompra, oferta);
+        $('#chatContainer').append(temp);
+        abrirChat(codCompra, oferta);
+        sendMessage(codCompra);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
+
+        mensajetemp = [{
+            codMensaje: 1,
+            destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+            Usuario_idUsuario: "1010029624",
+            desMensaje: "Te amo",
+            Compra_codCompra: "003",
+            time: "21:35"
+        }, {
+            codMensaje: 2,
+            destinatario: "1010029624",
+            Usuario_idUsuario: "1000257419",
+            desMensaje: "Yo más",
+            Compra_codCompra: "003",
+            time: "21:37"
+        }, {
+            codMensaje: 3,
+            destinatario: "1000257419",
+            Usuario_idUsuario: "1010029624",
+            desMensaje: "Que haces?",
+            Compra_codCompra: "003",
+            time: "21:40"
+        }, {
+            codMensaje: 4,
+            destinatario: "1010029624",
+            Usuario_idUsuario: "1000257419",
+            desMensaje: "Extrañarte",
+            Compra_codCompra: "003",
+            time: "21:43"
+        }]
+        mostrarMensajes(mensajetemp)
     }
 }
 
@@ -168,7 +259,7 @@ function accionesBtnRechazar(codCompra) {
                     console.log(result)
                     if (result) {
                         $('#exampleModal' + codCompra).modal('hide');
-                        $('#filasol'+codCompra).remove()
+                        $('#filasol' + codCompra).remove()
                     }
 
                 } else {
@@ -184,16 +275,50 @@ function accionesBtnRechazar(codCompra) {
 
 //Mostrar todas las  ofertas
 function mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
+
     $("#regresar").hide();
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + id + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="descripcionOferta">' + descripcion + '</h6>' + '<p class="card-text" id="precioOferta">' + precio + '</p>' +
         '<button id="BotonVerDetalles' + id + '" type="button" class="card-link" >Ver detalles</button>'
+
     $("#ofertas").append(ofertasC);
     botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas);
 }
+
+
+function seleccionPago(id) {
+    $("#escogerMetodoPago" + id).click(async function() {
+        var e = document.getElementById("cars" + id);
+        var e2 = document.getElementById("cars2" + id);
+        var value2 = e2.options[e2.selectedIndex].value;
+        var value = e.options[e.selectedIndex].value;
+        console.log(value)
+
+        if (value == "seleccion") {
+            swal("Por favor, seleccione una opcion de pago", {
+                icon: "error"
+            });
+        }
+        if (value == "economonedas") {
+            swal("Se selecciono correctamente", {
+                icon: "success"
+            });
+            $('.MetodosDepago2' + id).modal('hide');
+        }
+        if (value == "oferta") {
+            $('.MetodosDepago2' + id).modal('show');
+            if (value2 != "seleccion") {
+                console.log(value2)
+            }
+        }
+    });
+}
+             
 function botonVolver(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
     $("#BotonVolver" + id).click(async function() {
+         var puntuacion = await consultarPromedioValoracion(oferta['id']);
+         var save = await ConsultarComentarios(oferta['id']);
          mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) 
     });
     
@@ -227,6 +352,7 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcionComentario'] + '</p>';
             if (coment['respuesta'] != "") {
                 dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuestaComentario'] + '</p>'
+
             }
             console.log("#myComment" + id);
         }
@@ -329,9 +455,9 @@ function seleccionPago(id) {
 }
 
 function cerrarModal(id) {
-    $('#cerrarMod'+ id).click(async function() {
-        $('#myComment' + id ).modal('hide');
-        $('.MetodosDepago2'+id).modal('hide');
+    $('#cerrarMod' + id).click(async function() {
+        $('#myComment' + id).modal('hide');
+        $('.MetodosDepago2' + id).modal('hide');
 
     });
 
@@ -379,8 +505,8 @@ function botonCrearCompra(idOferta, precio) {
 
 
     $("#BotonComprar" + idOferta).click(async function() {
-        var e = document.getElementById("cars"+idOferta);
-        var e2 = document.getElementById("cars2"+idOferta);
+        var e = document.getElementById("cars" + idOferta);
+        var e2 = document.getElementById("cars2" + idOferta);
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value2)
@@ -397,7 +523,7 @@ function botonCrearCompra(idOferta, precio) {
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
 
-              console.log(value);
+                console.log(value);
                 var save = await crearCompra(idOferta, precio, null);
                 if (save) {
                     $("#myModal" + idOferta).modal("hide");
@@ -412,11 +538,11 @@ function botonCrearCompra(idOferta, precio) {
             } else if ((USUARIO['moneda'] < precio)) {
                 swal("Error", "No tienes suficiente saldo para adquirir este producto", "error");
             }
-            $('.MetodosDepago2'+idOferta).modal('hide');
+            $('.MetodosDepago2' + idOferta).modal('hide');
         }
         if (value == "oferta") {
             console.log(value2)
-            $('.MetodosDepago2'+idOferta).modal('show');
+            $('.MetodosDepago2' + idOferta).modal('show');
             if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
@@ -517,19 +643,19 @@ function mostrarAlertas(hora, concepto) {
     $('.toast').toast('show');
 }
 
-if(window.location.href .includes('confRecarga.html')) {
+if (window.location.href.includes('confRecarga.html')) {
     console.log("Si");
     $('#BotonConsultarR').empty()
     var USUARIO = JSON.parse(readCookie('token'));
-    if(USUARIO!=null && USUARIO!=""){
+    if (USUARIO != null && USUARIO != "") {
         referido = USUARIO["codReferido"]
         const mostrarcodigo = (codigo) => {
             $("#micodreferido").append(codigo);
-          }
-          mostrarcodigo(referido);
-    }else{
-         swal("No se pudo validar el código", {
-                    icon: "error"
-                });
+        }
+        mostrarcodigo(referido);
+    } else {
+        swal("No se pudo validar el código", {
+            icon: "error"
+        });
     }
-} 
+}
