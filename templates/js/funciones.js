@@ -373,39 +373,42 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
 
         detalles = "";
         detalles =
-    
-             '<div class="contenedores">' +
+    '<div class="contenedores">' +
             '<div class="caja">'+ nameimagen +
             '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
             '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
-            '<h6 id="lugar" class="cars0">Lugar:' + lugar + '</h6>' + 
+            '<h6 id="lugarmodOfer" class="cars0">Lugar:' + lugar + '</h6>' + 
             '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
-            '<h6 id="myComment" class="cars0">Comentarios: ' + comentarios + '</h6>' + 
             '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
             '</div>'+
             '<div class="caja">'+
             '<form class="MetodosDepago1">' +
             '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
-            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
+            '<select class="cars" name="cars" id="cars' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
-            '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
+            '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
             '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
-            '</select>' +
+            '</select>' + 
+            '<a id="escogerMetodoPago' + id + '" type="button" class="MetodoPago" >M.Pago</a>' + 
             '</form>' + 
-            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
+            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" style="display:none;" >' +
             '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
             '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
-            
             '</select>' + 
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
             '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>'+'<br><br>'+
             '</div>' + 
             '</div>' + 
-            '</div>' + 
-            
+            '<div class="contenedores">'+
+            '<h6>Comentarios:'+'</h6>' +
+            '<div class="form-group ">' + 
+            '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + 
+            '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + 
+            '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
+            '</div>' + '</div>'+ '</div>'
             '</div></div></div></div></div></div></div>';
         
         $("#ofertas").empty();
