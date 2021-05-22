@@ -286,14 +286,20 @@ footer {
 }
 
 .contenedores {
-    align-items: center;
-    position: center;
-    width: 200%;
-    max-width: 2000px;
-    padding-left: 100%;
-    margin: 50px;
-    justify-content: center;
-    
+    margin:3px;
+    padding-left: 165px;
+}
+.caja{
+    display: table-cell;
+    padding: 10px;
+}
+.caja:nth-child(1){
+    text-align: left;
+    margin-bottom: 15px;
+}
+.caja:nth-child(2){
+    text-align: left;
+    margin-bottom: 200px;
 }
 
 .Servicio,
@@ -877,9 +883,12 @@ section {
         margin: auto;
     }
     .contenedores{
-        padding: 0%;
-        width: 100%;
+        width: 700px;
+        padding-right: 10px;
     }
+    .caja{
+        line-height: 30px;
+    }  
     .Textos {
         width: 90%;
     }

@@ -248,16 +248,19 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
         detalles = "";
         detalles =
     
-            '<div class="contenedores">' + nameimagen + 
-            '<h3 id="nombremodOfe" class="title">' + nombre + '</h3><br>'+
+             '<div class="contenedores">' +
+            '<div class="caja">'+ nameimagen +
+            '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
             '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
             '<h6 id="lugar" class="cars0">Lugar:' + lugar + '</h6>' + 
             '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
             '<h6 id="myComment" class="cars0">Comentarios: ' + comentarios + '</h6>' + 
             '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
+            '</div>'+
+            '<div class="caja">'+
             '<form class="MetodosDepago1">' +
-            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label>' + 
+            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
             '<select class="cars" name="cars" id="cars' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
             '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
@@ -269,16 +272,15 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
             '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
-            
             '</select>' + 
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
             '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>'+'<br><br>'+
             '</div>' + 
             '</div>' + 
+            '</div>' + 
             
             '</div></div></div></div></div></div></div>';
-
         
         $("#ofertas").empty();
         $("#regresar").show();
