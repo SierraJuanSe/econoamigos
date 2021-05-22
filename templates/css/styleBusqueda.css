@@ -286,6 +286,23 @@ footer {
     margin: auto;
 }
 
+.contenedores {
+    margin:3px;
+    padding-left: 165px;
+}
+.caja{
+    display: table-cell;
+    padding: 10px;
+}
+.caja:nth-child(1){
+    text-align: left;
+    margin-bottom: 15px;
+}
+.caja:nth-child(2){
+    text-align: left;
+    margin-bottom: 200px;
+}
+
 .Servicio,
 .Servicio2 {
     width: 50%;
@@ -866,6 +883,13 @@ section {
         align-items: center;
         margin: auto;
     }
+    .contenedores{
+        width: 700px;
+        padding-right: 10px;
+    }
+    .caja{
+        line-height: 30px;
+    }  
     .Textos {
         width: 90%;
     }

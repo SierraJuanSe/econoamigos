@@ -84,7 +84,7 @@ $("#Registrar").click(function() {
 
 
 
-if (window.location.href.includes('registro.html')){
+if (window.location.href.includes('registro.html') || window.location.href.includes('confData.html')){
     console.log("Si");
     $('#barrios').empty()
     $('#barrios').append('<option value=0>Selecciona tu barrio</option>')
