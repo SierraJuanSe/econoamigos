@@ -118,7 +118,7 @@
                         </tr>
 
                     </table>
-                    <button id="consultarHistorialOfertas" type="button" class="btn">Consultar</button>
+                    <!--<button id="consultarHistorialOfertas" type="button" class="btn">Consultar</button>-->
                 </div>
             </div>
             </div>
@@ -230,6 +230,10 @@
     <script src="js/main.js" type="text/javascript"></Script>
     <script src="js/funciones.js" type="text/javascript"></Script>
     <script src="js/animaciones.js" type="text/javascript"></Script>
+     <script> window.onload=swal("Recuerda que solo puedes ver en tu historial las ofertas que ya han sido aprobadas. Si tienes alguna en proceso puedes verla desde Solicitudes", {
+        icon: "warning"
+    });
+    consultarSolicitudes();</script>
 </body>
 
 </html>
