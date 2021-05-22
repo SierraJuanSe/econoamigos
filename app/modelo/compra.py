@@ -24,31 +24,18 @@ class Compra:
         return r
 
     def consultar_ofertas_compradas(self):
-        sql = f"select *, Compra.codCompra from Oferta,Compra where Oferta.codOferta=Compra.Oferta_codOferta and Compra.Usuario_idUsuario='{self.usuario.id}';"
-        conn = Conector(DBINFO['host'], DBINFO['user'], DBINFO['password'], DBINFO['database'])
-        conn.connect()
-        result = conn.execute_query(sql)
-        res = []
-        for fila in result:
-            r = {}
-            r['codOferta'] = fila[0]
-            r['tipo'] = fila[1]
-            r['nombreOferta'] = fila[2]
-            r['descripcion'] = fila[3]
-            r['precio'] = fila[4]
-            r['estado'] = fila[5]
-            r['lugar'] = fila[6]
-            r['imagen'] = fila[7]
-            r['cantidad'] = fila[8]
-            r['codCompra'] = fila[-1]
-            res.append(r)
-        conn.close()
-        return res
+        sql = """select codOferta, Tipo as tipo, nombreOferta, descripcionOferta as descripcion, precioOferta as precio, precioOferta as precio, 
+        lugarServicio as lugar, imagenProducto as imagen, cantidadProducto as cantidad, Oferta.Usuario_idUsuario as destinatario, Compra.codCompra as codCompra
+        from Oferta,Compra where Oferta.codOferta=Compra.Oferta_codOferta and Compra.Usuario_idUsuario=%s;"""
+        cc = Connection().getCursor("DictCursor")
+        cc.execute(sql, (self.usuario.id, ))
+        cc.close()
+        return cc.fetchall()
 
     def consultar_ofertas_vendidas(self):
         # Consultar Quienes realizaron las compras de los Productos realizados por el usuario
         query = "SELECT Compra.codCompra,(select nombreOferta FROM Oferta where codOferta=Compra.ofertaCambio) as nombreOfertaCambio,\
-            Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,\
+            Usuario.idUsuario as destinatario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,\
             Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra,Compra.precioCompra\
             FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and \
             Oferta.Usuario_idUsuario=%s) INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario)" 
