@@ -46,5 +46,7 @@ def leave(data):
 @socketio.on('message', namespace='/chat')
 def message(data):
   print(data)
+  # llamar modelo comentario
+  # llamar funcion insertart mensaje para guardar el mesaje en la bae de datos
   emit('message', data, to=data['room'], include_self=False, namespace='/chat')
   emit('chatNotification', data, to=data['room'], include_self=False, namespace='/chat')
