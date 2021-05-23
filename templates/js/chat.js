@@ -129,7 +129,7 @@ function drawRecivedMsg(msg) {
 socketChat.on('message', drawRecivedMsg)
 
 socketChat.on('chatNotification', (data) => {
-    console.log(data);
+    $("#Alertas").empty();
     mostrarNotificaciones(data.time, "tienes un nuevo mensaje");
     mostrarAlertas(data.time, "tienes un nuevo mensaje");
 });

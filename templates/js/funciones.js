@@ -204,7 +204,8 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         solO = "";
         solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
             '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
-            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td></tr>';
+            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
+            '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
         var temp = drawChat(codCompra, oferta);
@@ -262,7 +263,6 @@ function accionesBtnRechazar(codCompra) {
                     console.log(result)
                     if (result) {
                         $('#exampleModal' + codCompra).modal('hide');
-                        $('#filasol' + codCompra).remove()
                     }
 
                 } else {
@@ -340,7 +340,7 @@ function botonVolver(id) {
     }*/
 }
 function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
-    
+   
     $("#BotonVerDetalles" + id).click(async function() {
         var dibujarComment = "";
         var dibujarPunt = "";
@@ -418,6 +418,7 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
         $("#ofertas").hide();
         $("#regresar").show();
         $("#regresar").append(detalles);
+        $('.MetodosDepago2'+id).hide();
         botonVolver(id);
         botonCrearCompra(id, precio);
         botonEnviarComentario(id);
@@ -444,9 +445,6 @@ function seleccionPago(id) {
         $('.MetodosDepago2'+id).hide();
     }
     if (value == "economonedas") {
-        swal("Se selecciono correctamente", {
-            icon: "success"
-        });
         $('.MetodosDepago2'+id).hide();
     }
     if (value == "oferta") {
@@ -485,7 +483,7 @@ function botonEnviarComentario(id) {
     $("#BotonEnviarComentario" + id).click(async function() {
         if ($("#descripcionComent" + id).val() != "") {
             commentN = $("#descripcionComent" + id).val();
-
+             console.log(id)
             save = await insertarComentario(id, commentN);
             if (!save) {
                 swal("Por favor, Intenta más tarde", {
