@@ -763,6 +763,38 @@ async function rechazarSolicitud(codCompra) {
     }
 }
 
+async function consultarMensajes(cod) {
+    const USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "idCompra":cod
+    }
+    console.log(cod)
+console.log(data);
+    try {
+        result = await $.ajax({
+            url: url + "/consultarMensajes",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result)
+            mostrarMensajes(result.info)
+        } else {
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+            console.log(result.status)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+
+
+    return true;
+}
+
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
 }
@@ -789,6 +821,6 @@ socket.on('buyNotification', (data) => {
     console.log(concepto);
     mostrarNotificaciones(data.info.hora, concepto);
     mostrarAlertas(data.info.hora, concepto);
-
+    
     // aca se llama a la funcion que dibuja la notificacion
 })

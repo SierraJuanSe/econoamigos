@@ -23,7 +23,7 @@ function actualizarMonedaVista(newMoneda) {
     $("#saldoUser").append(' ' + newMoneda.toString());
 }
 
-function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
+function mostrarCompras(codcompra,dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
     if (tipo == "Producto") {
         namelugar = "";
         nameimagen = "";
@@ -62,7 +62,7 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     $('#chatContainer').append(temp);
     enviarValoracion(codOferta)
     abrirChat(codcompra, nombre);
-    sendMessage(codcompra);
+    sendMessage(codcompra,dest);
     socketChat.emit('join', {room: 'room'+codcompra})
 
     mensajetemp = [{
@@ -97,8 +97,9 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     mostrarMensajes(mensajetemp)
 }
 
-function abrirChat(codcompra, nombre) {
+async function abrirChat(codcompra, nombre) {
     $("#verchat" + codcompra).click(async function() {
+         var pet = await consultarMensajes(codcompra)  
         $('#chat' + codcompra).show()
     });
 }
@@ -106,8 +107,9 @@ function abrirChat(codcompra, nombre) {
 function mostrarMensajes(mensajes) {
     for (const mensaje of mensajes) {
         //Aqui se va a llmar a la cookie para validar la posición
-        console.log(mensaje['codMensaje'])
-        if (mensaje['destinatario'] != "1000257419") {
+        var USUARIO = JSON.parse(readCookie('token'));
+
+        if (mensaje['destinatario'] != USUARIO['id']) {
             drawMsgOut(mensaje)
         } else {
             drawRecivedMsg(mensaje)
@@ -208,40 +210,40 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         var temp = drawChat(codCompra, oferta);
         $('#chatContainer').append(temp);
         abrirChat(codCompra, oferta);
-        sendMessage(codCompra);
+        sendMessage(codCompra,id);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
         socketChat.emit('join', {room: 'room'+codCompra})
-        mensajetemp = [{
-            codMensaje: 1,
-            destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-            Usuario_idUsuario: "1010029624",
-            desMensaje: "Te amo",
-            Compra_codCompra: "003",
-            time: "21:35"
-        }, {
-            codMensaje: 2,
-            destinatario: "1010029624",
-            Usuario_idUsuario: "1000257419",
-            desMensaje: "Yo más",
-            Compra_codCompra: "003",
-            time: "21:37"
-        }, {
-            codMensaje: 3,
-            destinatario: "1000257419",
-            Usuario_idUsuario: "1010029624",
-            desMensaje: "Que haces?",
-            Compra_codCompra: "003",
-            time: "21:40"
-        }, {
-            codMensaje: 4,
-            destinatario: "1010029624",
-            Usuario_idUsuario: "1000257419",
-            desMensaje: "Extrañarte",
-            Compra_codCompra: "003",
-            time: "21:43"
-        }]
-        mostrarMensajes(mensajetemp)
+        // mensajetemp = [{
+        //     codMensaje: 1,
+        //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+        //     Usuario_idUsuario: "1010029624",
+        //     desMensaje: "Te amo",
+        //     Compra_codCompra: "003",
+        //     time: "21:35"
+        // }, {
+        //     codMensaje: 2,
+        //     destinatario: "1010029624",
+        //     Usuario_idUsuario: "1000257419",
+        //     desMensaje: "Yo más",
+        //     Compra_codCompra: "003",
+        //     time: "21:37"
+        // }, {
+        //     codMensaje: 3,
+        //     destinatario: "1000257419",
+        //     Usuario_idUsuario: "1010029624",
+        //     desMensaje: "Que haces?",
+        //     Compra_codCompra: "003",
+        //     time: "21:40"
+        // }, {
+        //     codMensaje: 4,
+        //     destinatario: "1010029624",
+        //     Usuario_idUsuario: "1000257419",
+        //     desMensaje: "Extrañarte",
+        //     Compra_codCompra: "003",
+        //     time: "21:43"
+        // }]
+        // mostrarMensajes(mensajetemp)
     }
 }
 

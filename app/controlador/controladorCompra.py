@@ -3,6 +3,7 @@ from app.modelo.usuario import Usuario
 from app.modelo.compra import Compra
 from app.modelo.transaccion import Transaccion
 from app.modelo.oferta import Oferta
+from app.modelo.mensajes import Mensaje
 from app.utils.formValidations import create_response
 from app.email.purchase_email import send_purchase_notification_email, send_sale_notification_email
 from flask import request, jsonify
@@ -95,6 +96,18 @@ def actualizarEstadoCompra():
         return {'status': 200, 'info':True, 'moneda': moneda}
     else:
         return {'status': 400, 'info':False}
+
+@bp.route('/consultarMensajes', methods=['POST'])
+def consultarMensajes():
+    msg = request.get_json()
+    comp = Compra(id=msg.get('idCompra'))
+    print(msg.get('idCompra'))
+    mes = Mensaje(compra=comp)
+    res=mes.consultarMensaje()
+    if res != []:
+        return {'status': 200, 'info': res}
+    else:
+        return {'status': 404}
 
 def notificateCompra(vendor, producto):
     onlineUser = list(filter(lambda i: int(onlineUsers[i]['id']) == int(vendor.id), onlineUsers.keys()))

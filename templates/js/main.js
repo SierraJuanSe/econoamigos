@@ -128,7 +128,7 @@ function traerCompras(compras) {
     $("#compras").empty();
     console.log(compras)
     for (const compra of compras) {
-        mostrarCompras(compra['codCompra'], compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen'], compra['codOferta']);
+        mostrarCompras(compra['codCompra'],compra['destinatario'],compra['nombreOferta'], compra['descripcion'], compra['tipo'], compra['precio'], compra['estado'], compra['lugar'], compra['imagen'], compra['codOferta']);
 
     }
 }
@@ -200,7 +200,7 @@ async function traerSolicitudes(solicitudes) {
         } else {
             metodo="Oferta";
         }
-        mostrarSolicitudes(solicitud['codCompra'], solicitud['idUsuario'], solicitud['nombreUsuario'], solicitud['apellidoUsuario'], solicitud['telefonoUsuario'], solicitud['direccion'], solicitud['nombreOferta'],metodo,solicitud['nombreOfertaCambio'], solicitud['estadoCompra']);
+        mostrarSolicitudes(solicitud['codCompra'], solicitud['destinatario'], solicitud['nombreUsuario'], solicitud['apellidoUsuario'], solicitud['telefonoUsuario'], solicitud['direccion'], solicitud['nombreOferta'],metodo,solicitud['nombreOfertaCambio'], solicitud['estadoCompra']);
     }
 }
 

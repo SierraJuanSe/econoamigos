@@ -1,6 +1,9 @@
 from flask import request
 from flask_socketio import emit, join_room, leave_room
 from app import socketio, onlineUsers
+from app.modelo.mensajes import Mensaje
+from app.modelo.usuario import Usuario
+from app.modelo.compra import Compra
 
 @socketio.on('connect')
 def connect():
@@ -46,7 +49,10 @@ def leave(data):
 @socketio.on('message', namespace='/chat')
 def message(data):
   print(data)
-  # llamar modelo comentario
-  # llamar funcion insertart mensaje para guardar el mesaje en la bae de datos
+  recepto=Usuario(id=data['destinatario'])
+  emiso=Usuario(id=data['Usuario_idUsuario'])
+  comp=Compra(id=data['Compra_codCompra'])
+  mensaje=Mensaje(mensaje=data['desMensaje'],receptor=recepto,emisor=emiso,compra=comp,hora=data['time'])
+  mensaje.insertarMensaje()
   emit('message', data, to=data['room'], include_self=False, namespace='/chat')
   emit('chatNotification', data, to=data['room'], include_self=False, namespace='/chat')

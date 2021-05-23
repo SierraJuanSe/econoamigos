@@ -1,6 +1,6 @@
 from app.utils.conector import Conector, DBINFO
 
-class Comentario:
+class Mensaje:
     def __init__(self, id =None, mensaje=None, receptor=None, emisor=None, compra=None, hora=None):
         self.id = id
         self.mensaje = mensaje
@@ -10,7 +10,8 @@ class Comentario:
         self.hora = hora
 
     def insertarMensaje(self):
-        sql = f'insert Into Mensaje values(null,{self.mensaje},{self.receptor.id},{self.emisor.id},{self.compra.id}, {self.hora});'
+        sql = f"insert Into Mensaje values(null,'{self.mensaje}','{self.receptor.id}','{self.emisor.id}',{self.compra.id},'{self.hora}');"
+        print(sql)
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -33,7 +34,7 @@ class Comentario:
             r1['destinatario'] = fila[2]
             r1['Usuario_idUsuario'] = fila[3]
             r1['Compra_codCompra'] = fila[4]
-            r1['Hora'] = fila[5]
+            r1['time'] = fila[5]
             r.append(r1)
         conn.close()
         return r
