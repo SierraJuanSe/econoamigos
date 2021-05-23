@@ -316,11 +316,11 @@ function seleccionPago(id) {
     });
 }
              
-function botonVolver(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
+function botonVolver(id) {
     $("#BotonVolver" + id).click(async function() {
-         var puntuacion = await consultarPromedioValoracion(oferta['id']);
-         var save = await ConsultarComentarios(oferta['id']);
-         mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) 
+        $("#salirO"+id).hide();
+        $("#ofertas").show();
+        $("#regresar").hide();
     });
     
   /*  $("#BotonVolver" + id).click(function () {
@@ -374,12 +374,12 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
 
         detalles = "";
         detalles =
-    '<div class="contenedores">' +
+    '<div id="salirO'+id+'"><div  class="contenedores">' +
             '<div class="caja">'+ nameimagen +
             '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
             '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
-            '<h6 id="lugarmodOfer" class="cars0">Lugar:' + lugar + '</h6>' + 
+            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' + 
             '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
             '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
             '</div>'+
@@ -410,12 +410,12 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + 
             '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
             '</div>' + '</div>'+ '</div>'
-            '</div></div></div></div></div></div></div>';
+            '</div></div></div></div></div></div></div></div>';
         
-        $("#ofertas").empty();
+        $("#ofertas").hide();
         $("#regresar").show();
         $("#regresar").append(detalles);
-        botonVolver(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas);
+        botonVolver(id);
         botonCrearCompra(id, precio);
         botonEnviarComentario(id);
         cerrarModal(id);    
