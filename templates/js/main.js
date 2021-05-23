@@ -381,7 +381,7 @@ async function traerHistorialOfertas(Ofertas) {
 
     $("#Ofertas").empty();
     titulos = "";
-    titulos = '<tr><th>Nombre </th> <th>Comprador</th><th>Ingreso</th></tr>';
+    titulos = '<tr><th>Codigo </th> <th>Oferta</th><th>Ingreso</th></tr>';
     $("#Ofertas").append(titulos);
 
     for (const Ofertones of Ofertas) {

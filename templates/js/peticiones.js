@@ -504,6 +504,7 @@ async function ModificarDatosUsuario(nombre, apellido, telefono, barrio, direcci
         "direccionUsuario": direccion
 
     };
+    console.log(data)
     try {
         result = await $.ajax({
             url: url + "/actualizarUsuario",
@@ -782,9 +783,7 @@ console.log(data);
             console.log(result)
             mostrarMensajes(result.info)
         } else {
-            swal("No se han encontrado coincidencias con tu búsqueda", {
-                icon: "error"
-            });
+
             console.log(result.status)
         }
     } catch (error) {
