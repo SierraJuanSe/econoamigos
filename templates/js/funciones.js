@@ -23,7 +23,7 @@ function actualizarMonedaVista(newMoneda) {
     $("#saldoUser").append(' ' + newMoneda.toString());
 }
 
-function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
+function mostrarCompras(codcompra,dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
     if (tipo == "Producto") {
         namelugar = "";
         nameimagen = "";
@@ -62,7 +62,7 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     $('#chatContainer').append(temp);
     enviarValoracion(codOferta)
     abrirChat(codcompra, nombre);
-    sendMessage(codcompra);
+    sendMessage(codcompra,dest);
     socketChat.emit('join', {room: 'room'+codcompra})
 
     mensajetemp = [{
@@ -97,8 +97,9 @@ function mostrarCompras(codcompra, nombre, descripcion, tipo, precio, estado, lu
     mostrarMensajes(mensajetemp)
 }
 
-function abrirChat(codcompra, nombre) {
+async function abrirChat(codcompra, nombre) {
     $("#verchat" + codcompra).click(async function() {
+         var pet = await consultarMensajes(codcompra)  
         $('#chat' + codcompra).show()
     });
 }
@@ -106,8 +107,9 @@ function abrirChat(codcompra, nombre) {
 function mostrarMensajes(mensajes) {
     for (const mensaje of mensajes) {
         //Aqui se va a llmar a la cookie para validar la posición
-        console.log(mensaje['codMensaje'])
-        if (mensaje['destinatario'] != "1000257419") {
+        var USUARIO = JSON.parse(readCookie('token'));
+
+        if (mensaje['destinatario'] != USUARIO['id']) {
             drawMsgOut(mensaje)
         } else {
             drawRecivedMsg(mensaje)
@@ -195,53 +197,53 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
                 '<div class="modal-body">Oferta: ' + pago + '</div>' +
                 '<div class="modal-footer">' +
                 '<button type="button" class="btn" id="rechazarOferta' + codCompra + '">Rechazar</button>' +
+                '<button type="button" class="btn" id="customCheck' + codCompra + '">Aceptar</button>' +
                 '</div></div></div></div>';
 
         }
         solO = "";
         solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
             '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
-            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
-            '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
+            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
         var temp = drawChat(codCompra, oferta);
         $('#chatContainer').append(temp);
         abrirChat(codCompra, oferta);
-        sendMessage(codCompra);
+        sendMessage(codCompra,id);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
         socketChat.emit('join', {room: 'room'+codCompra})
-        mensajetemp = [{
-            codMensaje: 1,
-            destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-            Usuario_idUsuario: "1010029624",
-            desMensaje: "Te amo",
-            Compra_codCompra: "003",
-            time: "21:35"
-        }, {
-            codMensaje: 2,
-            destinatario: "1010029624",
-            Usuario_idUsuario: "1000257419",
-            desMensaje: "Yo más",
-            Compra_codCompra: "003",
-            time: "21:37"
-        }, {
-            codMensaje: 3,
-            destinatario: "1000257419",
-            Usuario_idUsuario: "1010029624",
-            desMensaje: "Que haces?",
-            Compra_codCompra: "003",
-            time: "21:40"
-        }, {
-            codMensaje: 4,
-            destinatario: "1010029624",
-            Usuario_idUsuario: "1000257419",
-            desMensaje: "Extrañarte",
-            Compra_codCompra: "003",
-            time: "21:43"
-        }]
-        mostrarMensajes(mensajetemp)
+        // mensajetemp = [{
+        //     codMensaje: 1,
+        //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+        //     Usuario_idUsuario: "1010029624",
+        //     desMensaje: "Te amo",
+        //     Compra_codCompra: "003",
+        //     time: "21:35"
+        // }, {
+        //     codMensaje: 2,
+        //     destinatario: "1010029624",
+        //     Usuario_idUsuario: "1000257419",
+        //     desMensaje: "Yo más",
+        //     Compra_codCompra: "003",
+        //     time: "21:37"
+        // }, {
+        //     codMensaje: 3,
+        //     destinatario: "1000257419",
+        //     Usuario_idUsuario: "1010029624",
+        //     desMensaje: "Que haces?",
+        //     Compra_codCompra: "003",
+        //     time: "21:40"
+        // }, {
+        //     codMensaje: 4,
+        //     destinatario: "1010029624",
+        //     Usuario_idUsuario: "1000257419",
+        //     desMensaje: "Extrañarte",
+        //     Compra_codCompra: "003",
+        //     time: "21:43"
+        // }]
+        // mostrarMensajes(mensajetemp)
     }
 }
 
@@ -316,11 +318,11 @@ function seleccionPago(id) {
     });
 }
              
-function botonVolver(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
+function botonVolver(id) {
     $("#BotonVolver" + id).click(async function() {
-         var puntuacion = await consultarPromedioValoracion(oferta['id']);
-         var save = await ConsultarComentarios(oferta['id']);
-         mostrarOfertas(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) 
+        $("#salirO"+id).hide();
+        $("#ofertas").show();
+        $("#regresar").hide();
     });
     
   /*  $("#BotonVolver" + id).click(function () {
@@ -374,29 +376,29 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
 
         detalles = "";
         detalles =
-    '<div class="contenedores">' +
+    '<div id="salirO'+id+'"><div  class="contenedores">' +
             '<div class="caja">'+ nameimagen +
             '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
             '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
-            '<h6 id="lugarmodOfer" class="cars0">Lugar:' + lugar + '</h6>' + 
+            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' + 
             '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
             '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
             '</div>'+
             '<div class="caja">'+
             '<form class="MetodosDepago1">' +
             '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
-            '<select class="cars" name="cars" id="cars' + id + '">' + 
+            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
-            '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
+            '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
             '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
-            '</select>' + 
-            '<a id="escogerMetodoPago' + id + '" type="button" class="MetodoPago" >M.Pago</a>' + 
+            '</select>' +
             '</form>' + 
-            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" style="display:none;" >' +
+            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
             '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
             '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
+            
             '</select>' + 
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
@@ -410,12 +412,12 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + 
             '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
             '</div>' + '</div>'+ '</div>'
-            '</div></div></div></div></div></div></div>';
+            '</div></div></div></div></div></div></div></div>';
         
-        $("#ofertas").empty();
+        $("#ofertas").hide();
         $("#regresar").show();
         $("#regresar").append(detalles);
-        botonVolver(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas);
+        botonVolver(id);
         botonCrearCompra(id, precio);
         botonEnviarComentario(id);
         cerrarModal(id);    

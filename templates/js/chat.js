@@ -13,15 +13,18 @@ $(document).on('click', '.close-chat', function() {
 });
 
 //Enviar
-function sendMessage(codCompra) {
+function sendMessage(codCompra,id) {
     $("#btnSend" + codCompra).click(async function() {
-        sendMsg(codCompra)
+        console.log("A")
+        sendMsg(codCompra,id)
     });
     //Enter para enviar documento
     $('#inputchat' + codCompra).keypress(function(e) {
         if (e.which == 13) {
+            console.log("A")
+
             e.preventDefault();
-            sendMsg(codCompra);
+            sendMsg(codCompra,id);
         }
     });
 }
@@ -42,8 +45,8 @@ function closeChat(chat_page) {
 }
 
 //Enviar Mensaje
-function sendMsg(codCompra) {
-    let info = getInfoMsgOut(codCompra)
+function sendMsg(codCompra,id) {
+    let info = getInfoMsgOut(codCompra,id)
     if (info.msg != '') {
         drawMsgOut(info)
         socketChat.emit('message', info)
@@ -51,20 +54,21 @@ function sendMsg(codCompra) {
 }
 
 //Recolectar Datos
-function getInfoMsgOut(codCompra) {
+function getInfoMsgOut(codCompra,id) {
     //const USUARIO = JSON.parse(readCookie('token'));
     let msg = $('#inputchat' + codCompra).val();
     let today = new Date()
     let time = today.getHours() + ':' + today.getMinutes();
-
+    var USUARIO = JSON.parse(readCookie('token'));
     info = {
-        destinatario: "1000257419",
-        Usuario_idUsuario: "1010029624",
+        destinatario:id,
+        Usuario_idUsuario: USUARIO['id'],
         desMensaje: msg,
         Compra_codCompra: codCompra,
         room : 'room'+codCompra,
         time: time
     }
+    console.log(info)
     $('#inputchat' + codCompra).val('');
     return info
 }
@@ -114,6 +118,7 @@ function reciveMsg(mensaje) {
 }
 
 function drawRecivedMsg(msg) {
+
     let chatPage = $('#chat' + msg.Compra_codCompra).find('.msg-page');
     let recivedMsg = '<div class="received-chats"><div class="received-msg-inbox">\
       <p>' + msg.desMensaje + '</p>\
