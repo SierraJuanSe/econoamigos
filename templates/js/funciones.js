@@ -321,6 +321,7 @@ function seleccionPago(id) {
 function botonVolver(id) {
     $("#BotonVolver" + id).click(async function() {
         $("#salirO"+id).hide();
+	$("#salirOC"+id).hide();
         $("#ofertas").show();
         $("#regresar").hide();
     });
@@ -376,9 +377,9 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
 
         detalles = "";
         detalles =
-    '<div id="salirO'+id+'"><div  class="contenedores">' +
+    	    '<div id="salirO'+id+'"><div  class="contenedores">' +
+	    '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
             '<div class="caja">'+ nameimagen +
-            '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
             '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
             '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' + 
@@ -404,8 +405,8 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
             '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>'+'<br><br>'+
             '</div>' + 
-            '</div>' + 
-            '<div class="contenedores">'+
+            '</div>' + '</div>'+
+            '<div id="salirOC'+id+'"><div class="contenedors">'+
             '<h6>Comentarios:'+'</h6>' +
             '<div class="form-group ">' + 
             '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + 
