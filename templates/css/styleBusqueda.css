@@ -280,6 +280,7 @@ footer {
 }
 
 .contenedor {
+    align-content: center;
     padding: 40px;
     width: 100%;
     max-width: 1000px;
@@ -288,19 +289,13 @@ footer {
 
 .contenedores {
     margin:3px;
-    padding-left: 165px;
+    padding-left: 150px;
+    padding-top: 20px;
+    column-count: 2;
 }
-.caja{
-    display: table-cell;
-    padding: 10px;
-}
-.caja:nth-child(1){
-    text-align: left;
-    margin-bottom: 15px;
-}
-.caja:nth-child(2){
-    text-align: left;
-    margin-bottom: 200px;
+.contenedors{
+    margin:3px;
+    padding-left: 150px;
 }
 
 .Servicio,
@@ -884,8 +879,12 @@ section {
         margin: auto;
     }
     .contenedores{
-        width: 700px;
-        padding-right: 10px;
+        width: 500px;
+        padding-left: 5px;
+    }
+    .contenedors{
+        margin:3px;
+        padding-left: 2px;
     }
     .caja{
         line-height: 30px;
