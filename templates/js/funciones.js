@@ -197,14 +197,14 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
                 '<div class="modal-body">Oferta: ' + pago + '</div>' +
                 '<div class="modal-footer">' +
                 '<button type="button" class="btn" id="rechazarOferta' + codCompra + '">Rechazar</button>' +
+                '<button type="button" class="btn" id="customCheck' + codCompra + '">Aceptar</button>' +
                 '</div></div></div></div>';
 
         }
         solO = "";
         solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
             '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
-            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
-            '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
+            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
         var temp = drawChat(codCompra, oferta);
@@ -388,17 +388,17 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
             '<div class="caja">'+
             '<form class="MetodosDepago1">' +
             '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
-            '<select class="cars" name="cars" id="cars' + id + '">' + 
+            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
-            '<option value="economonedas" id="ButonEconomonedas">' + 'Economonedas' + '</option>' +
+            '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
             '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
-            '</select>' + 
-            '<a id="escogerMetodoPago' + id + '" type="button" class="MetodoPago" >M.Pago</a>' + 
+            '</select>' +
             '</form>' + 
-            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" style="display:none;" >' +
+            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
             '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
             '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
             '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
+            
             '</select>' + 
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
