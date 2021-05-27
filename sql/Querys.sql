@@ -18,13 +18,39 @@ select*from Oferta where nombreOferta Like '%celular%' and (cantidadProducto >0 
 
 #consultar las compras que le han realizado a un usuario
 SELECT Compra.codCompra,Compra.ofertacambio,Usuario.idUsuario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,
-oferta.codOferta,oferta.nombreOferta,Compra.estadoCompra
+oferta.codOferta,oferta.nombreOferta,EstadoCompra_codEstadoCompra, compra.fechaEnvio
 FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = oferta.codOferta and Oferta.Usuario_idUsuario='23789345')
 INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario);
 
-#Cambiar el estado de la compra (Aca ya se acualiza el saldo) 
-Update Compra SET Compra.estadoCompra=True where Compra.codCompra=3;
-Update Transaccion as t SET t.estadoTransaccion=True where t.Compra_codCompra=3;
+#Cabiar estados cuando se compra por economonedas
+#Cambiar el estado de la compra a confirmado por parte del vendedor
+Update Compra SET EstadoCompra_codEstadoCompra=2 where Compra.codCompra=4;
+
+
+#Cambiar el estado de la compra a enviado por parte del vendedor
+Update Compra SET EstadoCompra_codEstadoCompra=3,fechaEnvio=now() where Compra.codCompra=4;
+
+#Cambiar el estado de la compra a recibido por parte del comprador
+Update Compra SET EstadoCompra_codEstadoCompra=4 where Compra.codCompra=4;
+Update Transaccion as t SET t.estadoTransaccion=True where t.Compra_codCompra=4;
+
+
+#Cabiar estados cuando se compra por intercambio
+#Cambiar el estado de la compra a confirmado por parte del vendedor
+Update Compra SET EstadoCompra_codEstadoCompra=2 where Compra.codCompra=8;
+SET @dueno=(select Usuario_idUsuario from Oferta where codOferta=9);
+insert into Compra values(null,9,null,null,6,@dueno,2);
+
+#Cambiar el estado de la compra a enviado por parte del vendedor
+Update Compra SET EstadoCompra_codEstadoCompra=3,fechaEnvio=now() where Compra.codCompra=8;
+#Lo mismo para la otra compra
+
+#Cambiar el estado de la compra a recibido por parte del comprador
+Update Compra SET EstadoCompra_codEstadoCompra=4 where Compra.codCompra=8;
+Update Transaccion as t SET t.estadoTransaccion=True where t.Compra_codCompra=8;
+#Lo mismo para la otra compra
+
+
 
 #Consultar las transacciones de un Usuario 
 select*from Transaccion where Usuario_idUsuario='1002549404'; 

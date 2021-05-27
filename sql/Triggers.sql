@@ -22,18 +22,28 @@ DELIMITER $$
 CREATE TRIGGER ActualizarMoneda AFTER UPDATE ON Transaccion
 FOR EACH ROW
 BEGIN
-IF old.conceptoTransaccion = 'Compra' THEN
-	update Usuario
-	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario-old.valorTransaccion
-	where Usuario.idUsuario=old.Usuario_idUsuario;
-
-   ELSEIF old.conceptoTransaccion = 'Ingreso' THEN
+IF  old.conceptoTransaccion = 'Ingreso' THEN
 	update Usuario
 	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario+old.valorTransaccion
 	where Usuario.idUsuario=old.Usuario_idUsuario;
    END IF;
 END$$
 DELIMITER ;
+
+
+#cuando se inserte la transaccion de compra
+DELIMITER $$
+CREATE TRIGGER ActualizarMonedaInsercion AFTER insert ON Transaccion
+FOR EACH ROW
+BEGIN
+IF new.conceptoTransaccion = 'Compra' THEN
+	update Usuario
+	set Usuario.totalMonedaUsuario=Usuario.totalMonedaUsuario-new.valorTransaccion
+	where Usuario.idUsuario=new.Usuario_idUsuario;
+   END IF;
+END$$
+DELIMITER ;
+
 
 #cuando se haga una compra reducir la cantidad
 DELIMITER $$

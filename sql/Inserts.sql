@@ -43,29 +43,36 @@ insert into Oferta values(null,'Servicio',"Servicio de Mecanica","Puedo arreglar
 insert into Oferta values(null,'Servicio',"Mantenimiento de cocina","Ofrezco el servicio para que su cocina este limpia",10,true,'Villa de Leyva',null,null,'333');
 Select*from Oferta where tipo='Servicio';
 
+#Inserco de los estados
+insert into EstadoCompra values(1,'CREADO');
+insert into EstadoCompra values(2,'CONFIRMADO');
+insert into EstadoCompra values(3,'ENVIADO');
+insert into EstadoCompra values(4,'RECIBIDO');
+
+
 
 #Insertar una Compra por economoneda como medio de pago
-insert into Compra values(null,null,100,false,1,'333');
-insert into Compra values(null,null,100,false,1,'978676');
-insert into Compra values(null,null,20,false,6,'1002549404');
-insert into Compra values(null,null,20,false,2,'978676');
+insert into Compra values(null,null,100,null,1,'333',1);
+insert into Compra values(null,null,100,null,1,'978676',1);
+insert into Compra values(null,null,20,null,6,'1002549404',1);
+insert into Compra values(null,null,20,null,2,'978676',1);
 
 #Insertar una Compra por intercambio de oferta como medio de pago
-insert into Compra values(null,8,null,false,3,'333');
-insert into Compra values(null,9,null,false,4,'333');
-insert into Compra values(null,2,null,false,7,'23789345');
-insert into Compra values(null,6,null,false,9,'978676');
+insert into Compra values(null,8,null,null,3,'333',1);
+insert into Compra values(null,9,null,null,4,'333',1);
+insert into Compra values(null,2,null,null,7,'23789345',1);
+insert into Compra values(null,6,null,null,9,'978676',1);
 Select*from Compra;
 
 #Insertar Transacciones a vendedor y comprador
 insert into Transaccion values(null,'Ingreso',100,false,'1002549404',1);
-insert into Transaccion values(null,'Compra',100,false,'333',1);
+insert into Transaccion values(null,'Compra',100,true,'333',1);
 insert into Transaccion values(null,'Ingreso',20,false,'1002549404',2);
-insert into Transaccion values(null,'Compra',20,false,'978676',2);
+insert into Transaccion values(null,'Compra',20,true,'978676',2);
 insert into Transaccion values(null,'Ingreso',10,false,'23789345',3);
-insert into Transaccion values(null,'Compra',10,false,'1002549404',3);
+insert into Transaccion values(null,'Compra',10,true,'1002549404',3);
 insert into Transaccion values(null,'Ingreso',10,false,'978676',4);
-insert into Transaccion values(null,'Compra',10,false,'23789345',4);
+insert into Transaccion values(null,'Compra',10,true,'23789345',4);
 Select*from Transaccion;
 
 #Insertar una Transferencia
@@ -100,21 +107,21 @@ insert into Valoracion values(null,2,3);
 select *from Valoracion;
 
 #Insertar MEnsajes de un chat
-insert Into Mensaje values(null,"Buenos Dias como esta?",'1002549404','333',1);
-insert Into Mensaje values(null,"Cuando me envia el producto?",'1002549404','333',1);
-insert Into Mensaje values(null,"esta misma tarde señor",'333','1002549404',1);
-insert Into Mensaje values(null,"Gracias",'1002549404','333',1);
+insert Into Mensaje values(null,"Buenos Dias como esta?",'1002549404','333',1,'19:20');
+insert Into Mensaje values(null,"Cuando me envia el producto?",'1002549404','333',1,'19:20');
+insert Into Mensaje values(null,"esta misma tarde señor",'333','1002549404',1,'19:20');
+insert Into Mensaje values(null,"Gracias",'1002549404','333',1,'19:20');
 
 
-insert Into Mensaje values(null,"Buenos Dias",'978676','23789345',4);
-insert Into Mensaje values(null,"Bunos dias",'23789345','978676',4);
-insert Into Mensaje values(null,"Disculpe, como instalo la mesa?",'978676','23789345',4);
-insert Into Mensaje values(null,"Tienes que leer las instruciones",'23789345','978676',4);
-
-
+insert Into Mensaje values(null,"Buenos Dias",'978676','23789345',4,'19:20');
+insert Into Mensaje values(null,"Bunos dias",'23789345','978676',4,'19:20');
+insert Into Mensaje values(null,"Disculpe, como instalo la mesa?",'978676','23789345',4,'19:20');
+insert Into Mensaje values(null,"Tienes que leer las instruciones",'23789345','978676',4,'19:20');
 
 select*from Mensaje;
 
 
+insert into Reclamacion values(null,"No me llego mi producto",null,4,false);
 
+select*from Reclamacion;
 
