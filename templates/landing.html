@@ -14,6 +14,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+    <!-- Compiled and minified Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<!-- Minified JS library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Compiled and minified Bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+
 </head>
 
 <body>
@@ -23,11 +30,17 @@
             <div class="logo">
                 <img src="img/icono.png" alt="" align="left">
                 <h1> Econoamigos</h1>
-
             </div>
-
-            
-
+            <div class="btnLand1">
+                <div class="navbar">
+                    <button id="iniciarS" type="button" class="btn-landing">Iniciar Sesión</button>
+                </div>
+            </div>
+            <div class="btnLand2">
+                <div class="navbar">
+                    <button id="crearC" type="button" class="btn-landing">Crear cuenta</button>
+                </div>
+            </div>
         </nav>
     </header>
     <main>
@@ -43,6 +56,71 @@
 
         <!-- Servicios -->
         <section class="contenedor">
+
+
+
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li id="CarriselProcess" data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li id="CarriselProcess" data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li id="CarriselProcess" data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+            <div class="Servicios">  
+                <div class="Textos">
+                    <br><br><br><br><br><br>
+                      <p class="lead text-muted">Nuestro principal objetivo es permitir a madres y padres cabeza de familia establacer sistemas ahorrativos.</p>
+                </div>
+                <img src="img/madre.svg" alt="" class="Servicio">
+            </div>
+    </div>
+    <div class="carousel-item">
+            <div class="Servicios">
+                <img src="img/madreHijo.svg" alt="" class="Servicio">
+                <div class="Textos">
+                    <br><br><br><br><br><br>
+                    <p class="lead text-muted">Pero, se extiende a personas que quieran generar economia en sus hogares.</p>
+                </div>
+            </div>
+    </div>
+    <div class="carousel-item">
+            <div class="Servicios">
+                <div class="Textos">
+                    <br><br><br><br><br><br>
+                    <p class="lead text-muted">Ofrecemos productos y servicios barrial, que permita generar economia social.</p>
+                </div>
+                <img src="img/Comprar.svg" alt="" class="Servicio">
+            </div>
+    </div>
+    <div class="carousel-item">
+            <div class="Servicios">
+                <img src="img/Elegir.svg" alt="" class="Servicio">
+                <div class="Textos">
+                    <br><br><br><br><br><br>
+                    <p class="lead text-muted">Se establece con el objetivo de generar colaboración y una ambiente de cooperación.</p>
+                </div>
+            </div>
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span id="deslisanteCarrusel" class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span id="deslisanteCarrusel" class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+
+
+
+
+
+
             <h2 id="Servicios" class="titulos">¿Qué puedes hacer?</h2>
             <div class="Servicios">
                 <img src="img/moneda.svg" alt="" class="Servicio">

@@ -3,6 +3,16 @@ let boton = document.getElementById("icono");
 let enlaces = document.getElementById("enlaces");
 let contador = 0;
 
+$("#iniciarS").click(function() {
+    deleteCookie();
+    location.href = "index.html";
+});
+
+$("#crearC").click(function() {
+    deleteCookie();
+    location.href = "registro.html";
+});
+
 boton.addEventListener("click", function() {
     if (contador == 0) {
         enlaces.className = ('enlaces dos');
@@ -496,3 +506,14 @@ $("#BotonValidarR").click(async function() {
     }
    
 });
+
+
+
+
+
+
+
+
+
+
+
