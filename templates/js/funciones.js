@@ -664,3 +664,14 @@ if (window.location.href.includes('confRecarga.html')) {
         });
     }
 }
+//Mostrar alertas limite Tiempo
+function mostrarAlertasTiempo(hora, concepto) {
+    $("#puntoNotificacion").show(); /////////////////////aaaaaaaaaaaaa
+    notificaciones2C = "";
+    notificaciones2C = '<div class="toast" role="alert" aria-live="assertive" data-autohide="false" >' + '<div class="toast-header" >' + ' <img src="https://img1.freepng.es/20180319/lqe/kisspng-computer-icons-weather-warning-iconfinder-clip-art-alert-icon-free-icons-5ab048d5a03131.1176779315215024216562.jpg" class="rounded mr-2" width="20" height="20">' + '<strong class="mr-auto">Tiempo Excedido</strong>' +
+        '<small class="text-muted">' + hora + '</small>' + '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + '</button>' +
+        '</div>' + '<div class="toast-body">' + concepto + '</div>' + '</div>' + '</div>' + '</div>';
+    $("#Alertas").empty();
+    $("#Alertas").append(notificaciones2C);
+    $('.toast').toast('show');
+}
