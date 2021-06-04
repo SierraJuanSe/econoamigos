@@ -4,6 +4,8 @@
 <head>
     <title>Econoamigos</title>
     <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
+    <link rel="stylesheet" type="text/css" href="css/styleTop.css">
+    <link rel="stylesheet" type="text/css" href="css/styleBusqueda.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
@@ -101,69 +103,138 @@
             ¡Hola,<span id="nombreUser"></span>! <br>¿Cómo te encuentras hoy?
         </div>
         <section class="contenedor">
-            <h2 id="Servicios" class="titulos">¿Qué puedes hacer?</h2>
+            <!-- TARJETAS DE SERVICIOS-->
+            <h4 class="Sub-tittle"> Los Mejores Productos</h4> &nbsp;<a href="busqueda.html" class="link">Ver más</a>
+            <!-- <button id="BotonOfertas" type="button" class="btn">Consultar</button>-->
             <div class="Servicios">
-                <img src="img/moneda.svg" alt="" class="Servicio">
-                <div class="Textos">
-                    <br><br>
-                    <h3><span>1</span>Búsqueda de Ofertas</h3>
-                    <p class="lead text-muted">Busca los servicios y productos que quieras entre todos los que ofrecen los Econoamigos, para generar ingresos mediante nuestra moneda virtual.</p>
-                    <br>
-                    <h3><span>2</span>Publicitar tus Ofertas</h3>
-                    <p class="lead text-muted"> Crea publicidad de tus productos o servicios que quieras vender para que los demás puedan adquirirlos y ganar Ecomonedas generando así ingresos. <b>Aquí ganamos todos.</b>
-                    </p>
-                    <br>
-                    <h3><span>3</span>Solicitudes a tus ofertas</h3>
-                    <p class="lead text-muted">Podrás ver a las personas que quieren acceder a relizar tu servicio o que desean adquirir tu producto, y tú escogeras tu favorito.
-                    </p>
-                </div>
-            </div>
-            <div class="Servicios">
-                <div class="Textos">
-                    <br><br>
-                    <h3><span>4</span>Ofertas Compradas</h3>
-                    <p class="lead text-muted"> Ver todos los servicios en los que te postulaste para saber como es tu progreso en estos, o ver los productos que adquiriste.</p>
-                    <br>
-                    <h3><span>5</span>Historial de Transacciones</h3>
-                    <p class="lead text-muted"> Revisa los movimientos como ingresos y egresos de la moneda virtual en tu cuenta. Y como ya hemos dicho <b>"Aquí ganamos todos".</b>
-                    </p>
-                    <br>
-                    <h3><span>6</span>Historial de Ofertas</h3>
-                    <p class="lead text-muted">Podrás revisar cuales son los servicios que ya has realizado o los productos que has comprado mediante el uso de Ecomonedas .
-                    </p>
-                </div>
-                <img src="img/chancho.svg" alt="" class="Servicio2">
-            </div>
-        </section>
-
-        <!-- Info de la app -->
-        <section class="form">
-            <h2 id="Informacion" class="titulos">¿Qué es?</h2>
-            <div class="cards">
-                <div class="tarjeta1">
-                    <img src="img/icono.png" class="imgfondo">
-                    <div class="textotarjeta">
-                        <h4>Econoamigos</h4>
-
-                        <h5>Una solución de Economía solidaria</h5>
-
-                        <p>Mediante la inicitiva de ayudar en la brecha de ingresos y egresos de las personas cabeza de hogar nace Economaigos. Aquí podras ofrecer o aceptar servicios, al igual que comprar productos de otras personas iguales a ti para aumentar
-                            tu economía.
-                        </p>
+                <div class="ofertas">
+                    <div class="row" id="top-productos">
+                        <!--1-->
+                        <div class="col-sm-4" id="' + id + '">'
+                            <div class="box">
+                                <div class="slide-img">
+                                    <img id="imagenmodOfe" src="https://cdn-ssl.s7.disneystore.com/is/image/DisneyShopping/6002040901668-2?fmt=jpeg&qlt=90&wid=652&hei=652" alt="1">
+                                    <div class="overlay">
+                                        <a href="=#" class="buy-btn">Comprar</a>
+                                    </div>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="type">
+                                        <a>Nombre</a>
+                                        <div class="des">Descripcion</div>
+                                    </div>
+                                    <div class="price">23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--2-->
+                        <div class="col-sm-4" id="' + id + '">'
+                            <div class="box">
+                                <div class="slide-img">
+                                    <img id="imagenmodOfe" src="https://cdn.shopify.com/s/files/1/2110/3289/products/Bob_esponja_300x.jpg?v=1574705486" alt="1">
+                                    <div class="overlay">
+                                        <a href="=#" class="buy-btn">Comprar</a>
+                                    </div>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="type">
+                                        <a>Nombre</a>
+                                        <div class="des">Descripcion</div>
+                                    </div>
+                                    <div class="price">23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--3-->
+                        <div class="col-sm-4" id="' + id + '">'
+                            <div class="box">
+                                <div class="slide-img">
+                                    <img id="imagenmodOfe" src="https://images.goodsmile.info/cgm/images/product/20170721/6596/46635/large/4a218ede07210f2ef4e3274229faf7da.jpg" alt="1">
+                                    <div class="overlay">
+                                        <a href="=#" class="buy-btn">Comprar</a>
+                                    </div>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="type">
+                                        <a>Nombre</a>
+                                        <div class="des">Descripcion</div>
+                                    </div>
+                                    <div class="price">23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--4-->
+                        <div class="col-sm-4" id="' + id + '">'
+                            <div class="box">
+                                <div class="slide-img">
+                                    <img id="imagenmodOfe" src="https://www.themarkethink.com/wp-content/uploads/2019/05/productos_star_wars.jpg" alt="1">
+                                    <div class="overlay">
+                                        <a href="=#" class="buy-btn">Comprar</a>
+                                    </div>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="type">
+                                        <a>Nombre</a>
+                                        <div class="des">Descripcion</div>
+                                    </div>
+                                    <div class="price">23</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Fin Datos Quemados-->
                     </div>
                 </div>
-                <div class="tarjeta2">
-                    <img src="img/ecomon.png">
-                    <div class="textotarjeta">
-                        <h4>Economoneda</h4>
+            </div>
 
-                        <h5>Moneda virtual de Econoamigos</h5>
+            <br>
+            <br>
 
-                        <p>La obtendrás mediante los servicios que realices como remuneración, o mediante el pago de los productos que vendas. También puedes recargar desde tu cuenta bancaria para tener fondos al momento de ofertar algo que necesites.</p>
+            <h4 class="Sub-tittle">Servicios mejores calificados</h4> &nbsp;<a href="busqueda.html" class="link">Ver más</a>
+            <div class="Servicios">
+
+                <div class="ofertas">
+                    <div class="row" id="top-servicios">
+                        <div class="col-sm-4" id="' + id + '">'
+                            <div class="box">
+                                <div class="slide-img">
+                                    <img id="imagenmodOfe" src="https://www.themarkethink.com/wp-content/uploads/2019/05/productos_star_wars.jpg" alt="1">
+                                    <div class="overlay">
+                                        <a href="=#" class="buy-btn">Comprar</a>
+                                    </div>
+                                </div>
+                                <div class="detail-box">
+                                    <div class="type">
+                                        <a>Nombre</a>
+                                        <div class="des">Descripcion</div>
+                                    </div>
+                                    <div class="price">23</div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-sm-4" id="' + id + '">
+                            <div class="card">
+                                <div class="card-header" id="tipoOferta">
+                                    Producto
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title" id="nombreOferta">Nombre</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted" id="descripcionOferta">Descripcion</h6>
+                                    <p class="card-text" id="precioOferta">500</p>
+                                    <button id="BotonVerDetalles' + id + '" type="button" class="card-link">Ver detalles</button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
+
         </section>
+
 
         <!-- Contacto -->
         <section id="contact">
@@ -196,8 +267,6 @@
                 </div>
             </div>
 
-            </div>
-            </div>
         </section>
     </main>
 
