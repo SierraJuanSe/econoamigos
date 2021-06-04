@@ -34,6 +34,9 @@ body {
     grid-gap: 5rem;
     padding: 0 2rem;
 }
+.terminos{
+    text-align: left;
+}
 
 .img2 {
     width: 90%;
@@ -195,7 +198,7 @@ h5 {
 
 a {
     display: block;
-    text-align: right;
+    text-align: left;
     text-decoration: none;
     color: #999;
     font-size: 0.9rem;
@@ -227,6 +230,7 @@ a:hover {
 .btn:hover {
     background-position: right;
 }
+
 
 @media screen and (max-width: 1050px) {
     .container {
