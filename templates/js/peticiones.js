@@ -793,6 +793,38 @@ console.log(data);
 
     return true;
 }
+//Peticion para consultar todas las ofertas(productos o servicios)
+async function consultarOfertasMenu() {
+    const USUARIO = JSON.parse(readCookie('token'));
+    let data = {
+        "id": USUARIO['id']
+    }
+    console.log(data.id)
+    try {
+        result = await $.ajax({
+            url: url + "/consultarOfertas",
+            data: JSON.stringify(data),
+            type: "POST",
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8"
+        })
+        if (result.status == 200) {
+            console.log(result.info)
+            traerOfertasMenu(result.info)
+        } else {
+            console.log(result.status)
+            swal("No se han encontrado coincidencias con tu búsqueda", {
+                icon: "error"
+            });
+        }
+    } catch (error) {
+        console.log(error)
+        return 0;
+    }
+
+
+    return true;
+}
 
 function setCookie(token) {
     document.cookie = "token=" + encodeURIComponent(token) + "; max-age=3600; path=/";
