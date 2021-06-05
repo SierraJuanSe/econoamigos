@@ -24,6 +24,7 @@ function actualizarMonedaVista(newMoneda) {
 }
 
 function mostrarCompras(codcompra, dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
+    $("#estados").hide();
     if (tipo == "Producto") {
         namelugar = "";
         nameimagen = "";

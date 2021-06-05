@@ -4,6 +4,7 @@
 <head>
     <title>Econoamigos</title>
     <link rel="stylesheet" href="css/styleChat.css">
+    <link rel="stylesheet" href="css/styleTracking.css">
     <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
     <link rel="stylesheet" type="text/css" href="css/styleBusqueda.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
@@ -15,6 +16,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -113,8 +115,82 @@
                     </div>
                 </div>
             </div>
+            <div id="estados">
+
+                <div id="salirO' + id + '">
+                    <button id="BotonVolver' + id + '" type="button" class="btn-return"><img src="https://img.icons8.com/ios/452/return.png" width="50"></button>
+                    <center>
+                        <h2 id="nombremodOfe" class="title"> Nombre Oferta </h2>
+                    </center>
+                    <div class="columnas">
+                        <div class="cajita">
+                            Imagen o Lugar
+                            <br><br>
+                            <h6 id="preciomodOfe" class="cars0">Precio: $ precio </h6>
+                        </div>
+                        <div class="cajita">
+                            <h6 id="descmodOfe" class="cars0">Descripción: descripcion</h6>
+                            <form name="nombreform">
+                                <br>Puntua la Oferta:
+                                <p class="clasificacion">
+                                    <input id="radio1 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="5"><label for="radio1 ' + codcompra + '">★</label>
+                                    <input id="radio2 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="4"><label for="radio2 ' + codcompra + '">★</label>
+                                    <input id="radio3 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="3"><label for="radio3 ' + codcompra + '">★</label>
+                                    <input id="radio4 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="2"><label for="radio4 ' + codcompra + '">★</label>
+                                    <input id="radio5 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="1"><label for="radio5 ' + codcompra + '">★</label></p>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="container px-1 px-md-40 py-5 mx-auto">
+                        <div class="tracking">
+                            <div class="row d-flex justify-content-between px-3 top">
+
+                                <div class="name">
+                                    <h5>Código de tu compra:</h5>
+                                    <div class="lead text"> Código </div>
+                                </div>
+
+                            </div>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12">
+                                    <ul id="progressbar" class="text-center">
+                                        <li class="activar step0"></li>
+                                        <li class="activar step0"></li>
+                                        <li class="activar step0"></li>
+                                        <li class="step0"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row justify-content-between top">
+                                <div class="row d-flex icon-content"> <img class="icon" src="https://image.flaticon.com/icons/png/512/114/114903.png">
+                                    <div class="d-flex flex-column">
+                                        <p class="font-weight-bold">Orden<br>Procesada</p>
+                                    </div>
+                                </div>
+                                <div class="row d-flex icon-content"> <img class="icon" src="https://static.thenounproject.com/png/543983-200.png">
+                                    <div class="d-flex flex-column">
+                                        <p class="font-weight-bold">Orden<br>Confirmada</p>
+                                    </div>
+                                </div>
+                                <div class="row d-flex icon-content"> <img class="icon" src="https://img.icons8.com/ios/452/truck.png">
+                                    <div class="d-flex flex-column">
+                                        <p class="font-weight-bold">Orden<br>En Camino</p>
+                                    </div>
+                                </div>
+                                <div class="row d-flex icon-content"> <img class="icon" src="https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png">
+                                    <div class="d-flex flex-column">
+                                        <p class="font-weight-bold">Orden<br>Entregada</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+
         <div id="chatContainer" class="chat-container">
 
         </div>
