@@ -506,3 +506,14 @@ $("#BotonValidarR").click(async function() {
     }
    
 });
+
+
+
+
+
+
+
+
+
+
+
