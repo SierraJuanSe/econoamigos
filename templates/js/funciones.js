@@ -28,8 +28,8 @@ function mostrarCompras(codcompra, dest, nombre, descripcion, tipo, precio, esta
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<div class="container"><div class="row"><div class="col">' + '<button id="vermasbot' + codcompra + '" type="button" class="card-link" ><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
-        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>';
+        '<div class="container"><div class="row"><div class="col">' + '<button id="vermasbot' + codcompra + '" type="button" class="card-link" ><img src="img/more.svg" style="width:50%; borderline: none;"></button>' +
+        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:50%; align: center;"></button></div><div class="col"><button type="button" id="verReclamo' + codcompra + '" class="card-link" ><img src="img/reclamos.svg" style="width:50%; align: center;"></button></div></div>';
 
 
 
@@ -235,10 +235,10 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
 
         }
         solO = "";
-        solO = '<tr id="filasol' + codCompra + '"><th scope="row" id="solicitud' + codCompra + '">' + id + '</th><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
+        solO = '<tr id="filasol' + codCompra + '"><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
             '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
-            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td><div class="custom-control custom-checkbox" id="check" style="width: 70%;">' +
-            '<input type="checkbox" class="custom-control-input" id="customCheck' + codCompra + '"><label class="custom-control-label" for="customCheck' + codCompra + '"></label></td></tr>';
+            '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td>' +
+            '<a>Confirmado</a></td><td><button type="button" class="btn-link">Actualizar Progreso</button></td></tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
         var temp = drawChat(codCompra, oferta);

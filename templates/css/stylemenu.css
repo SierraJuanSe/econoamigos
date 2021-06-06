@@ -1191,3 +1191,7 @@ ul, ol{
     background: #2f2e41;
 }
 
+.btn-link{
+    border-radius: 10%;
+    background-color: #333;
+}
