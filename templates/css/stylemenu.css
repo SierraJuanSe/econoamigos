@@ -326,9 +326,13 @@ footer {
 /*Informacion*/
 
 .form {
-    background-image: linear-gradient(to top, #ececec 0%, #dbdbdb78 100%);
-    padding-bottom: 50px;
-    padding: 50px;
+    background-image: #fff;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .cards {
