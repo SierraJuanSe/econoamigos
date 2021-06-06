@@ -99,7 +99,7 @@ def actualizarEstadoCompra():
         return {'status': 400, 'info':False}
 
 @bp.route('/consultarEstadoCompra', methods=['POST'])
-def consultarMensajes():
+def consultarEstadoCompra():
     msg = request.get_json()
     comp = Compra(id=msg.get('idCompra'))
     res = comp.consultar_estado_compra()
