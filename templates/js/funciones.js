@@ -41,8 +41,8 @@ function mostrarCompras(codcompra, dest, nombre, descripcion, tipo, precio, esta
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<div class="container"><div class="row"><div class="col">' + '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '"><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
-        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>' +
+        '<div class="container"><div class="row"><div class="col">' + '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '"><img src="img/more.svg" style="width:50%; borderline: none;"></button>' +
+        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:50%; align: center;"></button></div><div class="col"><button type="button" id="verReclamo' + codcompra + '" class="card-link" ><img src="img/reclamos.svg" style="width:50%; align: center;"></button></div></div>' +
         '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
         '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + codcompra + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
         '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
@@ -62,9 +62,10 @@ function mostrarCompras(codcompra, dest, nombre, descripcion, tipo, precio, esta
     $('#chatContainer').append(temp);
     enviarValoracion(codOferta)
     abrirChat(codcompra, nombre);
-    sendMessage(codcompra, dest);
-    socketChat.emit('join', { room: 'room' + codcompra })
 
+    abrirReclamo(codcompra, nombre);
+    sendMessage(codcompra,dest);
+    socketChat.emit('join', {room: 'room'+codcompra})
     mensajetemp = [{
         codMensaje: 1,
         destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
@@ -103,6 +104,15 @@ async function abrirChat(codcompra, nombre) {
         $('#chat' + codcompra).show()
     });
 }
+
+async function abrirReclamo(codcompra, nombre) {
+    $("#verReclamo" + codcompra).click(async function() {
+        location.href = "reclamos.html";
+    });
+}
+
+
+
 
 function mostrarMensajes(mensajes) {
     for (const mensaje of mensajes) {
