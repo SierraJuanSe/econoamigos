@@ -71,7 +71,7 @@ def consultarServiciosTop():
 @bp.route('/consultarProductosTop', methods=['POST'])
 def consultarProductosTop():
     ofertas = Oferta()
-    res = ofertas.consultarProductosTop()()
+    res = ofertas.consultarProductosTop()
     if len(res) != 0:
         return {'status': 200, 'info': res}
     else:

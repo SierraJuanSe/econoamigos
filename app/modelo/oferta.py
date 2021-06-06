@@ -121,18 +121,56 @@ class Oferta:
     def consultarServiciosTop(self):
         query = "SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
                 "and Oferta.Tipo='Servicio' GROUP BY codOferta ORDER BY `promedio` DESC"
-        c = Connection()
-        cs = c.getCursor("DictCursor")
-        r = cs.execute(query)
-        return cs.fetchall()
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        result = conn.execute_query(query, None)
+        respuesta = []
+        for fila in result:
+            r1 = {}
+            r1['id'] = fila[0]
+            r1['tipo'] = fila[1]
+            r1['nombre'] = fila[2]
+            r1['descripcion'] = fila[3]
+            r1['precio'] = fila[4]
+            r1['estado'] = fila[5]
+            r1['lugar'] = fila[6]
+            r1['imagen'] = fila[7]
+            r1['cantidad'] = fila[8]
+            r1['idUsuario'] = fila[9]
+            respuesta.append(r1)
+        conn.close()
+        if len(respuesta)>6:
+            aux = respuesta
+            respuesta = [aux[x] for x in range(6)]
+        return respuesta
 
     def consultarProductosTop(self):
         query = "SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
                 "and Oferta.Tipo='Producto' GROUP BY codOferta ORDER BY `promedio` DESC"
-        c = Connection()
-        cs = c.getCursor("DictCursor")
-        r = cs.execute(query)
-        return cs.fetchall()
+        conn = Conector(DBINFO['host'], DBINFO['user'],
+                        DBINFO['password'], DBINFO['database'])
+        conn.connect()
+        result = conn.execute_query(query, None)
+        respuesta = []
+        for fila in result:
+            r1 = {}
+            r1['id'] = fila[0]
+            r1['tipo'] = fila[1]
+            r1['nombre'] = fila[2]
+            r1['descripcion'] = fila[3]
+            r1['precio'] = fila[4]
+            r1['estado'] = fila[5]
+            r1['lugar'] = fila[6]
+            r1['imagen'] = fila[7]
+            r1['cantidad'] = fila[8]
+            r1['idUsuario'] = fila[9]
+            respuesta.append(r1)
+        conn.close()
+        if len(respuesta)>6:
+            aux = respuesta
+            respuesta = [aux[x] for x in range(6)]
+        return respuesta
 
     def to_dict(self):
         return {
