@@ -507,13 +507,14 @@ $("#BotonValidarR").click(async function() {
    
 });
 
+//Traer Ofertas Menu
 
-
-
-
-
-
-
-
-
+async function traerOfertasMenu(ofertas) {
+    $("#ofertas").empty();
+    for (const oferta of ofertas.ofertas) {
+        var puntuacion = await consultarPromedioValoracion(oferta['id']);
+        var save = await ConsultarComentarios(oferta['id']);
+        mostrarOfertasMenu(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion,ofertas.misofertas);
+    }
+}
 

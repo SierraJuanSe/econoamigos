@@ -697,4 +697,153 @@ if (window.location.href.includes('confRecarga.html')) {
             icon: "error"
         });
     }
+
+}
+//Mostrar alertas limite Tiempo
+function mostrarAlertasTiempo(hora, concepto) {
+    $("#puntoNotificacion").show(); /////////////////////aaaaaaaaaaaaa
+    notificaciones2C = "";
+    notificaciones2C = '<div class="toast" role="alert" aria-live="assertive" data-autohide="false" >' + '<div class="toast-header" >' + ' <img src="https://img1.freepng.es/20180319/lqe/kisspng-computer-icons-weather-warning-iconfinder-clip-art-alert-icon-free-icons-5ab048d5a03131.1176779315215024216562.jpg" class="rounded mr-2" width="20" height="20">' + '<strong class="mr-auto">Tiempo Excedido</strong>' +
+        '<small class="text-muted">' + hora + '</small>' + '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' + '<span aria-hidden="true">&times;</span>' + '</button>' +
+        '</div>' + '<div class="toast-body">' + concepto + '</div>' + '</div>' + '</div>' + '</div>';
+    $("#Alertas").empty();
+    $("#Alertas").append(notificaciones2C);
+    $('.toast').toast('show');
+}
+function mostrarOfertasMenu(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
+    if (tipo == "Producto") {
+        ofertasC = "";
+        ofertasC = '<div class="col-sm-4" id="' + id + '"><div class="caja"><div class="box"><div class="slide-img"><img id="imagenmodOfe" src="' + imagen + '" alt="1"><div class="overlay"> <button type="button" id="BotonComprarProd' + id + '" class="buy-btn">Comprar</button>' +
+            '</div></div><div class="detail-box"><div class="type"><a>' + nombre + '</a><div class="des">' + descripcion + '</div></div><div class="price">' + precio + '</div></div></div></div></div>';
+        $("#top-productos").append(ofertasC);
+    } else if (tipo == "Servicio") {
+        ofertasC = "";
+        ofertasC = '<div class="col-sm-4" id="' + id + '"><div class="caja"><div class="box"><div class="slide-name"><br><div class="service-name"><div class="des">' + descripcion + '</div></div><div class="overlay"> <button type="button" id="BotonComprarProd' + id + '" class="buy-btn">Comprar</button>' +
+            '</div></div><div class="detail-box"><div class="type"><a>' + nombre + '</a></div><div class="price">' + precio + '</div></div></div></div></div>';
+        $("#top-servicios").append(ofertasC);
+    }
+    BotonComprarMenu(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas);
+}
+function  BotonComprarMenu(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
+   
+    $("#BotonComprarProd" + id).click(async function() {
+        $("#regresar").empty();
+        var dibujarComment = "";
+        var dibujarPunt = "";
+        var dibujarofertasPago = "";
+
+        for (var i = 0; i < recibir; i++) {
+            dibujarPunt += '<label >⭐</label>'
+        }
+        if (recibir == 0 || recibir == null) {
+            dibujarPunt += '<label >☆☆☆☆☆</label>'
+        }
+        for (const coment of comentarios) {
+            dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcionComentario'] + '</p>';
+            if (coment['respuesta'] != "") {
+                dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuestaComentario'] + '</p>'
+
+            }
+            console.log("#myComment" + id);
+        }
+        console.log(OfertasOfrecidas)
+        for (const ofert of OfertasOfrecidas) {
+            dibujarofertasPago += '<option value="' + ofert['codOferta'] + '" id="ButonEconomonedas">' + ofert['nombreOferta'] + '</option>';
+        }
+        if (tipo == "Servicio") {
+            lugar = "Lugar: " + lugar;
+            cantidad = "";
+            nameimagen = " ";
+            // nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
+        } else {
+            lugar = " ";
+            cantidad = "Cantidad: " + cantidad;
+            nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
+        }
+
+        detalles = "";
+        detalles =
+            '<div id="salirO'+id+'"><div  class="contenedores">' +
+        '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
+            '<div class="caja">'+ nameimagen +
+            '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
+            '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
+            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' + 
+            '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
+            '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
+            '</div>'+
+            '<div class="caja">'+
+            '<form class="MetodosDepago1">' +
+            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
+            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
+            '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
+            '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
+            '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
+            '</select>' +
+            '</form>' + 
+            '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
+            '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
+            '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
+            '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
+            
+            '</select>' + 
+            '</form>' +
+            '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
+            '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>'+'<br><br>'+
+            '</div>' + 
+            '</div>' + '</div>'+
+            '<div id="salirOC'+id+'"><div class="contenedors">'+
+            '<h6>Comentarios:'+'</h6>' +
+            '<div class="form-group ">' + 
+            '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + 
+            '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + 
+            '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
+            '</div>' + '</div>'+ '</div>'
+            '</div></div></div></div></div></div></div></div>';
+        
+        $("#top-productos").hide();
+        $("#ofertas").hide();
+        $("#top-servicios").hide();
+        $("#sub1").hide();
+        $("#sub2").hide();
+        $("#sub0").hide();
+        $("#sub3").hide();
+        $("#regresar").show();
+        $("#regresar").append(detalles);
+        $('.MetodosDepago2'+id).hide();
+        botonVolverMenu(id);
+        botonCrearCompra(id, precio);
+        botonEnviarComentario(id);
+        cerrarModal(id);    
+        });
+        $("#regresar").empty();
+
+}
+function botonVolverMenu(id) {
+    $("#BotonVolver" + id).click(async function() {
+        $("#salirO"+id).hide();
+    $("#salirOC"+id).hide();
+        $("#top-productos").show();
+        $("#ofertas").show();
+        $("#top-servicios").show();
+        $("#sub1").show();
+        $("#sub2").show();
+        $("#sub0").show();
+        $("#sub3").show();
+        $("#regresar").hide();
+    });
+    
+  /*  $("#BotonVolver" + id).click(function () {
+        consultarOfertas()
+    });
+    //Trear Ofertas descripcion 
+    async function traerOfertas(ofertas) {
+        $("#ofertas").empty();
+        for (const oferta of ofertas.ofertas) {
+            var puntuacion = await consultarPromedioValoracion(oferta['id']);
+            var save = await ConsultarComentarios(oferta['id']);
+            mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion, ofertas.misofertas);
+        }
+    }*/
+
 }
