@@ -24,9 +24,11 @@ def insertarCompra():
     isCambio = msg['precio'] is None
     compra = None
     if isCambio:
-        compra = Compra(ofertaCambio=msg['ofertaCambio'],estado=False,usuario=comprador,cod_oferta=oferta.id)
+        compra = Compra(ofertaCambio=msg['ofertaCambio'],estado=msg['estado'],
+                        usuario=comprador,cod_oferta=oferta.id)
     else:
-        compra = Compra(precio=msg['precio'], estado=False, usuario=comprador, cod_oferta=oferta.id)
+        compra = Compra(precio=msg['precio'], estado=msg['estado'],
+                        usuario=comprador, cod_oferta=oferta.id)
     
     compra_succeed = compra.agregar()
 
@@ -85,23 +87,31 @@ def consultarOfertasVendidos():
     else:
         return {'status': 404}
 
-# El usuario que oferta confirma la compra
-# Y automáticamente el trigger actualizará el total de moneda de comprador y vendedor
+# El vendedor cambia en qué estado se encuentra la compra
 @bp.route('/actualizarEstadoCompra', methods=['POST'])
 def actualizarEstadoCompra():
     msg = request.get_json()
-    comp = Compra(id=msg.get('idCompra'))
+    comp = Compra(id=msg.get('idCompra'), estado=msg.get('estado'))
     if comp.actualizar_estado():
         _, moneda = Usuario(id=msg.get('idUsuario')).get()
         return {'status': 200, 'info':True, 'moneda': moneda}
     else:
         return {'status': 400, 'info':False}
 
+@bp.route('/consultarEstadoCompra', methods=['POST'])
+def consultarMensajes():
+    msg = request.get_json()
+    comp = Compra(id=msg.get('idCompra'))
+    res = comp.consultar_estado_compra()
+    if res != None:
+        return {'status': 200, 'info': res}
+    else:
+        return {'status': 404}
+
 @bp.route('/consultarMensajes', methods=['POST'])
 def consultarMensajes():
     msg = request.get_json()
     comp = Compra(id=msg.get('idCompra'))
-    print(msg.get('idCompra'))
     mes = Mensaje(compra=comp)
     res=mes.consultarMensaje()
     if res != []:
