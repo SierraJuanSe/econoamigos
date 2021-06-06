@@ -4,6 +4,7 @@
 <head>
     <title>Econoamigos</title>
     <link rel="stylesheet" href="css/styleChat.css">
+    <link rel="stylesheet" href="css/styleTracking.css">
     <link rel="stylesheet" type="text/css" href="css/stylemenu.css">
     <link rel="stylesheet" type="text/css" href="css/styleBusqueda.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
@@ -15,6 +16,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -133,8 +135,12 @@
                     </div>
                 </div>
             </div>
+            <div id="estados">
+
+
             </div>
         </section>
+
         <div id="chatContainer" class="chat-container">
 
         </div>
@@ -188,6 +194,10 @@
                     <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios a cambio de Ecomonedas, nuestra moneda virtual. </p>
                     <div class="social ">
                         <a href="https://github.com/SierraJuanSe/econoamigos "><span class="fab fa-github "></span></a>
+                    </div>
+                    <div>
+                        <br>
+                        <a href="PoliticasPrivacidad.html" style="color:rgb(95, 104, 104);">Términos y Condiciones</a>
                     </div>
                 </div>
             </div>
@@ -251,7 +261,9 @@
     <script src="js/chat.js"></script>
     <script src="js/main.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
-    <script> window.onload=consultarCompras();</script>
+    <script>
+        window.onload = consultarCompras();
+    </script>
 </body>
 
 </html>

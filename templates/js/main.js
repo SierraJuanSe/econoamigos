@@ -3,6 +3,16 @@ let boton = document.getElementById("icono");
 let enlaces = document.getElementById("enlaces");
 let contador = 0;
 
+$("#iniciarS").click(function() {
+    deleteCookie();
+    location.href = "index.html";
+});
+
+$("#crearC").click(function() {
+    deleteCookie();
+    location.href = "registro.html";
+});
+
 boton.addEventListener("click", function() {
     if (contador == 0) {
         enlaces.className = ('enlaces dos');
@@ -496,6 +506,7 @@ $("#BotonValidarR").click(async function() {
     }
    
 });
+
 //Traer Ofertas Menu
 
 async function traerOfertasMenu(ofertas) {
@@ -506,3 +517,4 @@ async function traerOfertasMenu(ofertas) {
         mostrarOfertasMenu(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion,ofertas.misofertas);
     }
 }
+

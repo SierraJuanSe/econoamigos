@@ -23,86 +23,119 @@ function actualizarMonedaVista(newMoneda) {
     $("#saldoUser").append(' ' + newMoneda.toString());
 }
 
-function mostrarCompras(codcompra,dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
-    if (tipo == "Producto") {
-        namelugar = "";
-        nameimagen = "";
-        nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px">';
-    } else {
-        namelugar = "Lugar: " + lugar;
-        nameimagen = " ";
-    }
-    if (estado) {
-        nameestado = "Adquirido";
-    } else {
-        nameestado = "En Proceso"
-    }
-
+function mostrarCompras(codcompra, dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
+    $("#estados").hide();
     ofertasC = "";
     ofertasC = '<div class="col-sm-4" id="' + codcompra + '">' + '<div class="card">' + '<div class="card-header" id="tipoOferta">' + tipo + '</div>' + '<div class="card-body">' +
         '<h5 class="card-title" id="nombreOferta">' + nombre + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted" id="precioOferta">' + precio + '</h6>' + '<p class="card-text" id="descOferta">' + descripcion + '</p>' +
-        '<div class="container"><div class="row"><div class="col">' + '<button type="button" id="vermasbot' + codcompra + '" class="card-link" data-toggle="modal" data-target="#myModal' + codcompra + '"><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
-        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>' +
-        '<div class="modal" id="myModal' + codcompra + '">' + '<div class="modal-dialog">' +
-        '<div class="modal-content">' + '<div class="modal-header">' + '<h4 id="nombremodOfe" class="modal-title">' + nombre + '</h4>' + '<button id="cerrarMod' + codcompra + '" type="button" class="close" data-dismiss="modal">&times;</button>' +
-        '</div>' + '<div class="modal-body">' + nameimagen + '<h6 id="preciomodOfe" class="modal-title">$' + precio + '</h6>' +
-        '<h6 id="estadomodOfe" class="modal-title">Estado: ' + nameestado + '</h6>' + '<h6 id="lugarmodOfer" class="modal-title">' + namelugar + '</h6>' + '<h6 id="descmodOfe" class="modal-title">' + descripcion + '</h6>' +
-        '<form name="nombreform">' +
-        '<br>Puntua la Oferta:' +
-        '<p class="clasificacion">' +
-        '<input id="radio1 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="5"><label for="radio1 ' + codcompra + '">★</label>' +
-        '<input id="radio2 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="4"><label for="radio2 ' + codcompra + '">★</label>' +
-        '<input id="radio3 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="3"><label for="radio3 ' + codcompra + '">★</label>' +
-        '<input id="radio4 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="2"><label for="radio4 ' + codcompra + '">★</label>' +
-        '<input id="radio5 ' + codcompra + '" type="radio" name="estrellas" class="radioBotones ' + codcompra + '" value="1"><label for="radio5 ' + codcompra + '">★</label></p></form>' +
-        '</div></div></div></div></div></div></div></div>';
+        '<div class="container"><div class="row"><div class="col">' + '<button id="vermasbot' + codcompra + '" type="button" class="card-link" ><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
+        '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>';
+
+
 
     $("#compras").append(ofertasC);
+    botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta);
     var temp = drawChat(codcompra, nombre);
     $('#chatContainer').append(temp);
-    enviarValoracion(codOferta)
     abrirChat(codcompra, nombre);
+
+    abrirReclamo(codcompra, nombre);
     sendMessage(codcompra,dest);
     socketChat.emit('join', {room: 'room'+codcompra})
 
-    mensajetemp = [{
-        codMensaje: 1,
-        destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-        Usuario_idUsuario: "1010029624",
-        desMensaje: "Te amo",
-        Compra_codCompra: "003",
-        time: "21:35"
-    }, {
-        codMensaje: 2,
-        destinatario: "1010029624",
-        Usuario_idUsuario: "1000257419",
-        desMensaje: "Yo más",
-        Compra_codCompra: "003",
-        time: "21:37"
-    }, {
-        codMensaje: 3,
-        destinatario: "1000257419",
-        Usuario_idUsuario: "1010029624",
-        desMensaje: "Que haces?",
-        Compra_codCompra: "003",
-        time: "21:40"
-    }, {
-        codMensaje: 4,
-        destinatario: "1010029624",
-        Usuario_idUsuario: "1000257419",
-        desMensaje: "Extrañarte",
-        Compra_codCompra: "003",
-        time: "21:43"
-    }]
-    mostrarMensajes(mensajetemp)
+}
+
+function botonRegresar(codcompra) {
+    $("#BotonRegresar" + codcompra).click(async function() {
+        $("#devolverC" + codcompra).hide();
+        $("#compras").show();
+        $("#estados").hide();
+    });
+}
+
+function botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
+    $("#vermasbot" + codcompra).click(async function() {
+        if (tipo == "Producto") {
+            namelugar = "";
+            nameimagen = "";
+            nameimagen = '<img id="imagenmodOfe" src=' + imagen + ' align="middle" width="300px"> <br><br>';
+        } else {
+            namelugar = "Lugar: " + lugar;
+            nameimagen = " ";
+        }
+        if (estado == "Procesada") {
+            nameestado = '<li class = "activar step0" > </li>' +
+                '<li class = "step0" > </li>' +
+                '<li class = "step0" > </li>' +
+                '<li class = "step0" > </li>';
+        } else if (estado == "Confirmada") {
+            nameestado = '<li class = "activar step0" > </li>' +
+                '<li class = "activar step0" > </li>' +
+                '<li class = "step0" > </li>' +
+                '<li class = "step0" > </li>';
+        } else if (estado == "Camino") {
+            nameestado = '<li class = "activar step0" > </li>' +
+                '<li class = "activar step0" > </li>' +
+                '<li class = "activar step0" > </li>' +
+                '<li class = "step0" > </li>';
+        } else if (estado == "Entregada") {
+            nameestado = '<li class = "activar step0" > </li>' +
+                '<li class = "activar step0" > </li>' +
+                '<li class = "activar step0" > </li>' +
+                '<li class = "activar step0" > </li>';
+        }
+
+        ofertasC = "";
+        ofertasC = '<div id = "devolverC' + codcompra + '" >' + '<button id = "BotonRegresar' + codcompra + '" type = "button" class = "btn-return">' + '<img src = "https://img.icons8.com/ios/452/return.png" width = "50"> </button>' +
+            '<center>' + '<h2 id = "nombremodOfe"  class = "title" >' + nombre + '</h2>' + '</center > <div class = "columnas" >' +
+            '<div class = "cajita" >' + nameimagen + namelugar + '<br><br><h6 id = "preciomodOfe" class = "cars0" > Precio: $ ' + precio + ' </h6> </div >' +
+            '<div class = "cajita" > <h6 id = "descmodOfe" class = "cars0" > Descripción: ' + descripcion + '</h6> <form name = "nombreform" >' +
+            '<br> Puntua la Oferta:' +
+            '<p class = "clasificacion">' + '<input id = "radio1 ' + codcompra + '" type = "radio" name = "estrellas" class = "radioBotones ' + codcompra + '"  value = "5"> <label for = "radio1 ' + codcompra + '" > ★ </label>' +
+            '<input id = "radio2 ' + codcompra + '" type = "radio"  name = "estrellas" class = "radioBotones ' + codcompra + '" value = "4"> <label for = "radio2 ' + codcompra + '" > ★ </label>' +
+            '<input id = "radio3 ' + codcompra + '" type = "radio"  name = "estrellas"  class = "radioBotones ' + codcompra + '" value = "3"> <label for = "radio3 ' + codcompra + '" > ★ </label>' +
+            '<input id = "radio4 ' + codcompra + '" type = "radio"  name = "estrellas"  class = "radioBotones ' + codcompra + '" value = "2"> <label for = "radio4 ' + codcompra + '" > ★ </label>' +
+            '<input id = "radio5 ' + codcompra + '" type = "radio"  name = "estrellas"  class = "radioBotones ' + codcompra + '" value = "1"> <label for = "radio5 ' + codcompra + '" > ★ </label></p>' +
+            '</form></div></div>' +
+            '<div class = "container px-1 px-md-40 py-5 mx-auto"> <div class = "tracking" ><div class = "row d-flex justify-content-between px-3 top" >' +
+            '<div class = "name" > <h5> Código de tu compra: </h5> <div class = "lead text" >' + codcompra + '</div> </div> </div>' +
+            '<div class = "row d-flex justify-content-center"> <div class = "col-12" > <ul id = "progressbar"  class = "text-center" >' + nameestado +
+            '</ul> <div> </div >' +
+            '<div class = "row justify-content-between top" > <div class = "row d-flex icon-content" > <img class = "icon" src = "https://image.flaticon.com/icons/png/512/114/114903.png" >' +
+            '<div class = "d-flex flex-column" >  <p class = "font-weight-bold"> Orden <br> Procesada </p> </div > </div>' +
+            '<div class = "row d-flex icon-content"> <img class = "icon" src = "https://static.thenounproject.com/png/543983-200.png" >' +
+            '<div class = "d-flex flex-column" > <p class = "font-weight-bold" > Orden <br> Confirmada </p> </div > </div>' +
+            '<div class = "row d-flex icon-content" > <img class = "icon" src = "https://img.icons8.com/ios/452/truck.png" >' +
+            '<div class = "d-flex flex-column" > <p class = "font-weight-bold" > Orden <br> En Camino </p> </div > </div>' +
+            '<div class = "row d-flex icon-content" > <img class = "icon" src = "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png" >' +
+            '<div class = "d-flex flex-column" > <p class = "font-weight-bold" > Orden <br> Entregada </p> </div > </div> </div></div></div></div></br>';
+
+
+        $("#compras").hide();
+        $("#estados").show();
+        $("#estados").append(ofertasC);
+        enviarValoracion(codOferta);
+        botonRegresar(codcompra);
+
+    });
+    $("#estados").empty();
 }
 
 async function abrirChat(codcompra, nombre) {
     $("#verchat" + codcompra).click(async function() {
-         var pet = await consultarMensajes(codcompra)  
+        var pet = await consultarMensajes(codcompra)
         $('#chat' + codcompra).show()
     });
 }
+
+async function abrirReclamo(codcompra, nombre) {
+    $("#verReclamo" + codcompra).click(async function() {
+        location.href = "reclamos.html";
+    });
+}
+
+
+
 
 function mostrarMensajes(mensajes) {
     for (const mensaje of mensajes) {
@@ -211,40 +244,40 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         var temp = drawChat(codCompra, oferta);
         $('#chatContainer').append(temp);
         abrirChat(codCompra, oferta);
-        sendMessage(codCompra,id);
+        sendMessage(codCompra, id);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
-        socketChat.emit('join', {room: 'room'+codCompra})
-        // mensajetemp = [{
-        //     codMensaje: 1,
-        //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-        //     Usuario_idUsuario: "1010029624",
-        //     desMensaje: "Te amo",
-        //     Compra_codCompra: "003",
-        //     time: "21:35"
-        // }, {
-        //     codMensaje: 2,
-        //     destinatario: "1010029624",
-        //     Usuario_idUsuario: "1000257419",
-        //     desMensaje: "Yo más",
-        //     Compra_codCompra: "003",
-        //     time: "21:37"
-        // }, {
-        //     codMensaje: 3,
-        //     destinatario: "1000257419",
-        //     Usuario_idUsuario: "1010029624",
-        //     desMensaje: "Que haces?",
-        //     Compra_codCompra: "003",
-        //     time: "21:40"
-        // }, {
-        //     codMensaje: 4,
-        //     destinatario: "1010029624",
-        //     Usuario_idUsuario: "1000257419",
-        //     desMensaje: "Extrañarte",
-        //     Compra_codCompra: "003",
-        //     time: "21:43"
-        // }]
-        // mostrarMensajes(mensajetemp)
+        socketChat.emit('join', { room: 'room' + codCompra })
+            // mensajetemp = [{
+            //     codMensaje: 1,
+            //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+            //     Usuario_idUsuario: "1010029624",
+            //     desMensaje: "Te amo",
+            //     Compra_codCompra: "003",
+            //     time: "21:35"
+            // }, {
+            //     codMensaje: 2,
+            //     destinatario: "1010029624",
+            //     Usuario_idUsuario: "1000257419",
+            //     desMensaje: "Yo más",
+            //     Compra_codCompra: "003",
+            //     time: "21:37"
+            // }, {
+            //     codMensaje: 3,
+            //     destinatario: "1000257419",
+            //     Usuario_idUsuario: "1010029624",
+            //     desMensaje: "Que haces?",
+            //     Compra_codCompra: "003",
+            //     time: "21:40"
+            // }, {
+            //     codMensaje: 4,
+            //     destinatario: "1010029624",
+            //     Usuario_idUsuario: "1000257419",
+            //     desMensaje: "Extrañarte",
+            //     Compra_codCompra: "003",
+            //     time: "21:43"
+            // }]
+            // mostrarMensajes(mensajetemp)
     }
 }
 
@@ -317,30 +350,31 @@ function seleccionPago(id) {
         }
     });
 }
-             
+
 function botonVolver(id) {
     $("#BotonVolver" + id).click(async function() {
-        $("#salirO"+id).hide();
-	$("#salirOC"+id).hide();
+        $("#salirO" + id).hide();
+        $("#salirOC" + id).hide();
         $("#ofertas").show();
         $("#regresar").hide();
     });
-    
-  /*  $("#BotonVolver" + id).click(function () {
-        consultarOfertas()
-    });
-    //Trear Ofertas descripcion 
-    async function traerOfertas(ofertas) {
-        $("#ofertas").empty();
-        for (const oferta of ofertas.ofertas) {
-            var puntuacion = await consultarPromedioValoracion(oferta['id']);
-            var save = await ConsultarComentarios(oferta['id']);
-            mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion, ofertas.misofertas);
-        }
-    }*/
+
+    /*  $("#BotonVolver" + id).click(function () {
+          consultarOfertas()
+      });
+      //Trear Ofertas descripcion 
+      async function traerOfertas(ofertas) {
+          $("#ofertas").empty();
+          for (const oferta of ofertas.ofertas) {
+              var puntuacion = await consultarPromedioValoracion(oferta['id']);
+              var save = await ConsultarComentarios(oferta['id']);
+              mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion, ofertas.misofertas);
+          }
+      }*/
 }
+
 function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
-   
+
     $("#BotonVerDetalles" + id).click(async function() {
         var dibujarComment = "";
         var dibujarPunt = "";
@@ -377,78 +411,78 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
 
         detalles = "";
         detalles =
-    	    '<div id="salirO'+id+'"><div  class="contenedores">' +
-	    '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
-            '<div class="caja">'+ nameimagen +
+            '<div id="salirO' + id + '"><div  class="contenedores">' +
+            '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>' +
+            '<div class="caja">' + nameimagen +
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
-            '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
-            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' + 
-            '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
-            '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
-            '</div>'+
-            '<div class="caja">'+
+            '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' +
+            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' +
+            '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' +
+            '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' +
+            '</div>' +
+            '<div class="caja">' +
             '<form class="MetodosDepago1">' +
-            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
-            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
-            '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
+            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' +
+            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago(' + id + ')">' +
+            '<option value="seleccion" >' + 'Seleccione' + '</option>' +
             '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
-            '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
+            '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' +
             '</select>' +
-            '</form>' + 
+            '</form>' +
             '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
-            '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
-            '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
-            '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
-            
-            '</select>' + 
+            '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' +
+            '<select class="cars2" name="cars2" id="cars2' + id + '">' +
+            '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago +
+
+            '</select>' +
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
-            '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>'+'<br><br>'+
-            '</div>' + 
-            '</div>' + '</div>'+
-            '<div id="salirOC'+id+'"><div class="contenedors">'+
-            '<h6>Comentarios:'+'</h6>' +
-            '<div class="form-group ">' + 
-            '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + 
-            '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + 
+            '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>' + '<br><br>' +
+            '</div>' +
+            '</div>' + '</div>' +
+            '<div id="salirOC' + id + '"><div class="contenedors">' +
+            '<h6>Comentarios:' + '</h6>' +
+            '<div class="form-group ">' +
+            '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' +
+            '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' +
             '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
-            '</div>' + '</div>'+ '</div>'
-            '</div></div></div></div></div></div></div></div>';
-        
+            '</div>' + '</div>' + '</div>'
+        '</div></div></div></div></div></div></div></div>';
+
         $("#ofertas").hide();
         $("#regresar").show();
         $("#regresar").append(detalles);
-        $('.MetodosDepago2'+id).hide();
+        $('.MetodosDepago2' + id).hide();
         botonVolver(id);
         botonCrearCompra(id, precio);
         botonEnviarComentario(id);
-        cerrarModal(id);    
-        });
-        $("#regresar").empty();
+        cerrarModal(id);
+    });
+    $("#regresar").empty();
 
 }
 
 function seleccionPago(id) {
     console.log(id)
-    var e = document.getElementById("cars"+id);
+    var e = document.getElementById("cars" + id);
     console.log(e)
-    var e2 = document.getElementById("cars2"+id);
+    var e2 = document.getElementById("cars2" + id);
     var value = e.options[e.selectedIndex].value;
     var value2 = e2.options[e2.selectedIndex].value;
-       
+
     console.log(value)
 
     if (value == "seleccion") {
         swal("Por favor, seleccione una opcion de pago", {
             icon: "error"
         });
-        $('.MetodosDepago2'+id).hide();
+        $('.MetodosDepago2' + id).hide();
     }
     if (value == "economonedas") {
-        $('.MetodosDepago2'+id).hide();
+        $('.MetodosDepago2' + id).hide();
     }
     if (value == "oferta") {
-        $('.MetodosDepago2'+id).show();
+        $('.MetodosDepago2' + id).show();
         if (value2 != "seleccion") {
             console.log(value2)
         }
@@ -456,7 +490,7 @@ function seleccionPago(id) {
 
     }
 
- 
+
 }
 
 function cerrarModal(id) {
@@ -483,7 +517,7 @@ function botonEnviarComentario(id) {
     $("#BotonEnviarComentario" + id).click(async function() {
         if ($("#descripcionComent" + id).val() != "") {
             commentN = $("#descripcionComent" + id).val();
-             console.log(id)
+            console.log(id)
             save = await insertarComentario(id, commentN);
             if (!save) {
                 swal("Por favor, Intenta más tarde", {
@@ -510,8 +544,8 @@ function botonCrearCompra(idOferta, precio) {
 
 
     $("#BotonComprar" + idOferta).click(async function() {
-        var e = document.getElementById("cars"+idOferta);
-        var e2 = document.getElementById("cars2"+idOferta);
+        var e = document.getElementById("cars" + idOferta);
+        var e2 = document.getElementById("cars2" + idOferta);
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value2)
@@ -528,7 +562,7 @@ function botonCrearCompra(idOferta, precio) {
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
 
-              console.log(value);
+                console.log(value);
                 var save = await crearCompra(idOferta, precio, null);
                 if (save) {
                     $("#myModal" + idOferta).hide();
@@ -543,11 +577,11 @@ function botonCrearCompra(idOferta, precio) {
             } else if ((USUARIO['moneda'] < precio)) {
                 swal("Error", "No tienes suficiente saldo para adquirir este producto", "error");
             }
-            $('.MetodosDepago2'+idOferta).hide();
+            $('.MetodosDepago2' + idOferta).hide();
         }
         if (value == "oferta") {
             console.log(value2)
-            $('.MetodosDepago2'+idOferta).show();
+            $('.MetodosDepago2' + idOferta).show();
             if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
@@ -663,6 +697,7 @@ if (window.location.href.includes('confRecarga.html')) {
             icon: "error"
         });
     }
+
 }
 //Mostrar alertas limite Tiempo
 function mostrarAlertasTiempo(hora, concepto) {
@@ -810,4 +845,5 @@ function botonVolverMenu(id) {
             mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion, ofertas.misofertas);
         }
     }*/
+
 }
