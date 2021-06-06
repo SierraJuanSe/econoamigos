@@ -28,7 +28,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background: #eb5d1e;
+  background: #38d39f;
   width: 40px;
   height: 40px;
   border-radius: 4px;
@@ -42,7 +42,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
 }
 
 .back-to-top:hover {
-  background: #ee7843;
+  background: #575988;
   color: #fff;
 }
 
@@ -135,21 +135,20 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   margin-left: 5px;
 }
 
-.navbar a:hover, .navbar .active, .navbar .active:focus, .navbar li:hover > a {
-  color: #eb5d1e;
+.navbar a:hover, .navbar .active, .navbar .active:focus ,.navbar li:hover > a {
+  color: #575988;
 }
 
 .navbar .getstarted{
-  background: #eb5d1e;
   color: #fff;
   padding: 10px 25px;
   margin-left: 30px;
   border-radius: 50px;
+  background-color: #38d39f;
 }
 
 .navbar .getstarted :hover {
-  color: #fff;
-  background: #ee7843;
+  background-color: #ee7843;
 }
 
 .navbar .dropdown ul {
@@ -350,11 +349,11 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   transition: 0.5s;
   margin-top: 30px;
   color: #fff;
-  background: #eb5d1e;
+  background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
 }
 
 #hero .btn-get-started:hover {
-  background: #ef7f4d;
+  background: #575988;
 }
 
 #hero .animated {
