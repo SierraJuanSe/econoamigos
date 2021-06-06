@@ -13,7 +13,7 @@ class Compra:
         self.cod_oferta = cod_oferta
 
     def agregar(self):
-        query = "insert into Compra values(null,%s,%s,%s,%s,%s);"
+        query = "insert into Compra values(null,%s,%s,null,%s,%s,%s);"
         c = Connection()
         cs = c.getCursor()
         r = cs.execute(query, (self.ofertaCambio, self.precio, False, self.cod_oferta, self.usuario.id))

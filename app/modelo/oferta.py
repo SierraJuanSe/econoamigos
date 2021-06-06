@@ -119,8 +119,8 @@ class Oferta:
         return r
 
     def consultarServiciosTop(self):
-        query = "SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
-                "and Oferta.Tipo='Servicio' GROUP BY codOferta ORDER BY `promedio` DESC"
+        query = f"SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
+                f"and Oferta.Tipo='Servicio' and Oferta.Usuario_idUsuario!={self.idUsuario} GROUP BY codOferta ORDER BY `promedio` DESC"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -138,6 +138,7 @@ class Oferta:
             r1['imagen'] = fila[7]
             r1['cantidad'] = fila[8]
             r1['idUsuario'] = fila[9]
+            r1['promedio'] = fila[13]
             respuesta.append(r1)
         conn.close()
         if len(respuesta)>6:
@@ -146,8 +147,8 @@ class Oferta:
         return respuesta
 
     def consultarProductosTop(self):
-        query = "SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
-                "and Oferta.Tipo='Producto' GROUP BY codOferta ORDER BY `promedio` DESC"
+        query = f"SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
+                f"and Oferta.Tipo='Producto' and Oferta.Usuario_idUsuario!={self.idUsuario} GROUP BY codOferta ORDER BY `promedio` DESC"
         conn = Conector(DBINFO['host'], DBINFO['user'],
                         DBINFO['password'], DBINFO['database'])
         conn.connect()
@@ -165,6 +166,7 @@ class Oferta:
             r1['imagen'] = fila[7]
             r1['cantidad'] = fila[8]
             r1['idUsuario'] = fila[9]
+            r1['promedio'] = fila[13]
             respuesta.append(r1)
         conn.close()
         if len(respuesta)>6:

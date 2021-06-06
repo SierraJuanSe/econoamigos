@@ -24,10 +24,10 @@ def insertarCompra():
     isCambio = msg['precio'] is None
     compra = None
     if isCambio:
-        compra = Compra(ofertaCambio=msg['ofertaCambio'],estado=msg['estado'],
+        compra = Compra(ofertaCambio=msg['ofertaCambio'],estado=1,
                         usuario=comprador,cod_oferta=oferta.id)
     else:
-        compra = Compra(precio=msg['precio'], estado=msg['estado'],
+        compra = Compra(precio=msg['precio'], estado=1,
                         usuario=comprador, cod_oferta=oferta.id)
     
     compra_succeed = compra.agregar()

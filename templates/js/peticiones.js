@@ -797,12 +797,12 @@ console.log(data);
 async function consultarOfertasMenu() {
     const USUARIO = JSON.parse(readCookie('token'));
     let data = {
-        "id": USUARIO['id']
+        "idUsuario": USUARIO['id']
     }
     console.log(data.id)
     try {
         result = await $.ajax({
-            url: url + "/consultarOfertas",
+            url: url + "/consultarOfertasTop",
             data: JSON.stringify(data),
             type: "POST",
             dataType: 'json',

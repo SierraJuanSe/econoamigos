@@ -710,6 +710,9 @@ function mostrarAlertasTiempo(hora, concepto) {
     $("#Alertas").append(notificaciones2C);
     $('.toast').toast('show');
 }
+
+
+
 function mostrarOfertasMenu(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
     if (tipo == "Producto") {
         ofertasC = "";
@@ -724,8 +727,11 @@ function mostrarOfertasMenu(id, tipo, nombre, descripcion, precio, lugar, cantid
     }
     BotonComprarMenu(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas);
 }
+
+
+
 function  BotonComprarMenu(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
-   
+   console.log(comentarios)
     $("#BotonComprarProd" + id).click(async function() {
         $("#regresar").empty();
         var dibujarComment = "";
@@ -739,9 +745,9 @@ function  BotonComprarMenu(id, tipo, nombre, descripcion, precio, lugar, cantida
             dibujarPunt += '<label >☆☆☆☆☆</label>'
         }
         for (const coment of comentarios) {
-            dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcionComentario'] + '</p>';
-            if (coment['respuesta'] != "") {
-                dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuestaComentario'] + '</p>'
+            dibujarComment += '<p class="lead_text-muted" id="letter">' + coment['descripcion'] + '</p>';
+            if (coment['respuestaComentario'] != "") {
+                dibujarComment += '<p class="lead_text-muted2" id="letter">' + coment['respuesta'] + '</p>'
 
             }
             console.log("#myComment" + id);

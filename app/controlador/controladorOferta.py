@@ -58,24 +58,19 @@ def consultarOferta():
         return {'status': 404}
 
 # Trae los mejores servicios de la plataforma
-@bp.route('/consultarServiciosTop', methods=['POST'])
-def consultarServiciosTop():
-    ofertas = Oferta()
-    res = ofertas.consultarServiciosTop()
-    if len(res) != 0:
-        return {'status': 200, 'info': res}
+@bp.route('/consultarOfertasTop', methods=['POST'])
+def consultarOfertasTop():
+    msg=request.get_json()
+    ofertas = Oferta(idUsuario=msg.get('idUsuario'))
+    servicios = ofertas.consultarServiciosTop()
+    productos = ofertas.consultarProductosTop()
+    MisOfertas= ofertas.consultarMisOfertas()
+    if len(servicios) != 0 and len(productos) != 0:
+        return {'status': 200, 'info': {'servicios':servicios,'productos':productos,'misOfertas':MisOfertas}}
     else:
         return {'status': 404}
 
-# Trae los mejores productos de la plataforma
-@bp.route('/consultarProductosTop', methods=['POST'])
-def consultarProductosTop():
-    ofertas = Oferta()
-    res = ofertas.consultarProductosTop()
-    if len(res) != 0:
-        return {'status': 200, 'info': res}
-    else:
-        return {'status': 404}
+
 
 # Crea un oferta para ser publicada al instante
 @bp.route('/insertarOferta', methods=['POST'])

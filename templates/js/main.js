@@ -511,10 +511,13 @@ $("#BotonValidarR").click(async function() {
 
 async function traerOfertasMenu(ofertas) {
     $("#ofertas").empty();
-    for (const oferta of ofertas.ofertas) {
-        var puntuacion = await consultarPromedioValoracion(oferta['id']);
+    for (const oferta of ofertas.productos) {
         var save = await ConsultarComentarios(oferta['id']);
-        mostrarOfertasMenu(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion,ofertas.misofertas);
+        mostrarOfertasMenu(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, oferta['promedio'],ofertas.misOfertas);
+    }
+    for (const oferta of ofertas.servicios) {
+        var save = await ConsultarComentarios(oferta['id']);
+        mostrarOfertasMenu(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, oferta['promedio'],ofertas.misOfertas);
     }
 }
 
