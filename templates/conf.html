@@ -6,14 +6,12 @@
     <link rel="stylesheet" type="text/css" href="css/styleConf.css">
     <link rel="icon" type="image/png" href="img/icono.png" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html;" charset="UTF-8" />
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"
-    integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU"
-    crossorigin="anonymous"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js" integrity="sha384-LzhRnpGmQP+lOvWruF/lgkcqD+WDVt9fU3H4BWmwP5u5LTmkUGafMcpZKNObVMLU" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -29,45 +27,45 @@
 
             </div>
 
-             <div class="wrapper">
-  <div class="navbar">
+            <div class="wrapper">
+                <div class="navbar">
 
-    <div class="navbar_right">
-      <div class="notifications">
-        <div class="icon_wrap"><i id="BotonCampana" class="far fa-bell"><img id="puntoNotificacion" src="img/punto.png" alt="" align="left" style="position: absolute; width:12px; "></i></div>
-       
-        <div class="notification_dd">
-            <ul id="NotificacionesCampana" class="notification_ul">
-                <!-- Aca van las notificaciones del boton de la campana     -->
-                <li class="show_all">
-                    <p  class="link">Ver todas mis notificaciones</p>
-                </li> 
-            </ul>
-        </div>
-        
-      </div>
-      
-    </div>
-  </div>
-  
-  <div id= "Notificaciones" class="popup">
-    <div class="shadow"></div>
-    <div class="inner_popup">
-        <div class="notification_dd">
-            <ul id="NotificacionesVentana" class="notification_ul">
-                <li class="title">
-                    <p>Mis notificaciones</p>
-                    <p class="close"><i class="fas fa-times" aria-hidden="true"></i></p>
-                </li> 
-                <!-- Aca van las notificaciones de la ventana emergente  -->
-            </ul>
-        </div>
-    </div>
-  </div>
-  
-</div>
+                    <div class="navbar_right">
+                        <div class="notifications">
+                            <div class="icon_wrap"><i id="BotonCampana" class="far fa-bell"><img id="puntoNotificacion" src="img/punto.png" alt="" align="left" style="position: absolute; width:12px; "></i></div>
 
-            
+                            <div class="notification_dd">
+                                <ul id="NotificacionesCampana" class="notification_ul">
+                                    <!-- Aca van las notificaciones del boton de la campana     -->
+                                    <li class="show_all">
+                                        <p class="link">Ver todas mis notificaciones</p>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="Notificaciones" class="popup">
+                    <div class="shadow"></div>
+                    <div class="inner_popup">
+                        <div class="notification_dd">
+                            <ul id="NotificacionesVentana" class="notification_ul">
+                                <li class="title">
+                                    <p>Mis notificaciones</p>
+                                    <p class="close"><i class="fas fa-times" aria-hidden="true"></i></p>
+                                </li>
+                                <!-- Aca van las notificaciones de la ventana emergente  -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
             <div class="saldo">
                 Tu saldo: $ <span id="saldoUser"></span>
             </div>
@@ -92,12 +90,12 @@
     <main>
 
 
- <div id="Alertas" aria-live="polite" aria-atomic="true" style="position: fixed; min-height: 200px; ">
-  <!-- Position it -->
-  <div style="position: fixed; top: 0; left: -50%;">
+        <div id="Alertas" aria-live="polite" aria-atomic="true" style="position: fixed; min-height: 200px; ">
+            <!-- Position it -->
+            <div style="position: fixed; top: 0; left: -50%;">
 
-  </div>
-</div>
+            </div>
+        </div>
         <!-- CONTENIDO-->
         <div class="contenedor">
             <h2 id="Servicios" class="titulos">Configuración De Cuenta</h2>
@@ -152,6 +150,10 @@
                     <p> Somos una compañía dedicada al apoyo de personas, especialmente, cabezas de hogar, fomentando una economía solidaria en la que se puede ofrecer y obtener servicios o productos a cambio de Ecomonedas, nuestra moneda virtual. </p>
                     <div class="social ">
                         <a href="https://github.com/SierraJuanSe/econoamigos "><span class="fab fa-github "></span></a>
+                    </div>
+                    <div>
+                        <br>
+                        <a href="PoliticasPrivacidad.html" style="color:rgb(95, 104, 104);">Términos y Condiciones</a>
                     </div>
                 </div>
             </div>

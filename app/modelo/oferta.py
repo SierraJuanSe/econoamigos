@@ -118,6 +118,22 @@ class Oferta:
         c.close()
         return r
 
+    def consultarServiciosTop(self):
+        query = "SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
+                "and Oferta.Tipo='Servicio' GROUP BY codOferta ORDER BY `promedio` DESC"
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        r = cs.execute(query)
+        return cs.fetchall()
+
+    def consultarProductosTop(self):
+        query = "SELECT *, AVG(valor) as promedio from Oferta, Valoracion where Oferta.codOferta=Valoracion.Oferta_codOferta " \
+                "and Oferta.Tipo='Producto' GROUP BY codOferta ORDER BY `promedio` DESC"
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        r = cs.execute(query)
+        return cs.fetchall()
+
     def to_dict(self):
         return {
             "id": self.id,
