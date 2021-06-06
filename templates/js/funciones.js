@@ -31,45 +31,18 @@ function mostrarCompras(codcompra, dest, nombre, descripcion, tipo, precio, esta
         '<div class="container"><div class="row"><div class="col">' + '<button id="vermasbot' + codcompra + '" type="button" class="card-link" ><img src="img/more.svg" style="width:30%; borderline: none;"></button>' +
         '</div> <div class="col"><button type="button" id="verchat' + codcompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></div>';
 
+
+
     $("#compras").append(ofertasC);
     botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta);
     var temp = drawChat(codcompra, nombre);
     $('#chatContainer').append(temp);
     abrirChat(codcompra, nombre);
-    sendMessage(codcompra, dest);
-    socketChat.emit('join', { room: 'room' + codcompra })
 
-    /*
-    mensajetemp = [{
-        codMensaje: 1,
-        destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-        Usuario_idUsuario: "1010029624",
-        desMensaje: "Te amo",
-        Compra_codCompra: "003",
-        time: "21:35"
-    }, {
-        codMensaje: 2,
-        destinatario: "1010029624",
-        Usuario_idUsuario: "1000257419",
-        desMensaje: "Yo más",
-        Compra_codCompra: "003",
-        time: "21:37"
-    }, {
-        codMensaje: 3,
-        destinatario: "1000257419",
-        Usuario_idUsuario: "1010029624",
-        desMensaje: "Que haces?",
-        Compra_codCompra: "003",
-        time: "21:40"
-    }, {
-        codMensaje: 4,
-        destinatario: "1010029624",
-        Usuario_idUsuario: "1000257419",
-        desMensaje: "Extrañarte",
-        Compra_codCompra: "003",
-        time: "21:43"
-    }]
-    mostrarMensajes(mensajetemp)*/
+    abrirReclamo(codcompra, nombre);
+    sendMessage(codcompra,dest);
+    socketChat.emit('join', {room: 'room'+codcompra})
+
 }
 
 function botonRegresar(codcompra) {
@@ -150,10 +123,19 @@ function botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, est
 
 async function abrirChat(codcompra, nombre) {
     $("#verchat" + codcompra).click(async function() {
-         var pet = await consultarMensajes(codcompra)  
+        var pet = await consultarMensajes(codcompra)
         $('#chat' + codcompra).show()
     });
 }
+
+async function abrirReclamo(codcompra, nombre) {
+    $("#verReclamo" + codcompra).click(async function() {
+        location.href = "reclamos.html";
+    });
+}
+
+
+
 
 function mostrarMensajes(mensajes) {
     for (const mensaje of mensajes) {
@@ -262,40 +244,40 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         var temp = drawChat(codCompra, oferta);
         $('#chatContainer').append(temp);
         abrirChat(codCompra, oferta);
-        sendMessage(codCompra,id);
+        sendMessage(codCompra, id);
         accionesBtnRechazar(codCompra);
         checkbox(id, estado, codCompra);
-        socketChat.emit('join', {room: 'room'+codCompra})
-        // mensajetemp = [{
-        //     codMensaje: 1,
-        //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-        //     Usuario_idUsuario: "1010029624",
-        //     desMensaje: "Te amo",
-        //     Compra_codCompra: "003",
-        //     time: "21:35"
-        // }, {
-        //     codMensaje: 2,
-        //     destinatario: "1010029624",
-        //     Usuario_idUsuario: "1000257419",
-        //     desMensaje: "Yo más",
-        //     Compra_codCompra: "003",
-        //     time: "21:37"
-        // }, {
-        //     codMensaje: 3,
-        //     destinatario: "1000257419",
-        //     Usuario_idUsuario: "1010029624",
-        //     desMensaje: "Que haces?",
-        //     Compra_codCompra: "003",
-        //     time: "21:40"
-        // }, {
-        //     codMensaje: 4,
-        //     destinatario: "1010029624",
-        //     Usuario_idUsuario: "1000257419",
-        //     desMensaje: "Extrañarte",
-        //     Compra_codCompra: "003",
-        //     time: "21:43"
-        // }]
-        // mostrarMensajes(mensajetemp)
+        socketChat.emit('join', { room: 'room' + codCompra })
+            // mensajetemp = [{
+            //     codMensaje: 1,
+            //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
+            //     Usuario_idUsuario: "1010029624",
+            //     desMensaje: "Te amo",
+            //     Compra_codCompra: "003",
+            //     time: "21:35"
+            // }, {
+            //     codMensaje: 2,
+            //     destinatario: "1010029624",
+            //     Usuario_idUsuario: "1000257419",
+            //     desMensaje: "Yo más",
+            //     Compra_codCompra: "003",
+            //     time: "21:37"
+            // }, {
+            //     codMensaje: 3,
+            //     destinatario: "1000257419",
+            //     Usuario_idUsuario: "1010029624",
+            //     desMensaje: "Que haces?",
+            //     Compra_codCompra: "003",
+            //     time: "21:40"
+            // }, {
+            //     codMensaje: 4,
+            //     destinatario: "1010029624",
+            //     Usuario_idUsuario: "1000257419",
+            //     desMensaje: "Extrañarte",
+            //     Compra_codCompra: "003",
+            //     time: "21:43"
+            // }]
+            // mostrarMensajes(mensajetemp)
     }
 }
 
@@ -368,30 +350,31 @@ function seleccionPago(id) {
         }
     });
 }
-             
+
 function botonVolver(id) {
     $("#BotonVolver" + id).click(async function() {
-        $("#salirO"+id).hide();
-	$("#salirOC"+id).hide();
+        $("#salirO" + id).hide();
+        $("#salirOC" + id).hide();
         $("#ofertas").show();
         $("#regresar").hide();
     });
-    
-  /*  $("#BotonVolver" + id).click(function () {
-        consultarOfertas()
-    });
-    //Trear Ofertas descripcion 
-    async function traerOfertas(ofertas) {
-        $("#ofertas").empty();
-        for (const oferta of ofertas.ofertas) {
-            var puntuacion = await consultarPromedioValoracion(oferta['id']);
-            var save = await ConsultarComentarios(oferta['id']);
-            mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion, ofertas.misofertas);
-        }
-    }*/
+
+    /*  $("#BotonVolver" + id).click(function () {
+          consultarOfertas()
+      });
+      //Trear Ofertas descripcion 
+      async function traerOfertas(ofertas) {
+          $("#ofertas").empty();
+          for (const oferta of ofertas.ofertas) {
+              var puntuacion = await consultarPromedioValoracion(oferta['id']);
+              var save = await ConsultarComentarios(oferta['id']);
+              mostrarOfertas(oferta['id'], oferta['tipo'], oferta['nombre'], oferta['descripcion'], oferta['precio'], oferta['lugar'], oferta['cantidad'], oferta['imagen'], save, puntuacion, ofertas.misofertas);
+          }
+      }*/
 }
+
 function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad, imagen, comentarios, recibir, OfertasOfrecidas) {
-   
+
     $("#BotonVerDetalles" + id).click(async function() {
         var dibujarComment = "";
         var dibujarPunt = "";
@@ -428,78 +411,78 @@ function botonVerDetalles(id, tipo, nombre, descripcion, precio, lugar, cantidad
 
         detalles = "";
         detalles =
-    	    '<div id="salirO'+id+'"><div  class="contenedores">' +
-	    '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>'+
-            '<div class="caja">'+ nameimagen +
+            '<div id="salirO' + id + '"><div  class="contenedores">' +
+            '<center><h3 id="nombremodOfe" class="title">' + nombre + '</h3></center>' +
+            '<div class="caja">' + nameimagen +
             '<br><br><h6 id="preciomodOfe" class="cars0">Precio: $' + precio + '</h6>' +
-            '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' + 
-            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' + 
-            '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' + 
-            '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' + 
-            '</div>'+
-            '<div class="caja">'+
+            '<h6 id="estadomodOfe" class="cars0">' + cantidad + '</h6>' +
+            '<h6 id="lugarmodOfer" class="cars0">' + lugar + '</h6>' +
+            '<h6 id="descmodOfe" class="cars0">Descripción: ' + descripcion + '</h6>' +
+            '<h6 class="cars0">Puntuación: ' + dibujarPunt + '</h6>' +
+            '</div>' +
+            '<div class="caja">' +
             '<form class="MetodosDepago1">' +
-            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' + 
-            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago('+id+')">' + 
-            '<option value="seleccion" >' + 'Seleccione' + '</option>' + 
+            '<br><br><label class="cars0">' + 'Seleccione el metodo de pago' + '</label><br>' +
+            '<select class="cars" name="cars" id="cars' + id + '"  onchange="seleccionPago(' + id + ')">' +
+            '<option value="seleccion" >' + 'Seleccione' + '</option>' +
             '<option value="economonedas" id="ButonEconomonedas" >' + 'Economonedas' + '</option>' +
-            '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' + 
+            '<option value="oferta">' + 'Por productos o servicios ofrecidos' + '</option>' +
             '</select>' +
-            '</form>' + 
+            '</form>' +
             '<form class="MetodosDepago2' + id + '" id="metodoPago2id' + id + '" >' +
-            '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' + 
-            '<select class="cars2" name="cars2" id="cars2' + id + '">' + 
-            '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago + 
-            
-            '</select>' + 
+            '<label class="cars0">' + 'Seleccione el servicio o producto por el cual desea pagar' + '</label>' +
+            '<select class="cars2" name="cars2" id="cars2' + id + '">' +
+            '<option value="seleccion" >' + 'Seleccione' + '</option>' + dibujarofertasPago +
+
+            '</select>' +
             '</form>' +
             '<button id="BotonComprar' + id + '" type="button" class="btn">Comprar</button>' +
-            '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>'+'<br><br>'+
-            '</div>' + 
-            '</div>' + '</div>'+
-            '<div id="salirOC'+id+'"><div class="contenedors">'+
-            '<h6>Comentarios:'+'</h6>' +
-            '<div class="form-group ">' + 
-            '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' + 
-            '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' + 
+            '<button id="BotonVolver' + id + '" type="button" class="btn">Regresar</button>' + '<br><br>' +
+            '</div>' +
+            '</div>' + '</div>' +
+            '<div id="salirOC' + id + '"><div class="contenedors">' +
+            '<h6>Comentarios:' + '</h6>' +
+            '<div class="form-group ">' +
+            '<div id=comentariosN' + id + '>' + dibujarComment + '</div>' +
+            '<textarea class="control " id="descripcionComent' + id + '" placeholder="Comentario" rows="5 ">' + '</textarea>' +
             '<a  id="BotonEnviarComentario' + id + '" type="button" class="btn">' + 'Enviar Comentario' + '</a>' +
-            '</div>' + '</div>'+ '</div>'
-            '</div></div></div></div></div></div></div></div>';
-        
+            '</div>' + '</div>' + '</div>'
+        '</div></div></div></div></div></div></div></div>';
+
         $("#ofertas").hide();
         $("#regresar").show();
         $("#regresar").append(detalles);
-        $('.MetodosDepago2'+id).hide();
+        $('.MetodosDepago2' + id).hide();
         botonVolver(id);
         botonCrearCompra(id, precio);
         botonEnviarComentario(id);
-        cerrarModal(id);    
-        });
-        $("#regresar").empty();
+        cerrarModal(id);
+    });
+    $("#regresar").empty();
 
 }
 
 function seleccionPago(id) {
     console.log(id)
-    var e = document.getElementById("cars"+id);
+    var e = document.getElementById("cars" + id);
     console.log(e)
-    var e2 = document.getElementById("cars2"+id);
+    var e2 = document.getElementById("cars2" + id);
     var value = e.options[e.selectedIndex].value;
     var value2 = e2.options[e2.selectedIndex].value;
-       
+
     console.log(value)
 
     if (value == "seleccion") {
         swal("Por favor, seleccione una opcion de pago", {
             icon: "error"
         });
-        $('.MetodosDepago2'+id).hide();
+        $('.MetodosDepago2' + id).hide();
     }
     if (value == "economonedas") {
-        $('.MetodosDepago2'+id).hide();
+        $('.MetodosDepago2' + id).hide();
     }
     if (value == "oferta") {
-        $('.MetodosDepago2'+id).show();
+        $('.MetodosDepago2' + id).show();
         if (value2 != "seleccion") {
             console.log(value2)
         }
@@ -507,7 +490,7 @@ function seleccionPago(id) {
 
     }
 
- 
+
 }
 
 function cerrarModal(id) {
@@ -534,7 +517,7 @@ function botonEnviarComentario(id) {
     $("#BotonEnviarComentario" + id).click(async function() {
         if ($("#descripcionComent" + id).val() != "") {
             commentN = $("#descripcionComent" + id).val();
-             console.log(id)
+            console.log(id)
             save = await insertarComentario(id, commentN);
             if (!save) {
                 swal("Por favor, Intenta más tarde", {
@@ -561,8 +544,8 @@ function botonCrearCompra(idOferta, precio) {
 
 
     $("#BotonComprar" + idOferta).click(async function() {
-        var e = document.getElementById("cars"+idOferta);
-        var e2 = document.getElementById("cars2"+idOferta);
+        var e = document.getElementById("cars" + idOferta);
+        var e2 = document.getElementById("cars2" + idOferta);
         var value2 = e2.options[e2.selectedIndex].value;
         var value = e.options[e.selectedIndex].value;
         console.log(value2)
@@ -579,7 +562,7 @@ function botonCrearCompra(idOferta, precio) {
             const USUARIO = JSON.parse(readCookie('token'));
             if (USUARIO['moneda'] > precio) {
 
-              console.log(value);
+                console.log(value);
                 var save = await crearCompra(idOferta, precio, null);
                 if (save) {
                     $("#myModal" + idOferta).hide();
@@ -594,11 +577,11 @@ function botonCrearCompra(idOferta, precio) {
             } else if ((USUARIO['moneda'] < precio)) {
                 swal("Error", "No tienes suficiente saldo para adquirir este producto", "error");
             }
-            $('.MetodosDepago2'+idOferta).hide();
+            $('.MetodosDepago2' + idOferta).hide();
         }
         if (value == "oferta") {
             console.log(value2)
-            $('.MetodosDepago2'+idOferta).show();
+            $('.MetodosDepago2' + idOferta).show();
             if (value2 != "seleccion") {
                 const USUARIO = JSON.parse(readCookie('token'));
                 if (USUARIO['moneda'] > precio) {
