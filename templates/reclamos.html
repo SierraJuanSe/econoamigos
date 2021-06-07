@@ -109,7 +109,7 @@
                     <div class="mb-3">
                         <label for="select-reclamo-tipo" class="form-label">Tipo de reclamo</label>
                         <select id="select-reclamo-tipo" class="form-control">
-                            <option selected value="0">...</option>
+                            <option selected value="-2">...</option>
                             <option selected value="1">Compra</option>
                             <option selected value="2">Venta</option>
 
@@ -119,7 +119,7 @@
                     <div class="mb-3">
                         <label for="select-reclamo-oferta" class="form-label">Oferta</label>
                         <select id="select-reclamo-oferta" class="form-control">
-                            <option selected value="0">...</option>
+                            <option selected value="-1">...</option>
                         </select>
                         <small id="select-reclamo-help" class="form-text text-muted">Selecciona la oferta</small>  
                     </div>
@@ -129,8 +129,10 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="exampleFormControlFile1">Evidencias</label>
-                        <input type="file" class="form-control-file" id="foto-reclamo" multiple>
+                        <input type="file" class="form-control-file" id="foto-reclamo" multiple accept="image/*">
                         <small id="select-reclamo-help" class="form-text text-muted">Si tienes alguna imagen o documento de evidencia puedes adjuntarlo.</small>
+                    </div>
+                    <div id='foto-pre' class="row">
                     </div>
                     <div class="d-grid gap-2 col-6 mx-auto mb-5">
                         <button type="submit" class="btn mx-auto">Crear reclamo</button>
@@ -210,7 +212,7 @@
     <script src="js/peticiones.js" type="text/javascript"></Script>
     <script src="js/main.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
-
+    <script src="js/reclamos.js"></script>
 </body>
 
 </html>
