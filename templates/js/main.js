@@ -210,7 +210,7 @@ async function traerSolicitudes(solicitudes) {
         } else {
             metodo="Oferta";
         }
-        mostrarSolicitudes(solicitud['codCompra'], solicitud['destinatario'], solicitud['nombreUsuario'], solicitud['apellidoUsuario'], solicitud['telefonoUsuario'], solicitud['direccion'], solicitud['nombreOferta'],metodo,solicitud['nombreOfertaCambio'], solicitud['estadoCompra']);
+        mostrarSolicitudes(solicitud['codCompra'], solicitud['destinatario'], solicitud['nombreUsuario'], solicitud['apellidoUsuario'], solicitud['telefonoUsuario'], solicitud['direccion'], solicitud['nombreOferta'],metodo,solicitud['nombreOfertaCambio'], solicitud['EstadoCompra_codEstadoCompra'],solicitud['ofertaCambio'],solicitud['codOferta']);
     }
 }
 

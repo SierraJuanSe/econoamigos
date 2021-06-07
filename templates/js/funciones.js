@@ -55,6 +55,7 @@ function botonRegresar(codcompra) {
 
 function botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, estado, lugar, imagen, codOferta) {
     $("#vermasbot" + codcompra).click(async function() {
+       var boton="";
         if (tipo == "Producto") {
             namelugar = "";
             nameimagen = "";
@@ -63,22 +64,23 @@ function botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, est
             namelugar = "Lugar: " + lugar;
             nameimagen = " ";
         }
-        if (estado == "Procesada") {
+        if (estado==1) {
             nameestado = '<li class = "activar step0" > </li>' +
                 '<li class = "step0" > </li>' +
                 '<li class = "step0" > </li>' +
                 '<li class = "step0" > </li>';
-        } else if (estado == "Confirmada") {
+        } else if (estado == 2) {
             nameestado = '<li class = "activar step0" > </li>' +
                 '<li class = "activar step0" > </li>' +
                 '<li class = "step0" > </li>' +
                 '<li class = "step0" > </li>';
-        } else if (estado == "Camino") {
+        } else if (estado ==3) {
             nameestado = '<li class = "activar step0" > </li>' +
                 '<li class = "activar step0" > </li>' +
                 '<li class = "activar step0" > </li>' +
                 '<li class = "step0" > </li>';
-        } else if (estado == "Entregada") {
+            boton='<button id="btnrecibido'+codcompra+'" type="button" class="btn btn-info">Confirmar Recibido</button>'
+        } else if (estado == 4) {
             nameestado = '<li class = "activar step0" > </li>' +
                 '<li class = "activar step0" > </li>' +
                 '<li class = "activar step0" > </li>' +
@@ -108,17 +110,38 @@ function botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, est
             '<div class = "row d-flex icon-content" > <img class = "icon" src = "https://img.icons8.com/ios/452/truck.png" >' +
             '<div class = "d-flex flex-column" > <p class = "font-weight-bold" > Orden <br> En Camino </p> </div > </div>' +
             '<div class = "row d-flex icon-content" > <img class = "icon" src = "https://cdn.icon-icons.com/icons2/936/PNG/512/home_icon-icons.com_73532.png" >' +
-            '<div class = "d-flex flex-column" > <p class = "font-weight-bold" > Orden <br> Entregada </p> </div > </div> </div></div></div></div></br>';
+            '<div class = "d-flex flex-column" > <p class = "font-weight-bold" > Orden <br> Entregada </p> </div > </div> </div></div></div></div></br>'+
+            boton;
 
 
         $("#compras").hide();
         $("#estados").show();
         $("#estados").append(ofertasC);
+        if(boton){
+            botonRecibido(codcompra)
+        }
         enviarValoracion(codOferta);
         botonRegresar(codcompra);
 
     });
     $("#estados").empty();
+}
+
+function botonRecibido(codCompra) {
+    $("#btnrecibido" + codCompra).click(async function() {
+        console.log(codCompra)
+        var pet = await actualizarSolicitud(codCompra,4,null,null)
+        if(pet){
+            swal("Muy bien", "Tu registro se ha confirmado", "success");
+        }else{
+            swal("Error", "Intenta mas tarde", "success");
+        }
+        $("#btnrecibido" + codCompra).hide()
+        $("#progressbar").append('<li class = "activar step0" > </li>' +
+        '<li class = "activar step0" > </li>' +
+        '<li class = "activar step0" > </li>' +
+        '<li class = "activar step0" > </li>')
+    });
 }
 
 async function abrirChat(codcompra, nombre) {
@@ -214,10 +237,18 @@ function botonEnviarRespuesta(codComentario) {
 }
 
 //Mostrar todas las solicitudes a ofertas
-function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, metodopago, pago, estado) {
+function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion, oferta, metodopago, pago, estado,ofertaCambio,codOferta) {
     //Codigo HTML
     var feli = "";
-    if (!estado) {
+    var estadoA=["","Creado","Confirmado","Enviado"];
+    var btEstado=["","Confirmar","Enviar"]
+    var actualizarBt="<td style='text-align:center'>---</td>"
+    if (estado!=3) {
+        actualizarBt='<td style="text-align:center" id="btest'+codCompra+'"><button type="button" id="cambiarEstado'+codCompra
+        +'" class="btn-link">'+btEstado[estado]+'</button></td>'
+    }
+
+    if (estado!=4) {
         if (metodopago == "Oferta") {
             feli = '<button type="button" class="card-link" data-toggle="modal" data-target="#exampleModal' + codCompra + '">Ver más</button>' +
                 '<div class="modal fade" id="exampleModal' + codCompra + '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">' +
@@ -238,7 +269,7 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         solO = '<tr id="filasol' + codCompra + '"><td id="nomsolicitud' + id + '">' + nombre + ' ' + apellido + '</td><td id="telsolicitud">' + telefono +
             '</td><td id="dirsolicitud' + id + '">' + direccion + '</td><td id="ofolicitud">' + oferta + '</td><td id="metodopagosolicitud"><div class="row"><div class="col">' + metodopago + '</div><div class="col-md-auto">' + feli + '</div></div></td>' +
             '<td><div style="align: center;"><button type="button" id="verchat' + codCompra + '" class="card-link" ><img src="img/chat.svg" style="width:90%; align: center;"></button></div></td><td>' +
-            '<a>Confirmado</a></td><td><button type="button" class="btn-link">Actualizar Progreso</button></td></tr>';
+            '<a id="campoEstado'+codCompra+'">'+estadoA[estado]+'</a></td>'+actualizarBt+'</tr>';
         //Inserscion al HTML
         $("#solicitudes").append(solO);
         var temp = drawChat(codCompra, oferta);
@@ -246,38 +277,9 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
         abrirChat(codCompra, oferta);
         sendMessage(codCompra, id);
         accionesBtnRechazar(codCompra);
-        checkbox(id, estado, codCompra);
+        checkbox(id, estado, codCompra,ofertaCambio,codOferta);
         socketChat.emit('join', { room: 'room' + codCompra })
-            // mensajetemp = [{
-            //     codMensaje: 1,
-            //     destinatario: "1000257419", ///JSON.parse(USUARIO['id']), //Ajustar
-            //     Usuario_idUsuario: "1010029624",
-            //     desMensaje: "Te amo",
-            //     Compra_codCompra: "003",
-            //     time: "21:35"
-            // }, {
-            //     codMensaje: 2,
-            //     destinatario: "1010029624",
-            //     Usuario_idUsuario: "1000257419",
-            //     desMensaje: "Yo más",
-            //     Compra_codCompra: "003",
-            //     time: "21:37"
-            // }, {
-            //     codMensaje: 3,
-            //     destinatario: "1000257419",
-            //     Usuario_idUsuario: "1010029624",
-            //     desMensaje: "Que haces?",
-            //     Compra_codCompra: "003",
-            //     time: "21:40"
-            // }, {
-            //     codMensaje: 4,
-            //     destinatario: "1010029624",
-            //     Usuario_idUsuario: "1000257419",
-            //     desMensaje: "Extrañarte",
-            //     Compra_codCompra: "003",
-            //     time: "21:43"
-            // }]
-            // mostrarMensajes(mensajetemp)
+
     }
 }
 
@@ -504,11 +506,11 @@ function cerrarModal(id) {
 
 
 //Accciones del checkbox
-function checkbox(id, estado, codCompra) {
+function checkbox(id, estado, codCompra,ofertaCambio,codOferta) {
 
     //Accion de boton al checkbox
-    $("#customCheck" + codCompra).click(function() {
-        accionesCheck(id, codCompra);
+    $("#cambiarEstado" + codCompra).click(function() {
+        accionesCheck(id, codCompra,estado,ofertaCambio,codOferta);
     });
 }
 
@@ -614,7 +616,7 @@ function botonCrearCompra(idOferta, precio) {
 }
 
 
-function accionesCheck(id, codCompra) {
+function accionesCheck(id, codCompra,estado,ofertaCambio,codOferta) {
     //Acciones de la alerta
     swal({
             title: "¿Estas seguro de cambiar el estado de la solicitud?",
@@ -628,7 +630,7 @@ function accionesCheck(id, codCompra) {
                 swal("Tu solicitud ha sido realizada, ya podras Verificar tu saldo", {
                     icon: "success"
                 });
-                var result = actualizarSolicitud(codCompra);
+                var result = actualizarSolicitud(codCompra,estado+1,ofertaCambio,codOferta);
                 console.log(result.info)
 
             } else {

@@ -19,7 +19,7 @@ class Compra:
         query = "insert into Compra values(null,%s,%s,null,%s,%s,%s);"
         c = Connection()
         cs = c.getCursor()
-        r = cs.execute(query, (self.ofertaCambio, self.precio, None, self.cod_oferta, self.usuario.id, 1))
+        r = cs.execute(query, (self.ofertaCambio, self.precio, self.cod_oferta, self.usuario.id, 1))
         if r:
             self.id = cs.lastrowid
             c.commit()
@@ -39,7 +39,7 @@ class Compra:
         return rr
 
     def consultar_ofertas_compradas(self):
-        sql = """select codOferta, Tipo as tipo, nombreOferta, descripcionOferta as descripcion, precioOferta as precio, precioOferta as precio, 
+        sql = """select codOferta,EstadoCompra_codEstadoCompra as estado,Tipo as tipo, nombreOferta, descripcionOferta as descripcion, precioOferta as precio,
         lugarServicio as lugar, imagenProducto as imagen, cantidadProducto as cantidad, Oferta.Usuario_idUsuario as destinatario, Compra.codCompra as codCompra
         from Oferta,Compra where Oferta.codOferta=Compra.Oferta_codOferta and Compra.Usuario_idUsuario=%s;"""
         cc = Connection().getCursor("DictCursor")
@@ -49,9 +49,9 @@ class Compra:
 
     def consultar_ofertas_vendidas(self):
         # Consultar Quienes realizaron las compras de los Productos realizados por el usuario
-        query = "SELECT Compra.codCompra,(select nombreOferta FROM Oferta where codOferta=Compra.ofertaCambio) as nombreOfertaCambio,\
+        query = "SELECT Compra.codCompra,Compra.ofertaCambio,Compra.codCompra,(select nombreOferta FROM Oferta where codOferta=Compra.ofertaCambio) as nombreOfertaCambio,\
             Usuario.idUsuario as destinatario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,\
-            Oferta.codOferta,Oferta.nombreOferta,Compra.estadoCompra,Compra.precioCompra\
+            Oferta.codOferta,Oferta.nombreOferta,Compra.EstadoCompra_codEstadoCompra,Compra.precioCompra\
             FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and \
             Oferta.Usuario_idUsuario=%s) INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario)" 
         c = Connection()
@@ -89,14 +89,18 @@ class Compra:
         conn.connect()
         conn.execute_query(sql)
         conn.commit_change()
-
-        cs = conn.getCursor("DictCursor")
-        r = cs.execute(sql2)
-        if r:
-            rr = cs.fetchone()
-            self.usuario = rr['Usuario_idUsuario']
-
-        sql3 = f"insert into Compra values(null,{self.ofertaCambio},null,null,{self.cod_oferta},{self.usuario},2);"
+        # c = Connection()
+        # cs = c.getCursor("DictCursor")
+        # r = cs.execute(sql2)
+        result=conn.execute_query(sql2,None)
+        # if r:
+        #     rr = cs.fetchone()
+        #     self.usuario = rr['Usuario_idUsuario']
+        self.usuario=result[0][0]
+            
+        print(self.usuario)
+        sql3 = f"insert into Compra values(null,{self.cod_oferta},null,null,{self.ofertaCambio},{self.usuario},2);"
+        print(sql3)
         conn.execute_query(sql3)
         conn.commit_change()
         conn.close()

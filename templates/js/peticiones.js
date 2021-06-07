@@ -239,12 +239,15 @@ async function consultarSolicitudes() {
 
 
 //Peticion para actualizar la solicitud de una compra
-async function actualizarSolicitud(codCompra) {
+async function actualizarSolicitud(codCompra,estado,ofertaCambio,codOferta) {
     var USUARIO = JSON.parse(readCookie('token'));
 
     let data = {
         "idCompra": codCompra,
-        "idUsuario": USUARIO['id']
+        "idUsuario": USUARIO['id'],
+        "estado":estado,
+        "ofertaCambio":ofertaCambio,
+        "codOferta":codOferta
     }
     try {
         result = await $.ajax({
@@ -255,13 +258,22 @@ async function actualizarSolicitud(codCompra) {
             contentType: "application/json; charset=utf-8"
         })
         if (result.status == 200) {
-            $("#filasol" + codCompra).remove();
+            var estadoA=["","Creado","Confirmado","Enviado"];
+            var btEstado=["","Confirmar","Enviar"]
+            $("#campoEstado"+codCompra).empty().append(estadoA[estado])
+            if(estado==3){
+                $('#btest'+codCompra).empty().append("---")
+            }else{
+                $("#cambiarEstado"+codCompra).html(btEstado[estado]);
+            }
+            console.log(estado)
             USUARIO['moneda'] = result.moneda;
             window.token = JSON.stringify(USUARIO);
             setCookie(token);
             actualizarMonedaVista(result.moneda);
+            return 1;
         } else {
-            $("#customCheck" + codCompra).prop("checked", false);
+            // $("#customCheck" + codCompra).prop("checked", false);
             return 0;
         }
     } catch (error) {
@@ -269,6 +281,7 @@ async function actualizarSolicitud(codCompra) {
         return 0;
     }
 }
+
 
 //Petición para insertar respuesta a comentario
 async function crearRespuesta(idComentario, respuesta) {

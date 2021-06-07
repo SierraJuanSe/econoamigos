@@ -91,8 +91,18 @@ def consultarOfertasVendidos():
 @bp.route('/actualizarEstadoCompra', methods=['POST'])
 def actualizarEstadoCompra():
     msg = request.get_json()
-    comp = Compra(id=msg.get('idCompra'), estado=msg.get('estado'))
-    if comp.actualizar_estado():
+    comp = Compra(id=msg.get('idCompra'), estado=msg.get('estado'),ofertaCambio=msg.get('ofertaCambio'),cod_oferta=msg.get('codOferta'))
+    confirma=False
+    if comp.estado==2:
+        if msg.get('ofertaCambio'):
+            confirma=comp.vendedor_confirmado_int()
+        else:
+            confirma=comp.vendedor_confirmado_eco()
+    elif comp.estado==3:
+        confirma=comp.vendedor_enviado()
+    else:
+        confirma=comp.comprador_recibido()
+    if confirma:
         _, moneda = Usuario(id=msg.get('idUsuario')).get()
         return {'status': 200, 'info':True, 'moneda': moneda}
     else:
