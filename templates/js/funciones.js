@@ -101,7 +101,7 @@ function botonVerEstados(codcompra, dest, nombre, descripcion, tipo, precio, est
             '</form></div></div>' +
             '<div class = "container px-1 px-md-40 py-5 mx-auto"> <div class = "tracking" ><div class = "row d-flex justify-content-between px-3 top" >' +
             '<div class = "name" > <h5> Código de tu compra: </h5> <div class = "lead text" >' + codcompra + '</div> </div> </div>' +
-            '<div class = "row d-flex justify-content-center"> <div class = "col-12" > <ul id = "progressbar"  class = "text-center" >' + nameestado +
+            '<div class = "row d-flex justify-content-center"> <div class = "col-12" > <ul id = "progressbar'+codcompra+'"  class = "text-center progss" >' + nameestado +
             '</ul> <div> </div >' +
             '<div class = "row justify-content-between top" > <div class = "row d-flex icon-content" > <img class = "icon" src = "https://image.flaticon.com/icons/png/512/114/114903.png" >' +
             '<div class = "d-flex flex-column" >  <p class = "font-weight-bold"> Orden <br> Procesada </p> </div > </div>' +
@@ -137,7 +137,7 @@ function botonRecibido(codCompra) {
             swal("Error", "Intenta mas tarde", "success");
         }
         $("#btnrecibido" + codCompra).hide()
-        $("#progressbar").append('<li class = "activar step0" > </li>' +
+        $("#progressbar"+codCompra).empty().append('<li class = "activar step0" > </li>' +
         '<li class = "activar step0" > </li>' +
         '<li class = "activar step0" > </li>' +
         '<li class = "activar step0" > </li>')
@@ -245,7 +245,7 @@ function mostrarSolicitudes(codCompra, id, nombre, apellido, telefono, direccion
     var actualizarBt="<td style='text-align:center'>---</td>"
     if (estado!=3) {
         actualizarBt='<td style="text-align:center" id="btest'+codCompra+'"><button type="button" id="cambiarEstado'+codCompra
-        +'" class="btn-link">'+btEstado[estado]+'</button></td>'
+        +'" class="card-link">'+btEstado[estado]+'</button></td>'
     }
 
     if (estado!=4) {
@@ -630,9 +630,11 @@ function accionesCheck(id, codCompra,estado,ofertaCambio,codOferta) {
                 swal("Tu solicitud ha sido realizada, ya podras Verificar tu saldo", {
                     icon: "success"
                 });
-                var result = actualizarSolicitud(codCompra,estado+1,ofertaCambio,codOferta);
-                console.log(result.info)
-
+                estado+=1;
+                var result = actualizarSolicitud(codCompra,estado,ofertaCambio,codOferta);
+                if(result){
+                    window.location.reload();
+                }
             } else {
                 $("#customCheck" + codCompra).prop("checked", false);
             }

@@ -260,13 +260,13 @@ async function actualizarSolicitud(codCompra,estado,ofertaCambio,codOferta) {
         if (result.status == 200) {
             var estadoA=["","Creado","Confirmado","Enviado"];
             var btEstado=["","Confirmar","Enviar"]
-            $("#campoEstado"+codCompra).empty().append(estadoA[estado])
-            if(estado==3){
-                $('#btest'+codCompra).empty().append("---")
-            }else{
-                $("#cambiarEstado"+codCompra).html(btEstado[estado]);
-            }
-            console.log(estado)
+            // $("#campoEstado"+codCompra).empty().append(estadoA[estado])
+            // if(estado==3){
+            //     $('#btest'+codCompra).empty().append("---")
+            // }else{
+            //     $("#cambiarEstado"+codCompra).html(btEstado[estado]);
+            // }
+            
             USUARIO['moneda'] = result.moneda;
             window.token = JSON.stringify(USUARIO);
             setCookie(token);
