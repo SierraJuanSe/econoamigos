@@ -95,9 +95,53 @@
         </div>
 
         <!-- CONTENIDO-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12">
+                    <h5>¿Tienes algún inconveniente con una de tus compras o ventas?</h5>
+                </div>
+                <div class="col-12">
+                    <p>Escribenos, nosotros te ayudamos.</p>
+                </div>
+            </div>
+            <div class="row mt-4 p-3">
+                <form id='reclamos-form' class="container">
+                    <div class="mb-3">
+                        <label for="select-reclamo-tipo" class="form-label">Tipo de reclamo</label>
+                        <select id="select-reclamo-tipo" class="form-control">
+                            <option selected value="-2">...</option>
+                            <option selected value="1">Compra</option>
+                            <option selected value="2">Venta</option>
 
+                        </select>
+                        <small id="select-reclamo-help" class="form-text text-muted">Selecciona el tipo de tranaccion del que quieras hacer el reclamo</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="select-reclamo-oferta" class="form-label">Oferta</label>
+                        <select id="select-reclamo-oferta" class="form-control">
+                            <option selected value="-1">...</option>
+                        </select>
+                        <small id="select-reclamo-help" class="form-text text-muted">Selecciona la oferta</small>  
+                    </div>
+                    <div class="mb-3">
+                        <label for="textarea-reclamo" class="form-label">Escribe en detalle que fue lo que paso.</label>
+                        <textarea class="form-control" id="textarea-reclamo" rows="5"></textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="exampleFormControlFile1">Evidencias</label>
+                        <input type="file" class="form-control-file" id="foto-reclamo" multiple accept="image/*">
+                        <small id="select-reclamo-help" class="form-text text-muted">Si tienes alguna imagen o documento de evidencia puedes adjuntarlo.</small>
+                    </div>
+                    <div id='foto-pre' class="row">
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto mb-5">
+                        <button type="submit" class="btn mx-auto">Crear reclamo</button>
+                    </div>
+                </form>
+            </div>
+        </div>
         <!-- Servicios -->
-        
+    </main>
     <!-- Pie de página-->
     <footer>
         <div class="main-content ">
@@ -168,7 +212,7 @@
     <script src="js/peticiones.js" type="text/javascript"></Script>
     <script src="js/main.js " type="text/javascript "></Script>
     <script src="js/funciones.js " type="text/javascript "></Script>
-
+    <script src="js/reclamos.js"></script>
 </body>
 
 </html>
