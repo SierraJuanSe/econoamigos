@@ -47,12 +47,32 @@ class Compra:
         cc.close()
         return cc.fetchall()
 
+
+    def consultar__nombres_ofertas_compradas(self):
+        sql = """select Compra.codCompra as id, nombreOferta as name, from Oferta,Compra where Oferta.codOferta=Compra.Oferta_codOferta and Compra.Usuario_idUsuario=%s;"""
+        cc = Connection().getCursor("DictCursor")
+        cc.execute(sql, (self.usuario.id, ))
+        cc.close()
+        return cc.fetchall()
+
     def consultar_ofertas_vendidas(self):
         # Consultar Quienes realizaron las compras de los Productos realizados por el usuario
         query = "SELECT Compra.codCompra,Compra.ofertaCambio,Compra.codCompra,(select nombreOferta FROM Oferta where codOferta=Compra.ofertaCambio) as nombreOfertaCambio,\
             Usuario.idUsuario as destinatario,Usuario.nombreUsuario,Usuario.apellidoUsuario,telefonoUsuario,Usuario.direccion,\
             Oferta.codOferta,Oferta.nombreOferta,Compra.EstadoCompra_codEstadoCompra,Compra.precioCompra\
             FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and \
+            Oferta.Usuario_idUsuario=%s) INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario)" 
+        c = Connection()
+        cs = c.getCursor("DictCursor")
+        r = cs.execute(query, (self.usuario.id, ))
+        rr = cs.fetchall()
+        c.close()
+        return rr
+
+
+    def consultar_nombres_ofertas_vendidas(self):
+        # Consultar Quienes realizaron las compras de los Productos realizados por el usuario
+        query = "SELECT Compra.codCompra as id, Oferta.nombreOferta as name FROM ((Compra INNER JOIN Oferta ON Compra.Oferta_codOferta = Oferta.codOferta and \
             Oferta.Usuario_idUsuario=%s) INNER JOIN Usuario ON Compra.Usuario_idUsuario = Usuario.idUsuario)" 
         c = Connection()
         cs = c.getCursor("DictCursor")

@@ -75,6 +75,22 @@ def consultarOfertasComprados():
     else:
         return {'status': 404}
 
+# Retorna el nombre de todas las ofertas que el usuario adquirió
+@bp.route('/getPubNames', methods=['POST'])
+def consultarNombreOfertasComprados():
+    msg = request.get_json()
+    user = Usuario(id=msg.get('userId'))
+    comp = Compra(usuario=user)
+    if(msg['option']=='compras'):
+        res = comp.consultar__nombres_ofertas_compradas()
+    else:
+        res = comp.consultar_nombres_ofertas_vendidas()
+
+    if res != []:
+        return {'status': 200, 'options': res}
+    else:
+        return {'status': 404}
+
 # Retorna todas las ofertas que el usuario haya vendido
 @bp.route('/consultarOfertasVendidas', methods=['POST'])
 def consultarOfertasVendidos():
@@ -128,6 +144,17 @@ def consultarMensajes():
         return {'status': 200, 'info': res}
     else:
         return {'status': 404}
+
+
+@bp.route('/createReclamo', methods=['POST'])
+def createReclamo():
+    msg = request.get_json()
+    res = [1]
+    if res != []:
+        return {'status': 200, 'info': res}
+    else:
+        return {'status': 404}
+
 
 def notificateCompra(vendor, producto):
     onlineUser = list(filter(lambda i: int(onlineUsers[i]['id']) == int(vendor.id), onlineUsers.keys()))

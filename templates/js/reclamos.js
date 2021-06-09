@@ -5,23 +5,25 @@ const cache = {
 
 const handleSubmit = async (e) => {
   e.preventDefault()
-  // const USUARIO = JSON.parse(readCookie('token'));
+  const USUARIO = JSON.parse(readCookie('token'));
+  const option = $('#select-reclamo-tipo').val()
+  const publicationId = $('#select-reclamo-oferta').val()
+  const desc = $('#textarea-reclamo').val()
   data = {
-    // userId: USUARIO['id'],
-    option: "",
-    publicationId: "",
-    desc: "",
+    userId: USUARIO['id'],
+    option,
+    publicationId,
+    desc,
     images: []
   }
-  // r = await submitReclamo(data)
-  r = true
+  let r = await submitReclamo(data)
   if(r){
     swal("Tu reclamacion ha sido enviada con exito", {
       icon: "success"
     });
   }else{
     swal("Error creando la reclamacion", {
-      icon: "error  "
+      icon: "error"
     });
   } 
 }
@@ -36,7 +38,7 @@ const handleChangeSelect = async (e) => {
 
   if(option){
     let options = cache[option]
-    if(!options){
+    if(options.length <= 0){
       options = await getSelectOptions(option)
       cache[option] = options
     }
@@ -84,14 +86,14 @@ const getSelectOptions = async (option) => {
     r = await $.ajax({
       url: url + "/getPubNames",
       data: JSON.stringify(data),
-      type: "GET",
+      type: "POST",
       dataType: 'json',
       contentType: "application/json; charset=utf-8"
   })
 
     return r.options
   }catch(e){
-    console.log(error);
+    console.error(e);
     return []
   }
 }
